@@ -19,7 +19,7 @@ interface RegisterRes {
   message: string;
 }
 
-export function RegisterPage() {
+export default function RegisterPage() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [signUp] = useRegisterMutation();

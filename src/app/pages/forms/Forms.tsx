@@ -1,4 +1,4 @@
-export function FormsPage() {
+export default function FormsPage() {
   return (
     <main>
       Forms page

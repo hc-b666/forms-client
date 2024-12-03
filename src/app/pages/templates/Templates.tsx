@@ -1,4 +1,4 @@
-export function TemplatesPage() {
+export default function TemplatesPage() {
   return (
     <main>
       Templates page

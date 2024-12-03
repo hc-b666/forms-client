@@ -28,7 +28,7 @@ interface LoginRes {
   };
 }
 
-export function LoginPage() {
+export default function LoginPage() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [signIn] = useLoginMutation();

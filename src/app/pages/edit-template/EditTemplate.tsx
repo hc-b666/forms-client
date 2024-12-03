@@ -1,4 +1,4 @@
-export function EditTemplatePage() {
+export default function EditTemplatePage() {
   return (
     <main>Edit template page</main>
   );
