@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import { useLoginMutation } from "@/app/services/authApi";
+import { useToast } from "@/app/hooks/use-toast";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 
-interface ILoginForm {
+export interface ILoginForm {
   firstName: string;
   lastName: string;
   username: string;
@@ -13,9 +15,37 @@ interface ILoginForm {
   password: string;
 }
 
+interface LoginRes {
+  message: string;
+  token: string;
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    role: string;
+  };
+}
+
 export function LoginPage() {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [signIn] = useLoginMutation();
   const { register, handleSubmit } = useForm<ILoginForm>();
-  const onSubmit: SubmitHandler<ILoginForm> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
+    try {
+      const res: LoginRes = await signIn(data).unwrap();
+      toast({ description: res.message });
+      localStorage.setItem("token", res.token);
+      localStorage.setItem("role", res.user.role);
+      localStorage.setItem("user", JSON.stringify(res.user));
+      navigate("/profile");
+    } catch (err) {
+      const msg = (err as any).data.message;
+      toast({ variant: "destructive", description: msg });
+    }
+  };
 
   return (
     <div className="container flex-grow flex items-center justify-center">

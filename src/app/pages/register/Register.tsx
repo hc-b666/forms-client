@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import { useRegisterMutation } from "@/app/services/authApi";
+import { useToast } from "@/app/hooks/use-toast";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 
-interface IRegisterForm {
+export interface IRegisterForm {
   firstName: string;
   lastName: string;
   username: string;
@@ -13,9 +15,25 @@ interface IRegisterForm {
   password: string;
 }
 
+interface RegisterRes {
+  message: string;
+}
+
 export function RegisterPage() {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [signUp] = useRegisterMutation();
   const { register, handleSubmit } = useForm<IRegisterForm>();
-  const onSubmit: SubmitHandler<IRegisterForm> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IRegisterForm> = async (data) => {
+    try {
+      const res: RegisterRes = await signUp(data).unwrap();
+      toast({ description: res.message });
+      navigate("/login");
+    } catch (err) {
+      const msg = (err as any).data.message;
+      toast({ variant: "destructive", description: msg });
+    }
+  };
 
   return (
     <div className="container flex-grow flex items-center justify-center">
