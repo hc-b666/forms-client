@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
+import { PrivateRoute } from "./components/PrivateRoute";
+
 import { HomePage } from "./pages/home/Home";
 import { LoginPage } from "./pages/login/Login";
 import { RegisterPage } from "./pages/register/Register";
@@ -27,14 +29,59 @@ export function Router() {
 
       <Route path="/search" element={<SearchPage />} />
 
-      <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/create-template" element={<CreateTemplatePage />} />
-      <Route path="/edit-template" element={<EditTemplatePage />} />
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute>
+            <ProfilePage />
+          </PrivateRoute>
+        }
+      />
 
-      <Route path="/template/:templateId/forms" element={<FormsPage />} />
-      <Route path="/template/:templateId/forms/:formId" element={<FormPage />} />
+      <Route
+        path="/create-template"
+        element={
+          <PrivateRoute>
+            <CreateTemplatePage />
+          </PrivateRoute>
+        }
+      />
 
-      <Route path="/admin" element={<AdminPage />} />
+      <Route
+        path="/edit-template"
+        element={
+          <PrivateRoute>
+            <EditTemplatePage />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/template/:templateId/forms"
+        element={
+          <PrivateRoute>
+            <FormsPage />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/template/:templateId/forms/:formId"
+        element={
+          <PrivateRoute>
+            <FormPage />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/admin"
+        element={
+          <PrivateRoute requiredRole="admin">
+            <AdminPage />
+          </PrivateRoute>
+        }
+      />
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
