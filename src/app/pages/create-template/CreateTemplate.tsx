@@ -9,7 +9,6 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Textarea } from "@/app/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
-// import { Badge } from "@/app/components/ui/badge";
 import { QuestionCard } from "@/app/pages/create-template/QuestionCard";
 import { SelectComponent } from "@/app/components/SelectComponent";
 import { Button } from "@/app/components/ui/button";
@@ -26,11 +25,6 @@ export interface IQuestion {
   }[];
 }
 
-// type User = {
-//   id: string;
-//   email: string;
-// };
-
 export default function CreateTemplatePage() {
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -40,7 +34,6 @@ export default function CreateTemplatePage() {
   const [description, setDescription] = useState("");
   const [topic, setTopic] = useState("");
   const [type, setType] = useState<"public" | "private">("public");
-  // const [users, setUsers] = useState<User[]>([]);
   const [questions, setQuestions] = useState<IQuestion[]>([
     {
       id: uuidv4(),
@@ -81,14 +74,15 @@ export default function CreateTemplatePage() {
       title,
       description,
       createdBy: user.id,
-      topic,
+      topic: topic.toLowerCase(),
       type,
       questions: questions.map(({ id, ...rest }) => ({ ...rest, options: rest.options.map(o => o.value) })),
     };
 
     try {
       const res = await createTemplate(data).unwrap();
-      console.log(res);
+      toast({ description: res.message });
+      navigate("/profile");
     } catch (err) {
       const status = (err as any).status;
       const msg = (err as any).data.message;
@@ -186,16 +180,6 @@ export default function CreateTemplatePage() {
             </div>
           </RadioGroup>
         </div>
-
-        {/* {type === "private" && (
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-1">
-              {users.map((u) => (
-                <Badge key={u.id}>{u.email}</Badge>
-              ))}
-            </div>
-          </div>
-        )} */}
 
         <h2 className="font-semibold">Your questions</h2>
 
