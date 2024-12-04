@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useToast } from "@/app/hooks/use-toast";
 
+import { useCreateTemplateMutation } from "@/app/services/templateApi";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Textarea } from "@/app/components/ui/textarea";
@@ -33,6 +34,7 @@ export interface IQuestion {
 export default function CreateTemplatePage() {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [createTemplate] = useCreateTemplateMutation();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -48,7 +50,7 @@ export default function CreateTemplatePage() {
     },
   ]);
 
-  const handleCreateTemplate = () => {
+  const handleCreateTemplate = async () => {
     if (!title.trim()) {
       toast({ variant: "destructive", description: "There has to be 'Title' in the template" });
       return;
@@ -75,15 +77,27 @@ export default function CreateTemplatePage() {
     }
 
     const user: IUser = JSON.parse(u);
-    const request = {
+    const data = {
       title,
       description,
-      topic,
       createdBy: user.id,
-      questions,
+      topic,
+      type,
+      questions: questions.map(({ id, ...rest }) => ({ ...rest, options: rest.options.map(o => o.value) })),
     };
 
-    console.log(request);
+    try {
+      const res = await createTemplate(data).unwrap();
+      console.log(res);
+    } catch (err) {
+      const status = (err as any).status;
+      const msg = (err as any).data.message;
+      if (status === 403) {
+        localStorage.clear();
+        toast({ variant: "destructive", description: msg });
+        navigate("/login");
+      }
+    }
   };
 
   const handleTopicChange = (v: string) => {

@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IRegisterForm } from "../pages/register/Register";
 import { ILoginForm } from "../pages/login/Login";
-
-export const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL; 
+import { BACKEND_BASE_URL } from "./base-url";
 
 export const authApi = createApi({
   reducerPath: "authApi",
