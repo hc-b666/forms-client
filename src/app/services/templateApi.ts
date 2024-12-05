@@ -12,6 +12,7 @@ interface ICreateTemplateBody {
     type: string;
     options: string[];
   }[];
+  tags: string[];
 }
 
 export const templateApi = createApi({

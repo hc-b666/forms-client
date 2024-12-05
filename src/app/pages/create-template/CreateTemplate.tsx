@@ -9,21 +9,12 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Textarea } from "@/app/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group";
-import { QuestionCard } from "@/app/pages/create-template/QuestionCard";
 import { SelectComponent } from "@/app/components/SelectComponent";
+import { QuestionsComponent } from "./QuestionsComponent";
 import { Button } from "@/app/components/ui/button";
+import { TagsComponent } from "./TagsComponent";
 
 const topics = ["Education", "Quiz", "Other"];
-
-export interface IQuestion {
-  id: string;
-  question: string;
-  type: string;
-  options: { 
-    id: string;
-    value: string;
-  }[];
-}
 
 export default function CreateTemplatePage() {
   const { toast } = useToast();
@@ -34,6 +25,7 @@ export default function CreateTemplatePage() {
   const [description, setDescription] = useState("");
   const [topic, setTopic] = useState("");
   const [type, setType] = useState<"public" | "private">("public");
+  const [tags, setTags] = useState<ITag[]>([]);
   const [questions, setQuestions] = useState<IQuestion[]>([
     {
       id: uuidv4(),
@@ -54,6 +46,10 @@ export default function CreateTemplatePage() {
     }
     if (!topic) {
       toast({ variant: "destructive", description: "There has to be 'Topic' in the template" });
+      return;
+    }
+    if (tags.length === 0) {
+      toast({ variant: "destructive", description: "There has to be at least one tag" });
       return;
     }
     if (questions.length === 0) {
@@ -77,6 +73,7 @@ export default function CreateTemplatePage() {
       topic: topic.toLowerCase(),
       type,
       questions: questions.map(({ id, ...rest }) => ({ ...rest, options: rest.options.map(o => o.value) })),
+      tags: tags.map(({ value }) => value),
     };
 
     try {
@@ -86,6 +83,10 @@ export default function CreateTemplatePage() {
     } catch (err) {
       const status = (err as any).status;
       const msg = (err as any).data.message;
+      if (status === 400) {
+        toast({ variant: "destructive", description: msg });
+      }
+
       if (status === 403) {
         localStorage.clear();
         toast({ variant: "destructive", description: msg });
@@ -100,34 +101,6 @@ export default function CreateTemplatePage() {
 
   const handleTypeChange = (v: "public" | "private") => {
     setType(v);
-  };
-
-  const handleAddQuestion = () => {
-    setQuestions((p) => [...p, { id: uuidv4(), question: `Question ${p.length + 1}`, type: "short", options: [] }]);
-  };
-
-  const handleUpdateQuestion = (id: string, v: string) => {
-    setQuestions((p) => p.map((q) => q.id === id ? { ...q, question: v } : q));
-  };
-
-  const handleDeleteQuestion = (id: string) => {
-    setQuestions((p) => p.filter((q) => q.id !== id));
-  };
-
-  const handleQuestionTypeChange = (id: string, v: string) => {
-    setQuestions((p) => p.map((q) => q.id === id ? { ...q, type: v } : q));
-  };
-
-  const handleAddOption = (id: string) => {
-    setQuestions((p) => p.map((q) => q.id === id ? { ...q, options: [...q.options, { id: uuidv4(), value: `Option ${q.options.length + 1}` }] } : q));
-  };
-
-  const handleUpdateOption = (qId: string, oId: string, v: string) => {
-    setQuestions((p) => p.map((q) => q.id === qId ? { ...q, options: q.options.map((o) => o.id === oId ? { ...o, value: v } : o)  } : q));
-  };
-
-  const handleDeleteOption = (qId: string, oId: string) => {
-    setQuestions((p) => p.map((q) => q.id === qId ? { ...q, options: q.options.filter((o) => o.id !== oId) } : q));
   };
 
   return (
@@ -165,6 +138,8 @@ export default function CreateTemplatePage() {
           label="Topic"
         />
 
+        <TagsComponent tags={tags} setTags={setTags} />
+
         <div className="flex flex-col gap-2">
           <h3 className="text-sm font-semibold">
             Select the type of your template
@@ -181,24 +156,7 @@ export default function CreateTemplatePage() {
           </RadioGroup>
         </div>
 
-        <h2 className="font-semibold">Your questions</h2>
-
-        <div className="flex flex-col gap-3">
-          {questions.map((q) => (
-            <QuestionCard 
-              q={q}
-              handleUpdateQuestion={handleUpdateQuestion}
-              handleQuestionTypeChange={handleQuestionTypeChange}
-              handleDeleteQuestion={handleDeleteQuestion}
-              handleAddOption={handleAddOption}
-              handleUpdateOption={handleUpdateOption}
-              handleDeleteOption={handleDeleteOption}
-              key={q.id}
-            />
-          ))}
-
-          <Button onClick={handleAddQuestion} type="button" variant={"secondary"}>Add question</Button>
-        </div>
+        <QuestionsComponent questions={questions} setQuestions={setQuestions}  />
 
         <Button onClick={handleCreateTemplate}>Create template</Button>
       </div>

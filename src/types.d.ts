@@ -7,6 +7,21 @@ declare global {
     email: string;
     role: string;
   }
+
+  interface IQuestion {
+    id: string;
+    question: string;
+    type: string;
+    options: {
+      id: string;
+      value: string;
+    }[];
+  }
+
+  interface ITag {
+    id: string;
+    value: string;
+  }
 }
 
 export {};

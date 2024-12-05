@@ -1,5 +1,4 @@
 import { X } from "lucide-react";
-import { IQuestion } from "./CreateTemplate";
 import { SelectComponent } from "../../components/SelectComponent";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -7,7 +6,7 @@ import { Textarea } from "../../components/ui/textarea";
 
 const questions: string[] = ["short", "paragraph", "mcq", "checkbox"];
 
-interface IQuestionCard {
+interface IQuestionsComponent {
   q: IQuestion;
   handleUpdateQuestion: (id: string, v: string) => void;
   handleQuestionTypeChange: (id: string, v: string) => void;
@@ -17,7 +16,7 @@ interface IQuestionCard {
   handleDeleteOption: (qId: string, oId: string) => void;
 }
 
-export function QuestionCard({
+export function QuestionComponent({
   q,
   handleUpdateQuestion,
   handleQuestionTypeChange,
@@ -25,7 +24,7 @@ export function QuestionCard({
   handleUpdateOption,
   handleAddOption,
   handleDeleteOption,
-}: IQuestionCard) {
+}: IQuestionsComponent) {
   return (
     <div className="w-full flex flex-col gap-5 border p-5 rounded-md">
       <div className="w-full grid grid-cols-4 gap-5">
