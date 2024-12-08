@@ -42,7 +42,7 @@ declare global {
     topic: string;
   }
 
-  interface ITag {
+  interface ITagServer {
     id: number;
     tagName: string;
   }

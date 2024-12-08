@@ -7,7 +7,7 @@ export const tagApi = createApi({
     baseUrl: `${BACKEND_BASE_URL}/api/v1/`,
   }),
   endpoints: (builder) => ({
-    getTags: builder.query<ITag[], void>({
+    getTags: builder.query<ITagServer[], void>({
       query: () => ({
         url: "tags",
         method: "GET",
