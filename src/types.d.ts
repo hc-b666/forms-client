@@ -22,6 +22,30 @@ declare global {
     id: string;
     value: string;
   }
+
+  interface ITopTemplate {
+    createdAt: string;
+    email: string;
+    formsCount: string;
+    id: number;
+    tags: string[];
+    title: string;
+    topic: string;
+  }
+
+  interface ILatestTemplate {
+    createdAt: string;
+    email: string;
+    id: number;
+    tags: string[];
+    title: string;
+    topic: string;
+  }
+
+  interface ITag {
+    id: number;
+    tagName: string;
+  }
 }
 
 export {};

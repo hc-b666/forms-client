@@ -17,16 +17,16 @@ interface ICreateTemplateBody {
 
 export const templateApi = createApi({
   reducerPath: "templateApi",
-  baseQuery: fetchBaseQuery({ 
-    baseUrl: `${BACKEND_BASE_URL}/api/v1/`, 
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${BACKEND_BASE_URL}/api/v1/`,
     prepareHeaders: (headers) => {
       const tkn = localStorage.getItem("token");
       if (tkn) {
         headers.set("Authorization", `Bearer ${tkn}`);
       }
-      
+
       return headers;
-    }
+    },
   }),
   endpoints: (builder) => ({
     createTemplate: builder.mutation({
@@ -36,7 +36,30 @@ export const templateApi = createApi({
         body: data,
       }),
     }),
+    getTop5Templates: builder.query<ITopTemplate[], void>({
+      query: () => ({
+        url: "templates/top5",
+        method: "GET",
+      }),
+    }),
+    getLatestTemplates: builder.query<ILatestTemplate[], void>({
+      query: () => ({
+        url: "templates/latest",
+        method: "GET",
+      }),
+    }),
+    getTemplateById: builder.query({
+      query: (id: number) => ({
+        url: `templates/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateTemplateMutation } = templateApi;
+export const {
+  useCreateTemplateMutation,
+  useGetTop5TemplatesQuery,
+  useGetLatestTemplatesQuery,
+  useGetTemplateByIdQuery,
+} = templateApi;
