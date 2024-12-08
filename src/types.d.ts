@@ -46,6 +46,35 @@ declare global {
     id: number;
     tagName: string;
   }
+
+  interface IComment {
+    id: number;
+    content: string;
+    createdAt: string;
+    user: {
+      id: number;
+      email: string;
+    };
+  }
+
+  interface IQuestionServer {
+    id: number;
+    type: string;
+    question: string;
+    options: string[];
+  }
+
+  interface ITemplate {
+    id: number;
+    title: string;
+    description: string;
+    email: string;
+    createdAt: string;
+    tags: string[];
+    topic: string;
+    comments: IComment[] | null;
+    questions: IQuestionServer[];
+  }
 }
 
 export {};

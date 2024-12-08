@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 import { capitalize } from "@/app/lib/capitalize";
 import { formatDate } from "@/app/lib/dateUtils";
 
@@ -7,7 +9,7 @@ interface ILatestTemplateCompoennt {
 
 export function LatestTemplateComponent({ t }: ILatestTemplateCompoennt) {
   return (
-    <div className="flex flex-col border rounded-md p-3">
+    <NavLink to={`/template/${t.id}`} className="flex flex-col border rounded-md p-3 hover:bg-gray-50 dark:hover:bg-zinc-900 duration-300">
       <div className="flex items-center justify-between mb-3 text-sm">
         <p>{t.email}</p>
         <span>{formatDate(t.createdAt)}</span>
@@ -20,6 +22,6 @@ export function LatestTemplateComponent({ t }: ILatestTemplateCompoennt) {
           {t.tags.map((t: string) => <span key={t}>{t}</span>)}
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 }

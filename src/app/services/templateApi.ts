@@ -48,8 +48,8 @@ export const templateApi = createApi({
         method: "GET",
       }),
     }),
-    getTemplateById: builder.query({
-      query: (id: number) => ({
+    getTemplateById: builder.query<ITemplate, string | undefined>({
+      query: (id) => ({
         url: `templates/${id}`,
         method: "GET",
       }),

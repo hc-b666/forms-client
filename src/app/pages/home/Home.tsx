@@ -21,14 +21,14 @@ export default function HomePage() {
     <div className="container flex-grow grid grid-cols-4 gap-10">
       <div className="col-span-3 flex flex-col gap-5">
         <div className="flex flex-col gap-5">
-          <h3 className="text-xl font-semibold">Top 5 Templates</h3>
+          <h3 className="text-xl font-semibold border-b pb-5">Top 5 Templates</h3>
           <div className="w-full flex flex-col gap-5">
             {top5Data &&
               top5Data.map((t) => <TopTemplateComponent t={t} key={t.id} />)}
           </div>
         </div>
         <div className="flex flex-col gap-5">
-          <h3 className="text-xl font-semibold">Top 10 Latest Templates</h3>
+          <h3 className="text-xl font-semibold border-b pb-5">Top 10 Latest Templates</h3>
           <div className="w-full flex flex-col gap-5">
             {latestData &&
               latestData.map((t) => (
@@ -39,7 +39,7 @@ export default function HomePage() {
       </div>
 
       <div className="col-span-1 flex flex-col gap-5">
-        <h3 className="text-xl font-semibold">Search by tags</h3>
+        <h3 className="text-xl font-semibold border-b pb-5">Search by tags</h3>
         <div className="flex flex-wrap gap-1">
           {tags &&
             tags.map((t) => (

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useValidateTokenMutation } from "../services/authApi";
 import LoadingSpinner from "./LoadingSpinner";
+import { clearStorage } from "../lib/clearStorage";
 
 interface IPrivateRoute {
   children: JSX.Element;
@@ -32,7 +33,7 @@ export function PrivateRoute({ children, requiredRole }: IPrivateRoute) {
           setIsValid(true);
         }
       } catch (error) {
-        localStorage.clear();
+        clearStorage();
         setIsValid(false);
       }
     };

@@ -1,5 +1,6 @@
 import { capitalize } from "@/app/lib/capitalize";
 import { formatDate } from "@/app/lib/dateUtils";
+import { NavLink } from "react-router-dom";
 
 interface ITopTemplateComponent {
   t: ITopTemplate;
@@ -7,7 +8,7 @@ interface ITopTemplateComponent {
 
 export function TopTemplateComponent({ t }: ITopTemplateComponent) {
   return (
-    <div className="flex flex-col border rounded-md p-3">
+    <NavLink to={`/template/${t.id}`} className="flex flex-col border rounded-md p-3 hover:bg-gray-50 dark:hover:bg-zinc-900 duration-300">
       <div className="flex items-center justify-between mb-3 text-sm">
         <p>{t.email}</p>
         <span>{formatDate(t.createdAt)}</span>
@@ -21,6 +22,6 @@ export function TopTemplateComponent({ t }: ITopTemplateComponent) {
           {t.tags.map((t: string) => <span key={t}>{t}</span>)}
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 }
