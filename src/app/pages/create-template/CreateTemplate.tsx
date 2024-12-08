@@ -14,7 +14,7 @@ import { QuestionsComponent } from "./QuestionsComponent";
 import { Button } from "@/app/components/ui/button";
 import { TagsComponent } from "./TagsComponent";
 
-const topics = ["Education", "Quiz", "Other"];
+const topics = ["Edu", "Quiz", "Other"];
 
 export default function CreateTemplatePage() {
   const { toast } = useToast();
