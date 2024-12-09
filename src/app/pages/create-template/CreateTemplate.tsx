@@ -79,7 +79,7 @@ export default function CreateTemplatePage() {
     try {
       const res = await createTemplate(data).unwrap();
       toast({ description: res.message });
-      navigate("/profile");
+      navigate(`/profile/${user.id}`);
     } catch (err) {
       const status = (err as any).status;
       const msg = (err as any).data.message;

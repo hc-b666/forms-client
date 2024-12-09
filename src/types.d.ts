@@ -1,6 +1,6 @@
 declare global {
   interface IUser {
-    id: string;
+    id: number;
     firstName: string;
     lastName: string;
     username: string;
@@ -65,7 +65,8 @@ declare global {
   }
 
   interface ITemplate {
-    id: number;
+    templateId: number;
+    userId: number;
     title: string;
     description: string;
     email: string;
@@ -84,6 +85,14 @@ declare global {
     topic: string;
     tags: string[];
     responses: string;
+  }
+
+  interface IUserProfile {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    username: string;
   }
 }
 

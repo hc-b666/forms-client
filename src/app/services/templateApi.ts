@@ -4,9 +4,9 @@ import { BACKEND_BASE_URL } from "./base-url";
 interface ICreateTemplateBody {
   title: string;
   description: string;
-  createdBy: string;
+  createdBy: number;
   topic: string;
-  type: string;
+  type: "public" | "private";
   questions: {
     question: string;
     type: string;
@@ -54,7 +54,7 @@ export const templateApi = createApi({
         method: "GET",
       }),
     }),
-    getTemplatesForUser: builder.query<IProfileTemplate[], string>({
+    getTemplatesForUser: builder.query<{ templates: IProfileTemplate[], user: IUserProfile }, string | undefined>({
       query: (userId) => ({
         url: `templates/profile/${userId}`,
         method: "GET",

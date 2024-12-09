@@ -1,33 +1,12 @@
-import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import { ModeToggle } from "../ModeToggle";
 import { Button } from "../ui/button";
-import { clearStorage } from "@/app/lib/clearStorage";
 import { SearchComponent } from "./SearchComponent";
+import { useAppContext } from "@/app/AppProvider";
 
 export function Navbar() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<IUser | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-    if (token && user) {
-      setIsAuthenticated(true);
-      setUser(user);
-    } else {
-      setIsAuthenticated(false);
-      setUser(null);
-    }
-  }, []);
-
-  const handleLogout = () => {
-    clearStorage();
-    setIsAuthenticated(false);
-    setUser(null);
-  };
+  const { isAuthenticated, user, handleLogout } = useAppContext();
 
   return (
     <nav className="container py-3 flex items-center justify-between border-b">
@@ -43,7 +22,7 @@ export function Navbar() {
             <NavLink to="/create-template" className="hover:underline">
               Create Template
             </NavLink>
-            <NavLink to="/profile" className="hover:underline">
+            <NavLink to={`/profile/${user?.id}`} className="hover:underline">
               {user?.username}
             </NavLink>
             <Button onClick={handleLogout}>Log Out</Button>

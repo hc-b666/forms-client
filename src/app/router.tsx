@@ -33,7 +33,7 @@ export function Router() {
         <Route path="/search" element={<SearchPage />} />
 
         <Route
-          path="/profile"
+          path="/profile/:userId"
           element={
             <PrivateRoute>
               <ProfilePage />
@@ -51,7 +51,7 @@ export function Router() {
         />
 
         <Route
-          path="/edit-template"
+          path="/edit-template/:templateId"
           element={
             <PrivateRoute>
               <EditTemplatePage />

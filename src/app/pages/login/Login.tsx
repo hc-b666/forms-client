@@ -6,6 +6,7 @@ import { useToast } from "@/app/hooks/use-toast";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
+import { useAppContext } from "@/app/AppProvider";
 
 export interface ILoginForm {
   firstName: string;
@@ -22,6 +23,7 @@ interface LoginRes {
 }
 
 export default function LoginPage() {
+  const { setIsAuthenticated } = useAppContext();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [signIn] = useLoginMutation();
@@ -33,7 +35,8 @@ export default function LoginPage() {
       localStorage.setItem("token", res.token);
       localStorage.setItem("role", res.user.role);
       localStorage.setItem("user", JSON.stringify(res.user));
-      navigate("/profile");
+      setIsAuthenticated(true);
+      navigate(`/profile/${res.user.id}`);
     } catch (err) {
       const msg = (err as any).data.message;
       toast({ variant: "destructive", description: msg });
