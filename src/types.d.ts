@@ -31,6 +31,8 @@ declare global {
     tags: string[];
     title: string;
     topic: string;
+    totalLikes: string;
+    hasLiked: boolean;
   }
 
   interface ILatestTemplate {

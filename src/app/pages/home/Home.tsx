@@ -1,6 +1,6 @@
 import {
   useGetLatestTemplatesQuery,
-  useGetTop5TemplatesQuery,
+  useGetTopTemplatesQuery,
 } from "@/app/services/templateApi";
 import { TopTemplateComponent } from "./TopTemplateComponent";
 import { useGetTagsQuery } from "@/app/services/tagApi";
@@ -9,7 +9,7 @@ import { LatestTemplateComponent } from "./LatestTemplateComponent";
 import LoadingSpinner from "@/app/components/LoadingSpinner";
 
 export default function HomePage() {
-  const { data: top5Data, isLoading: top5Loading } = useGetTop5TemplatesQuery();
+  const { data: top5Data, isLoading: top5Loading } = useGetTopTemplatesQuery();
   const { data: latestData, isLoading: latestLoading } = useGetLatestTemplatesQuery();
   const { data: tags, isLoading: tagsLoading } = useGetTagsQuery();
 

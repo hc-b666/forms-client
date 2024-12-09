@@ -28,6 +28,7 @@ export const templateApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Template"],
   endpoints: (builder) => ({
     createTemplate: builder.mutation({
       query: (data: ICreateTemplateBody) => ({
@@ -36,17 +37,19 @@ export const templateApi = createApi({
         body: data,
       }),
     }),
-    getTop5Templates: builder.query<ITopTemplate[], void>({
+    getTopTemplates: builder.query<ITopTemplate[], void>({
       query: () => ({
         url: "templates/top5",
         method: "GET",
       }),
+      providesTags: ["Template"],
     }),
     getLatestTemplates: builder.query<ILatestTemplate[], void>({
       query: () => ({
         url: "templates/latest",
         method: "GET",
       }),
+      providesTags: ["Template"],
     }),
     getTemplateById: builder.query<ITemplate, string | undefined>({
       query: (id) => ({
@@ -60,13 +63,29 @@ export const templateApi = createApi({
         method: "GET",
       }),
     }),
+    likeTemplate: builder.mutation({
+      query: (templateId: number) => ({
+        url: `templates/like/${templateId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Template"],
+    }),
+    unlikeTemplate: builder.mutation({
+      query: (templateId: number) => ({
+        url: `templates/unlike/${templateId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Template"],
+    }),
   }),
 });
 
 export const {
   useCreateTemplateMutation,
-  useGetTop5TemplatesQuery,
+  useGetTopTemplatesQuery,
   useGetLatestTemplatesQuery,
   useGetTemplateByIdQuery,
   useGetTemplatesForUserQuery,
+  useLikeTemplateMutation,
+  useUnlikeTemplateMutation,
 } = templateApi;
