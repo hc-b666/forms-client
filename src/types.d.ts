@@ -78,9 +78,8 @@ declare global {
   }
 
   interface IProfileTemplate {
-    id: number;
+    templateId: number;
     title: string;
-    email: string;
     createdAt: string;
     topic: string;
     tags: string[];

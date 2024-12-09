@@ -39,7 +39,7 @@ export default function ProfilePage() {
               data.templates.map((t) => (
                 <TemplateComponent
                   t={t}
-                  key={t.id}
+                  key={t.templateId}
                   isAuthor={user?.id === data.user.id}
                 />
               ))
