@@ -54,6 +54,12 @@ export const templateApi = createApi({
         method: "GET",
       }),
     }),
+    getTemplatesForUser: builder.query<IProfileTemplate[], string>({
+      query: (userId) => ({
+        url: `templates/profile/${userId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -62,4 +68,5 @@ export const {
   useGetTop5TemplatesQuery,
   useGetLatestTemplatesQuery,
   useGetTemplateByIdQuery,
+  useGetTemplatesForUserQuery,
 } = templateApi;

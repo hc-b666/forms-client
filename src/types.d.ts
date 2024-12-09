@@ -26,7 +26,7 @@ declare global {
   interface ITopTemplate {
     createdAt: string;
     email: string;
-    formsCount: string;
+    responses: string;
     id: number;
     tags: string[];
     title: string;
@@ -74,6 +74,16 @@ declare global {
     topic: string;
     comments: IComment[] | null;
     questions: IQuestionServer[];
+  }
+
+  interface IProfileTemplate {
+    id: number;
+    title: string;
+    email: string;
+    createdAt: string;
+    topic: string;
+    tags: string[];
+    responses: string;
   }
 }
 

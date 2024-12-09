@@ -4,10 +4,11 @@ import { Link, NavLink } from "react-router-dom";
 import { ModeToggle } from "../ModeToggle";
 import { Button } from "../ui/button";
 import { clearStorage } from "@/app/lib/clearStorage";
+import { SearchComponent } from "./SearchComponent";
 
 export function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<{ username: string } | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,6 +34,9 @@ export function Navbar() {
       <Link to={"/"} className="text-xl font-semibold">
         Customizable Forms
       </Link>
+
+      <SearchComponent />
+
       <div className="flex items-center gap-4">
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
