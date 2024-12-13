@@ -50,33 +50,34 @@ declare global {
   }
 
   interface IComment {
-    id: number;
+    commentId: number;
     content: string;
     createdAt: string;
-    user: {
-      id: number;
-      email: string;
-    };
+    authorId: number;
+    email: string;
   }
 
   interface IQuestionServer {
     id: number;
-    type: string;
     question: string;
-    options: string[];
+    type: string;
+    options: {
+      id: number;
+      option: string;
+    }[];
   }
 
-  interface ITemplate {
+  interface ISingleTemplate {
     templateId: number;
-    userId: number;
     title: string;
     description: string;
-    email: string;
-    createdAt: string;
-    tags: string[];
     topic: string;
-    comments: IComment[] | null;
+    createdAt: string;
+    userId: number;
+    email: string;
+    tags: string[];
     questions: IQuestionServer[];
+    comments: IComment[];
   }
 
   interface IProfileTemplate {

@@ -1,63 +1,90 @@
-import { NavLink, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+import { useAppContext } from "@/app/AppProvider";
+import { useCreateFormMutation, useGetTemplateByIdQuery, useHasUserSubmittedFormMutation } from "@/app/services/templateApi";
 import LoadingSpinner from "@/app/components/LoadingSpinner";
-import { useGetTemplateByIdQuery } from "@/app/services/templateApi";
-import { User } from "lucide-react";
-import { Input } from "@/app/components/ui/input";
-import { Label } from "@/app/components/ui/label";
-import { Textarea } from "@/app/components/ui/textarea";
+import { Button } from "@/app/components/ui/button";
+import { useToast } from "@/app/hooks/use-toast";
+import TemplateHeaderComponent from "./TemplateHeaderComponent";
+import TemplateQuestionRenderer from "./TemplateQuestionRenderer";
+import useFormSubmission from "./useFormSubmission";
+
+interface ITemplateForm {
+  [key: string]: any;
+}
 
 export default function TemplatePage() {
   const { templateId } = useParams();
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const { toast } = useToast();
+  const { handleLogout, user } = useAppContext();
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const { data, isLoading, isSuccess } = useGetTemplateByIdQuery(templateId);
+  const { data: template, isLoading, isSuccess, error: templateError } = useGetTemplateByIdQuery(templateId);
+  const [createForm, { isLoading: createLoading, error: createError }] = useCreateFormMutation();
+  const [hasSubmittedForm, { isLoading: hasSubmittedLoading }] = useHasUserSubmittedFormMutation();
 
-  if (isLoading) {
+  
+  const { register, handleSubmit } = useForm<ITemplateForm>();
+  const { onSubmit } = useFormSubmission({ templateId, template, createForm, toast, handleLogout });
+
+  useEffect(() => {
+    const checkUserSubmitted = async () => {
+      try {
+        if (user) {
+          const res = await hasSubmittedForm(templateId).unwrap();
+          setHasSubmitted(res.hasSubmitted);
+        }
+      } catch (err: any) {
+        if (err.status === 403) {
+          handleLogout();
+          toast({ variant: "destructive", description: "Unauthorized. Log In" });
+        } else {
+          toast({ variant: "destructive", description: "Something went wrong"});
+        }
+
+      }
+    };
+
+    checkUserSubmitted();
+  }, [user]);
+
+  if (isLoading || createLoading || hasSubmittedLoading) {
     return <LoadingSpinner />;
+  }
+
+  if (templateError || createError) {
+    return <div className="container flex-grow flex justify-center">An error occurred</div>;
+  }
+
+  if (!template) {
+    return <div className="container flex-grow flex justify-center">Template not found</div>;
   }
 
   return (
     <div className="container flex-grow flex justify-center">
-      
-      {isSuccess && (
+      {isSuccess && !hasSubmitted ? (
         <div className="w-[720px] h-full flex flex-col gap-5 border-x py-5 px-10">
-          <NavLink to={`/profile/${data.userId}`} className="w-full flex justify-end gap-1">
-            <span className="ml-auto hover:underline">{data.email}</span>
-            <div className="bg-gray-100 w-6 h-6 rounded-full flex items-center justify-center">
-              <User className="w-4 h-4" />
-            </div>
-          </NavLink>
+          <TemplateHeaderComponent template={template} />
 
-          <h1 className="text-2xl border-b pb-3 mb-5">{data.title}</h1>
-          <p className="mb-5 border-b pb-5">{data.description}</p>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {template.questions.map(q => (
+              <div className="flex flex-col gap-3 border-y py-2" key={q.id}>
+                <h3>{q.question}</h3>
 
-          {data.questions.map((q) => (
-            <div className="flex flex-col gap-3 border-y py-2" key={q.id}>
-              <h3>{q.question}</h3>
-              {q.type === "short" && <Input readOnly={!user.id} placeholder="Your answer" />}
-              {q.type === "paragraph" && <Textarea readOnly={!user.id} placeholder="Your answer" />}
-              {q.type === "mcq" && (
-                <div className="flex flex-col gap-2">
-                  {q.options.map((o, id) => (
-                    <div key={id} className="flex items-center gap-3">
-                      <input type="radio" />
-                      <Label>{o}</Label>
-                    </div>
-                  ))}                  
-                </div>
-              )}
-              {q.type === "checkbox" && (
-                <div className="flex flex-col gap-2">
-                  {q.options.map((o, id) => (
-                    <div key={id} className="flex items-center gap-3">
-                      <input type="checkbox" />
-                      <Label>{o}</Label>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+                <TemplateQuestionRenderer question={q} register={register} user={user} />
+              </div>
+            ))}
+
+            {user && <Button type="submit">Submit</Button>}
+          </form>
+        </div>
+      ) : (
+        <div className="w-[720px] h-full flex flex-col gap-5 border-x py-5 px-10">
+          <TemplateHeaderComponent template={template} />
+
+          <p className="text-center">You have already submitted the form</p>
         </div>
       )}
     </div>

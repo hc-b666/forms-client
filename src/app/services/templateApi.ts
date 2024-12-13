@@ -31,10 +31,10 @@ export const templateApi = createApi({
   tagTypes: ["Template"],
   endpoints: (builder) => ({
     createTemplate: builder.mutation({
-      query: (data: ICreateTemplateBody) => ({
+      query: (body: ICreateTemplateBody) => ({
         url: "templates/create",
         method: "POST",
-        body: data,
+        body,
       }),
     }),
     getTopTemplates: builder.query<ITopTemplate[], void>({
@@ -51,7 +51,7 @@ export const templateApi = createApi({
       }),
       providesTags: ["Template"],
     }),
-    getTemplateById: builder.query<ITemplate, string | undefined>({
+    getTemplateById: builder.query<ISingleTemplate, string | undefined>({
       query: (id) => ({
         url: `templates/${id}`,
         method: "GET",
@@ -77,6 +77,19 @@ export const templateApi = createApi({
       }),
       invalidatesTags: ["Template"],
     }),
+    createForm: builder.mutation({
+      query: ({ templateId, body }) => ({
+        url: `forms/submit/${templateId}`,
+        method: "POST",
+        body,
+      }),
+    }),
+    hasUserSubmittedForm: builder.mutation({
+      query: (templateId: string | undefined) => ({
+        url: `forms/check/${templateId}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -88,4 +101,6 @@ export const {
   useGetTemplatesForUserQuery,
   useLikeTemplateMutation,
   useUnlikeTemplateMutation,
+  useCreateFormMutation,
+  useHasUserSubmittedFormMutation,
 } = templateApi;

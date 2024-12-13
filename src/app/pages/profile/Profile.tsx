@@ -1,15 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import LoadingSpinner from "@/app/components/LoadingSpinner";
 import { useGetTemplatesForUserQuery } from "@/app/services/templateApi";
 import { TemplateComponent } from "./TemplateComponent";
 import { useToast } from "@/app/hooks/use-toast";
 import { useAppContext } from "@/app/AppProvider";
+import { Button } from "@/app/components/ui/button";
 
 export default function ProfilePage() {
   const { userId } = useParams();
   const { toast } = useToast();
   const { user } = useAppContext();
+  const navigate = useNavigate();
 
   const { data, isLoading, isError, isSuccess } = useGetTemplatesForUserQuery(userId);
 
@@ -30,10 +32,13 @@ export default function ProfilePage() {
           <h3>Username: {data.user.username}</h3>
         </div>
         <div className="col-span-3">
-          <h1 className="text-2xl font-semibold mb-5">
-            {user?.id === data.user.id ? "Your" : "Their"} templates (
-            {data.templates.length})
-          </h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold mb-5">
+              {user?.id === data.user.id ? "Your" : "Their"} templates (
+              {data.templates.length})
+            </h1>
+            <Button onClick={() => navigate("/create-template")}>Create Template</Button>
+          </div>
           <div className="flex flex-col gap-5">
             {data.templates.length !== 0 ? (
               data.templates.map((t) => (

@@ -105,9 +105,12 @@ export default function CreateTemplatePage() {
 
   return (
     <div className="container flex-grow flex flex-col items-center gap-5">
-      <h1 className="text-2xl font-semibold">
-        Create your questionnaire / survey template
-      </h1>
+      <div className="flex items-center justify-between w-[720px]">
+        <h1 className="text-2xl font-semibold">
+          Create your questionnaire or survey template
+        </h1>
+        <Button onClick={() => navigate(-1)}>Go Back</Button>
+      </div>
 
       <div className="w-[720px] p-10 flex flex-col gap-4 border rounded-md">
         <div className="flex flex-col gap-2">

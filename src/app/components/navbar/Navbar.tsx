@@ -19,9 +19,6 @@ export function Navbar() {
       <div className="flex items-center gap-4">
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
-            <NavLink to="/create-template" className="hover:underline">
-              Create Template
-            </NavLink>
             <NavLink to={`/profile/${user?.id}`} className="hover:underline">
               {user?.username}
             </NavLink>
