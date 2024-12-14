@@ -90,6 +90,12 @@ export const templateApi = createApi({
         method: "POST",
       }),
     }),
+    getForms: builder.query({
+      query: (templateId: string | undefined) => ({
+        url: `forms/responses/${templateId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -103,4 +109,5 @@ export const {
   useUnlikeTemplateMutation,
   useCreateFormMutation,
   useHasUserSubmittedFormMutation,
+  useGetFormsQuery,
 } = templateApi;
