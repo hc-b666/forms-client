@@ -12,7 +12,10 @@ export type AppContextType = {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   user: IUser | null;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+  token: string | null;
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
   handleLogout: () => void;
+  role: "user" | "admin" | undefined;
 };
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -30,6 +33,7 @@ export function AppProvider({ children }: IAppProvider) {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<IUser | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,9 +42,11 @@ export function AppProvider({ children }: IAppProvider) {
     if (token && Object.keys(user).length !== 0) {
       setIsAuthenticated(true);
       setUser(user);
+      setToken(token);
     } else {
       setIsAuthenticated(false);
       setUser(null);
+      setToken(null);
     }
   }, [isAuthenticated]);
 
@@ -48,6 +54,7 @@ export function AppProvider({ children }: IAppProvider) {
     clearStorage();
     setIsAuthenticated(false);
     setUser(null);
+    setToken(null);
     navigate("/login");
   };
 
@@ -58,7 +65,10 @@ export function AppProvider({ children }: IAppProvider) {
         setIsAuthenticated,
         user,
         setUser,
+        token,
+        setToken,
         handleLogout,
+        role: user?.role,
       }}
     >
       {children}

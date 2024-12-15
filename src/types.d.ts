@@ -1,11 +1,13 @@
 declare global {
+  type UserRole = "admin" | "user";
+
   interface IUser {
     id: number;
     firstName: string;
     lastName: string;
     username: string;
     email: string;
-    role: string;
+    role: UserRole;
   }
 
   interface IQuestion {
@@ -114,6 +116,12 @@ declare global {
     optionId: number | null;
     option: string | null;
     options: string[];
+  }
+
+  interface ILoginResponse {
+    token: string;
+    user: IUser;
+    message: string;
   }
 }
 

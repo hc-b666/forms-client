@@ -1,7 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 import { useRegisterMutation } from "@/app/services/authApi";
+import { selectIsAuthenticated } from "@/app/features/authSlice";
 import { useToast } from "@/app/hooks/use-toast";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
@@ -20,6 +22,7 @@ interface RegisterRes {
 }
 
 export default function RegisterPage() {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const { toast } = useToast();
   const navigate = useNavigate();
   const [signUp] = useRegisterMutation();
@@ -35,6 +38,11 @@ export default function RegisterPage() {
     }
   };
 
+  if (isAuthenticated) {
+    toast({ description: "You are already logged in" });
+    return <Navigate to="/" />;
+  }
+  
   return (
     <div className="container flex-grow flex items-center justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="w-[450px] p-8 flex flex-col gap-4 border rounded-lg">

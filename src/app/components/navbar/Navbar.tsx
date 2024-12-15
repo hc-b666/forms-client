@@ -1,12 +1,19 @@
 import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
+import { logout, selectIsAuthenticated, selectUser } from "@/app/features/authSlice";
+import { SearchComponent } from "./SearchComponent";
 import { ModeToggle } from "../ModeToggle";
 import { Button } from "../ui/button";
-import { SearchComponent } from "./SearchComponent";
-import { useAppContext } from "@/app/AppProvider";
 
 export function Navbar() {
-  const { isAuthenticated, user, handleLogout } = useAppContext();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  }
 
   return (
     <nav className="container py-3 flex items-center justify-between border-b">

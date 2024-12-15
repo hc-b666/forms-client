@@ -35,54 +35,42 @@ export function Router() {
         <Route
           path="/profile/:userId"
           element={
-            <PrivateRoute>
-              <ProfilePage />
-            </PrivateRoute>
+            <PrivateRoute roles={["user", "admin"]} component={ProfilePage} />
           }
         />
 
         <Route
           path="/create-template"
           element={
-            <PrivateRoute>
-              <CreateTemplatePage />
-            </PrivateRoute>
+            <PrivateRoute roles={["user", "admin"]} component={CreateTemplatePage} />
           }
         />
 
         <Route
           path="/edit-template/:templateId"
           element={
-            <PrivateRoute>
-              <EditTemplatePage />
-            </PrivateRoute>
+            <PrivateRoute roles={["user", "admin"]} component={EditTemplatePage} />
           }
         />
 
         <Route
           path="/template/:templateId/forms"
           element={
-            <PrivateRoute>
-              <FormsPage />
-            </PrivateRoute>
+            <PrivateRoute roles={["user", "admin"]} component={FormsPage} />
           }
         />
 
         <Route
           path="/template/:templateId/forms/:formId"
           element={
-            <PrivateRoute>
-              <FormPage />
-            </PrivateRoute>
+            <PrivateRoute roles={["user", "admin"]} component={FormPage} />
           }
         />
 
         <Route
           path="/admin"
           element={
-            <PrivateRoute requiredRole="admin">
-              <AdminPage />
-            </PrivateRoute>
+            <PrivateRoute roles={["admin"]} component={AdminPage} />
           }
         />
 

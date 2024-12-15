@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 
-import { useAppContext } from "@/app/AppProvider";
 import { useCreateFormMutation, useGetTemplateByIdQuery, useHasUserSubmittedFormMutation } from "@/app/services/templateApi";
 import LoadingSpinner from "@/app/components/LoadingSpinner";
 import { Button } from "@/app/components/ui/button";
@@ -10,6 +10,7 @@ import { useToast } from "@/app/hooks/use-toast";
 import TemplateHeaderComponent from "./TemplateHeaderComponent";
 import TemplateQuestionRenderer from "./TemplateQuestionRenderer";
 import useFormSubmission from "./useFormSubmission";
+import { selectUser } from "@/app/features/authSlice";
 
 interface ITemplateForm {
   [key: string]: any;
@@ -18,7 +19,7 @@ interface ITemplateForm {
 export default function TemplatePage() {
   const { templateId } = useParams();
   const { toast } = useToast();
-  const { handleLogout, user } = useAppContext();
+  const user = useSelector(selectUser);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const { data: template, isLoading, isSuccess, error: templateError } = useGetTemplateByIdQuery(templateId);
@@ -27,7 +28,7 @@ export default function TemplatePage() {
 
   
   const { register, handleSubmit } = useForm<ITemplateForm>();
-  const { onSubmit } = useFormSubmission({ templateId, template, createForm, toast, handleLogout });
+  const { onSubmit } = useFormSubmission({ templateId, template, createForm, toast });
 
   useEffect(() => {
     const checkUserSubmitted = async () => {
@@ -38,7 +39,6 @@ export default function TemplatePage() {
         }
       } catch (err: any) {
         if (err.status === 403) {
-          handleLogout();
           toast({ variant: "destructive", description: "Unauthorized. Log In" });
         } else {
           toast({ variant: "destructive", description: "Something went wrong"});

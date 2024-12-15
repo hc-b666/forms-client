@@ -8,9 +8,8 @@ interface IUseFormSubmission {
   template: ISingleTemplate | undefined;
   createForm: any;
   toast: any;
-  handleLogout: () => void;
 }
-export default function useFormSubmission({ templateId, template, createForm, toast, handleLogout }: IUseFormSubmission) {
+export default function useFormSubmission({ templateId, template, createForm, toast }: IUseFormSubmission) {
   const onSubmit: SubmitHandler<ITemplateForm> = async (data) => {
       let isValid = true;
       const responses: { questionId: number; answer: string | number | number[] }[] = [];
@@ -63,7 +62,6 @@ export default function useFormSubmission({ templateId, template, createForm, to
         toast({ description: res.message });
       } catch (err: any) {
         if (err.status === 403) {
-          handleLogout();
           toast({ variant: "destructive", description: "Unauthorized. Log In" });
         }
       }

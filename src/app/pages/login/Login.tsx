@@ -1,12 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 import { useLoginMutation } from "@/app/services/authApi";
+import { selectIsAuthenticated } from "@/app/features/authSlice";
 import { useToast } from "@/app/hooks/use-toast";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
-import { useAppContext } from "@/app/AppProvider";
 
 export interface ILoginForm {
   firstName: string;
@@ -16,32 +17,28 @@ export interface ILoginForm {
   password: string;
 }
 
-interface LoginRes {
-  message: string;
-  token: string;
-  user: IUser;
-}
-
 export default function LoginPage() {
-  const { setIsAuthenticated } = useAppContext();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [signIn] = useLoginMutation();
+  const [login] = useLoginMutation();
+
   const { register, handleSubmit } = useForm<ILoginForm>();
   const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
     try {
-      const res: LoginRes = await signIn(data).unwrap();
+      const res: ILoginResponse = await login(data).unwrap();
       toast({ description: res.message });
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("role", res.user.role);
-      localStorage.setItem("user", JSON.stringify(res.user));
-      setIsAuthenticated(true);
       navigate(`/profile/${res.user.id}`);
     } catch (err) {
       const msg = (err as any).data.message;
       toast({ variant: "destructive", description: msg });
     }
   };
+
+  if (isAuthenticated) {
+    toast({ description: "You are already logged in" });
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="container flex-grow flex items-center justify-center">

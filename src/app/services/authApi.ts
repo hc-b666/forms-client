@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { IRegisterForm } from "../pages/register/Register";
 import { ILoginForm } from "../pages/login/Login";
-import { BACKEND_BASE_URL } from "./base-url";
+import { baseQuery } from "./base-url";
 
 interface IValidateToken {
   token: string;
@@ -17,7 +17,7 @@ interface IValidateToken {
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `${BACKEND_BASE_URL}/api/v1/` }),
+  baseQuery,
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (data: IRegisterForm) => ({
@@ -26,8 +26,8 @@ export const authApi = createApi({
         body: data,
       }),
     }),
-    login: builder.mutation({
-      query: (data: ILoginForm) => ({
+    login: builder.mutation<ILoginResponse, ILoginForm>({
+      query: (data) => ({
         url: `auth/login`,
         method: "POST",
         body: data,

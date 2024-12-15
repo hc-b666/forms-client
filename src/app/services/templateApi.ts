@@ -1,5 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BACKEND_BASE_URL } from "./base-url";
+import { BaseQueryApi, createApi, FetchArgs } from "@reduxjs/toolkit/query/react";
+import { baseQuery } from "./base-url";
+import { logout } from "../features/authSlice";
 
 interface ICreateTemplateBody {
   title: string;
@@ -15,19 +16,23 @@ interface ICreateTemplateBody {
   tags: string[];
 }
 
+const baseQueryAuth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
+  const result = await baseQuery(args, api, extraOptions);
+
+  if (result.error && result.error.status === 403) {
+    api.dispatch(logout());
+
+    window.alert("Your session is expired. Please log in again.");
+
+    window.location.href = "/login";
+  }
+
+  return result;
+};
+
 export const templateApi = createApi({
   reducerPath: "templateApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${BACKEND_BASE_URL}/api/v1/`,
-    prepareHeaders: (headers) => {
-      const tkn = localStorage.getItem("token");
-      if (tkn) {
-        headers.set("Authorization", `Bearer ${tkn}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryAuth,
   tagTypes: ["Template"],
   endpoints: (builder) => ({
     createTemplate: builder.mutation({

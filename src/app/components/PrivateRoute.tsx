@@ -1,53 +1,26 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useValidateTokenMutation } from "../services/authApi";
-import LoadingSpinner from "./LoadingSpinner";
-import { clearStorage } from "../lib/clearStorage";
+import { useSelector } from "react-redux";
+
+import { selectIsAuthenticated, selectUser } from "../features/authSlice";
+import AccessDeniedPage from "../pages/access-denied/AccessDenied";
 
 interface IPrivateRoute {
-  children: JSX.Element;
-  requiredRole?: "admin" | "user";
+  component: React.ComponentType;
+  roles: UserRole[];
 }
 
-export function PrivateRoute({ children, requiredRole }: IPrivateRoute) {
-  const [validateToken] = useValidateTokenMutation();
-  const [isValid, setIsValid] = useState<boolean | null>(null);
+export function PrivateRoute({ component: RouteComponent, roles }: IPrivateRoute) {
+  const user = useSelector(selectUser);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const hasRequiredRole = user && roles.includes(user.role) ? true : false;
 
-  useEffect(() => {
-    const validate = async () => {
-      const token = localStorage.getItem("token");
-      const user = JSON.parse(localStorage.getItem("user") || "{}");
-
-      if (!token || !user) {
-        setIsValid(false);
-        return;
-      }
-
-      try {
-        const res = await validateToken({ token, user }).unwrap();
-        localStorage.setItem("token", res.token);
-        localStorage.setItem("user", JSON.stringify(res.user));
-        if (requiredRole && res.user.role !== requiredRole) {
-          setIsValid(false);
-        } else {
-          setIsValid(true);
-        }
-      } catch (error) {
-        clearStorage();
-        setIsValid(false);
-      }
-    };
-
-    validate();
-  }, [requiredRole, validateToken]);
-
-  if (isValid === null) {
-    return <LoadingSpinner />;
+  if (isAuthenticated && hasRequiredRole) {
+    return <RouteComponent />;
   }
 
-  if (!isValid) {
-    return <Navigate to="/login" />;
+  if (isAuthenticated && !hasRequiredRole) {
+    return <AccessDeniedPage />;
   }
 
-  return children;
+  return <Navigate to="/login" />;
 }

@@ -4,13 +4,14 @@ import LoadingSpinner from "@/app/components/LoadingSpinner";
 import { useGetProfileQuery } from "@/app/services/templateApi";
 import { TemplateComponent } from "./TemplateComponent";
 import { useToast } from "@/app/hooks/use-toast";
-import { useAppContext } from "@/app/AppProvider";
 import { Button } from "@/app/components/ui/button";
+import { useSelector } from "react-redux";
+import { selectUser } from "@/app/features/authSlice";
 
 export default function ProfilePage() {
   const { userId } = useParams();
   const { toast } = useToast();
-  const { user } = useAppContext();
+  const user = useSelector(selectUser);
   const navigate = useNavigate();
 
   const { data, isLoading, isError, isSuccess } = useGetProfileQuery(userId);
