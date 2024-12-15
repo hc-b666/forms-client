@@ -12,7 +12,7 @@ export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
   const navigate = useNavigate();
 
   return (
-    <NavLink to={isAuthor ? `/template/${t.templateId}/forms` : `/template/${t.templateId}`} className="flex flex-col border rounded-md p-3 hover:bg-gray-50 dark:hover:bg-zinc-900 duration-300">
+    <NavLink to={isAuthor ? `/template/${t.id}/forms` : `/template/${t.id}`} className="flex flex-col border rounded-md p-3 hover:bg-gray-50 dark:hover:bg-zinc-900 duration-300">
       <div className="flex items-center justify-between mb-3 text-sm">
         <h4 className="text-lg font-medium">{t.title}</h4>
         <span>{formatDate(t.createdAt)}</span>
@@ -28,7 +28,7 @@ export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
         </div>
         {isAuthor && (
           <div className="flex items-center gap-3">
-            <Button onClick={() => navigate(`/edit-template/${t.templateId}`)}>Edit</Button>
+            <Button onClick={() => navigate(`/edit-template/${t.id}`)}>Edit</Button>
           </div>
         )}
       </div>

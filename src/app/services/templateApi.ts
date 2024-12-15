@@ -57,7 +57,7 @@ export const templateApi = createApi({
         method: "GET",
       }),
     }),
-    getTemplatesForUser: builder.query<{ templates: IProfileTemplate[], user: IUserProfile }, string | undefined>({
+    getProfile: builder.query<{ templates: IProfileTemplate[], user: IUserProfile }, string | undefined>({
       query: (userId) => ({
         url: `templates/profile/${userId}`,
         method: "GET",
@@ -90,9 +90,15 @@ export const templateApi = createApi({
         method: "POST",
       }),
     }),
-    getForms: builder.query({
-      query: (templateId: string | undefined) => ({
-        url: `forms/responses/${templateId}`,
+    getForms: builder.query<{ forms: IForm[], template: ISingleTemplate }, string | undefined>({
+      query: (templateId) => ({
+        url: `forms/${templateId}`,
+        method: "GET",
+      }),
+    }),
+    getForm: builder.query<IResponse[], { templateId: string, formId: string }>({
+      query: ({ templateId, formId }) => ({
+        url: `forms/${templateId}/responses/${formId}`,
         method: "GET",
       }),
     }),
@@ -104,10 +110,11 @@ export const {
   useGetTopTemplatesQuery,
   useGetLatestTemplatesQuery,
   useGetTemplateByIdQuery,
-  useGetTemplatesForUserQuery,
+  useGetProfileQuery,
   useLikeTemplateMutation,
   useUnlikeTemplateMutation,
   useCreateFormMutation,
   useHasUserSubmittedFormMutation,
   useGetFormsQuery,
+  useGetFormQuery,
 } = templateApi;

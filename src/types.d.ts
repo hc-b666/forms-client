@@ -81,7 +81,7 @@ declare global {
   }
 
   interface IProfileTemplate {
-    templateId: number;
+    id: number;
     title: string;
     createdAt: string;
     topic: string;
@@ -95,6 +95,25 @@ declare global {
     lastName: string;
     email: string;
     username: string;
+  }
+
+  interface IForm {
+    formId: number;
+    filledBy: number;
+    templateTitle: string;
+    filledAt: string;
+    email: string;
+  }
+
+  interface IResponse {
+    questionId: number;
+    question: string;
+    type: 'short' | 'paragraph' | 'mcq' | 'checkbox';
+    responseId: number;
+    answer: string | null;
+    optionId: number | null;
+    option: string | null;
+    options: string[];
   }
 }
 

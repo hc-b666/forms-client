@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 
 import LoadingSpinner from "@/app/components/LoadingSpinner";
-import { useGetTemplatesForUserQuery } from "@/app/services/templateApi";
+import { useGetProfileQuery } from "@/app/services/templateApi";
 import { TemplateComponent } from "./TemplateComponent";
 import { useToast } from "@/app/hooks/use-toast";
 import { useAppContext } from "@/app/AppProvider";
@@ -13,7 +13,7 @@ export default function ProfilePage() {
   const { user } = useAppContext();
   const navigate = useNavigate();
 
-  const { data, isLoading, isError, isSuccess } = useGetTemplatesForUserQuery(userId);
+  const { data, isLoading, isError, isSuccess } = useGetProfileQuery(userId);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -44,7 +44,7 @@ export default function ProfilePage() {
               data.templates.map((t) => (
                 <TemplateComponent
                   t={t}
-                  key={t.templateId}
+                  key={t.id}
                   isAuthor={user?.id === data.user.id}
                 />
               ))
