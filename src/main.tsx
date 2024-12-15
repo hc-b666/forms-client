@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import "./index.css";
 import { persistor, store } from "@/app/store.ts";
 import { ThemeProvider } from "@/app/components/ThemeProvider.tsx";
+import { LocaleProvider } from "./app/locales/locales";
 import { App } from "@/app/App.tsx";
 import LoadingSpinner from "./app/components/LoadingSpinner";
 
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")!).render(
     <Provider store={store}>
       <PersistGate loading={<LoadingSpinner />} persistor={persistor}>
         <ThemeProvider>
-          <App />
+          <LocaleProvider>
+            <App />
+          </LocaleProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>

@@ -1,6 +1,7 @@
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useIntl } from "react-intl";
 
 import { useLoginMutation } from "@/app/services/authApi";
 import { selectIsAuthenticated } from "@/app/features/authSlice";
@@ -18,6 +19,7 @@ export interface ILoginForm {
 }
 
 export default function LoginPage() {
+  const intl = useIntl();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -43,32 +45,44 @@ export default function LoginPage() {
   return (
     <div className="container flex-grow flex items-center justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="w-[450px] p-8 flex flex-col gap-4 border rounded-lg">
-        <h1 className="text-xl font-semibold">Login Form</h1>
+        <h1 className="text-xl font-semibold">
+          {intl.formatMessage({ id: "loginpage.title" })}
+        </h1>
+        
         <div className="flex flex-col items-start gap-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">
+            {intl.formatMessage({ id: "loginpage.email" })}
+          </Label>
           <Input
             id="email"
             type="email"
-            placeholder="Email"
+            placeholder={intl.formatMessage({ id: "loginpage.email" })}
             {...register("email")}
           />
         </div>
+
         <div className="flex flex-col items-start gap-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">
+            {intl.formatMessage({ id: "loginpage.password" })}
+          </Label>
           <Input
             id="password"
             type="password"
-            placeholder="Password"
+            placeholder={intl.formatMessage({ id: "loginpage.password" })}
             {...register("password")}
           />
         </div>
 
         <div className="text-sm flex items-center gap-1">
-          <p>Don't have an account?</p>
-          <Link to={"/register"} className="underline">Register here</Link>
+          <p>{intl.formatMessage({ id: "loginpage.noaccount" })}</p>
+          <Link to={"/register"} className="underline">
+            {intl.formatMessage({ id: "loginpage.register" })}
+          </Link>
         </div>
 
-        <Button type="submit">Log In</Button>
+        <Button type="submit">
+          {intl.formatMessage({ id: "loginpage.button" })}
+        </Button>
       </form>
     </div>
   );

@@ -1,0 +1,21 @@
+{
+  "navbar.login": "Log In",
+  "navbar.logout": "Log Out",
+
+  "loginpage.title": "Log In Form",
+  "loginpage.email": "Email",
+  "loginpage.password": "Password",
+  "loginpage.noaccount": "Don't have an account?",
+  "loginpage.register": "Register here",
+  "loginpage.button": "Log In",
+
+  "registerpage.title": "Register Form",
+  "registerpage.firstname": "First Name",
+  "registerpage.lastname": "Last Name",
+  "registerpage.username": "Username",
+  "registerpage.email": "Email",
+  "registerpage.password": "Password",
+  "registerpage.haveaccount": "Already have an account?",
+  "registerpage.login": "Log in here",
+  "registerpage.button": "Register"
+}

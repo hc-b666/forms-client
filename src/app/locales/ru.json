@@ -1,0 +1,21 @@
+{
+  "navbar.login": "Войти",
+  "navbar.logout": "Выйти",
+
+  "loginpage.title": "Форма входа",
+  "loginpage.email": "Электронная почта",
+  "loginpage.password": "Пароль",
+  "loginpage.noaccount": "Нет аккаунта?",
+  "loginpage.register": "Зарегистрируйтесь здесь",
+  "loginpage.button": "Войти",
+
+  "registerpage.title": "Форма регистрации",
+  "registerpage.firstname": "Имя",
+  "registerpage.lastname": "Фамилия",
+  "registerpage.username": "Имя пользователя",
+  "registerpage.email": "Электронная почта",
+  "registerpage.password": "Пароль",
+  "registerpage.haveaccount": "Уже есть аккаунт?",
+  "registerpage.login": "Войдите здесь",
+  "registerpage.button": "Зарегистрироваться"
+}
