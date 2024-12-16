@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import { capitalize } from "@/app/lib/capitalize";
+import { capitalize } from "@/app/lib/stringUtils";
 import locales, { useLocale } from "@/app/locales/locales";
 
 export function LanguageDropdown() {

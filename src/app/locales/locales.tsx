@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import en from "./en.json";
 import ru from "./ru.json";
@@ -34,11 +34,21 @@ interface ILocaleProvider {
 }
 
 export function LocaleProvider({ children }: ILocaleProvider) {
-  const [locale, setLocale] = useState(locales.EN);
+  const [locale, setLocale] = useState(() => {
+    const locale = localStorage.getItem("locale");
+    return locale ? locale : locales.EN;
+  });
 
   const onLocaleChange = (locale: string) => {
     setLocale(locale);
+    localStorage.setItem("locale", locale);
   };
+
+  useEffect(() => {
+    const locale = localStorage.getItem("locale");
+    if (locale) setLocale(locale);
+    else setLocale(locales.EN);
+  }, []);
 
   return (
     <LocaleProviderContext.Provider value={{ locale, setLocale, onLocaleChange }}>

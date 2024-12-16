@@ -1,5 +1,5 @@
 import { Button } from "@/app/components/ui/button";
-import { capitalize } from "@/app/lib/capitalize";
+import { capitalize } from "@/app/lib/stringUtils";
 import { formatDate } from "@/app/lib/dateUtils";
 import { NavLink, useNavigate } from "react-router-dom";
 

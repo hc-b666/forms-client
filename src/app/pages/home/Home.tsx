@@ -1,14 +1,17 @@
+import { useIntl } from "react-intl";
+
 import {
   useGetLatestTemplatesQuery,
   useGetTopTemplatesQuery,
 } from "@/app/services/templateApi";
-import { TopTemplateComponent } from "./TopTemplateComponent";
 import { useGetTagsQuery } from "@/app/services/tagApi";
 import { Badge } from "@/app/components/ui/badge";
-import { LatestTemplateComponent } from "./LatestTemplateComponent";
 import LoadingSpinner from "@/app/components/LoadingSpinner";
+import { TemplateCard } from "./TemplateCard";
 
 export default function HomePage() {
+  const intl = useIntl();
+
   const { data: top5Data, isLoading: top5Loading } = useGetTopTemplatesQuery();
   const { data: latestData, isLoading: latestLoading } = useGetLatestTemplatesQuery();
   const { data: tags, isLoading: tagsLoading } = useGetTagsQuery();
@@ -18,28 +21,12 @@ export default function HomePage() {
   }
 
   return (
-    <div className="container flex-grow grid grid-cols-4 gap-10">
-      <div className="col-span-3 flex flex-col gap-5">
-        <div className="flex flex-col gap-5">
-          <h3 className="text-xl font-semibold border-b pb-5">Top 5 Templates</h3>
-          <div className="w-full flex flex-col gap-5">
-            {top5Data &&
-              top5Data.map((t) => <TopTemplateComponent t={t} key={t.id} />)}
-          </div>
-        </div>
-        <div className="flex flex-col gap-5">
-          <h3 className="text-xl font-semibold border-b pb-5">Top 10 Latest Templates</h3>
-          <div className="w-full flex flex-col gap-5">
-            {latestData &&
-              latestData.map((t) => (
-                <LatestTemplateComponent t={t} key={t.id} />
-              ))}
-          </div>
-        </div>
-      </div>
-
+    <div className="container flex-grow flex flex-col gap-10">
+      
       <div className="col-span-1 flex flex-col gap-5">
-        <h3 className="text-xl font-semibold border-b pb-5">Search by tags</h3>
+        <h3 className="text-xl font-semibold border-b pb-3">
+          {intl.formatMessage({ id: "homepage.searchtags" })}
+        </h3>
         <div className="flex flex-wrap gap-1">
           {tags &&
             tags.map((t) => (
@@ -49,6 +36,27 @@ export default function HomePage() {
             ))}
         </div>
       </div>
+
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5">
+          <h3 className="text-xl font-semibold border-b pb-3">
+            {intl.formatMessage({ id: "homepage.toptemplates" })}
+          </h3>
+          <div className="w-full grid grid-cols-5 gap-5">
+            {top5Data && top5Data.map((t) => <TemplateCard t={t} key={t.id} />)}
+          </div>
+        </div>
+        
+        <div className="flex flex-col gap-5">
+          <h3 className="text-xl font-semibold border-b pb-3">
+            {intl.formatMessage({ id: "homepage.latesttemplates" })}
+          </h3>
+          <div className="w-full grid grid-cols-5 gap-5">
+            {latestData && latestData.map((t) => <TemplateCard t={t} key={t.id} />)}
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }

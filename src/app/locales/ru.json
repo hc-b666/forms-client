@@ -1,6 +1,9 @@
 {
   "navbar.login": "Войти",
   "navbar.logout": "Выйти",
+  "navbar.search": "Поиск по ключевому слову...",
+
+  "footer.copyright": "Все права защищены",
 
   "loginpage.title": "Форма входа",
   "loginpage.email": "Электронная почта",
@@ -17,5 +20,9 @@
   "registerpage.password": "Пароль",
   "registerpage.haveaccount": "Уже есть аккаунт?",
   "registerpage.login": "Войдите здесь",
-  "registerpage.button": "Зарегистрироваться"
+  "registerpage.button": "Зарегистрироваться",
+
+  "homepage.searchtags": "Поиск по тегам",
+  "homepage.toptemplates": "Лучшие шаблоны",
+  "homepage.latesttemplates": "Последние шаблоны"
 }

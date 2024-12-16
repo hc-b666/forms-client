@@ -1,6 +1,9 @@
 {
   "navbar.login": "Log In",
   "navbar.logout": "Log Out",
+  "navbar.search": "Search by keyword...",
+
+  "footer.copyright": "All rights reserved",
 
   "loginpage.title": "Log In Form",
   "loginpage.email": "Email",
@@ -17,5 +20,9 @@
   "registerpage.password": "Password",
   "registerpage.haveaccount": "Already have an account?",
   "registerpage.login": "Log in here",
-  "registerpage.button": "Register"
+  "registerpage.button": "Register",
+
+  "homepage.searchtags": "Search by tags",
+  "homepage.toptemplates": "Top Templates",
+  "homepage.latesttemplates": "Latest Templates"
 }

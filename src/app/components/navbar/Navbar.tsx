@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useIntl } from "react-intl";
+import { Rotate3d } from "lucide-react";
 
 import { logout, selectIsAuthenticated, selectUser } from "@/app/features/authSlice";
 import { SearchComponent } from "./SearchComponent";
@@ -21,8 +22,9 @@ export function Navbar() {
 
   return (
     <nav className="container py-3 flex items-center justify-between border-b">
-      <Link to={"/"} className="text-xl font-semibold">
-        Customizable Forms
+      <Link to={"/"} className="text-xl font-semibold flex items-center gap-1">
+        <Rotate3d />
+        Forms
       </Link>
 
       <SearchComponent />

@@ -7,6 +7,7 @@ export default {
     extend: {
       container: {
         center: true,
+        padding: "1.5rem",
         // screens: {
         //   sm: '100%', // 640px
         //   md: '100%', // 768px

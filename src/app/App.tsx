@@ -4,6 +4,7 @@ import { localizationDictionaries, useLocale } from "./locales/locales";
 import { Router } from "./router";
 import { Navbar } from "./components/navbar/Navbar";
 import { Toaster } from "./components/ui/toaster";
+import Footer from "./components/Footer";
 
 export function App() {
   const { locale } = useLocale();
@@ -13,8 +14,9 @@ export function App() {
       <main className="w-full h-screen flex flex-col gap-10">
         <Navbar />
         <Router />
-        <Toaster />
+        <Footer />
       </main>
+      <Toaster />
     </IntlProvider>
   );
 }

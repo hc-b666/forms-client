@@ -26,24 +26,24 @@ declare global {
   }
 
   interface ITopTemplate {
+    id: number;
+    title: string;
+    description: string;
+    topic: string;
     createdAt: string;
     email: string;
     responses: string;
-    id: number;
-    tags: string[];
-    title: string;
-    topic: string;
     totalLikes: string;
     hasLiked: boolean;
   }
 
   interface ILatestTemplate {
+    id: number;
+    title: string;
+    description: string;
+    topic: string;
     createdAt: string;
     email: string;
-    id: number;
-    tags: string[];
-    title: string;
-    topic: string;
   }
 
   interface ITagServer {
