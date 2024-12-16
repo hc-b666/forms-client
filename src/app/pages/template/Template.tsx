@@ -11,6 +11,7 @@ import TemplateHeaderComponent from "./TemplateHeaderComponent";
 import TemplateQuestionRenderer from "./TemplateQuestionRenderer";
 import useFormSubmission from "./useFormSubmission";
 import { selectUser } from "@/app/features/authSlice";
+import { ErrorPage } from "../error/Error";
 
 interface ITemplateForm {
   [key: string]: any;
@@ -54,8 +55,12 @@ export default function TemplatePage() {
     return <LoadingSpinner />;
   }
 
-  if (templateError || createError) {
-    return <div className="container flex-grow flex justify-center">An error occurred</div>;
+  if (templateError) {
+    return templateError && <ErrorPage error={templateError} />;
+  }
+
+  if (createError) {
+    return createError && <ErrorPage error={createError} />;
   }
 
   if (!template) {
