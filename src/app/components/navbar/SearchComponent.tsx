@@ -6,7 +6,7 @@ export function SearchComponent() {
 
   return (
     <Input 
-      className="w-[480px]" 
+      className="w-[480px] hidden lg:block" 
       placeholder={intl.formatMessage({ id: "navbar.search" })}
     />
   );

@@ -8,13 +8,6 @@ export default {
       container: {
         center: true,
         padding: "1.5rem",
-        // screens: {
-        //   sm: '100%', // 640px
-        //   md: '100%', // 768px
-        //   lg: '720px', // 1024px
-        //   xl: '720px', // 1280px
-        //   '2xl': '1200px', // 1280px
-        // },
       },
       borderRadius: {
         lg: "var(--radius)",

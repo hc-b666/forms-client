@@ -41,23 +41,33 @@ export function TemplateCard({ t }: TemplateCardProps) {
     <Card onClick={() => navigate(`/template/${t.id}`)} className="hover:bg-zinc-50 duration-300 flex flex-col dark:bg-zinc-900 dark:hover:bg-zinc-800 cursor-pointer">
       <CardHeader>
         <CardTitle>{t.title}</CardTitle>
-        <CardDescription>{truncateText(t.description, 100)}</CardDescription>
+        <CardDescription className="text-justify">{truncateText(t.description, 100)}</CardDescription>
       </CardHeader>
 
       <CardFooter className="mt-auto flex flex-col items-start gap-2">
-        <div className="w-full flex items-center justify-between">
-          <Badge>{capitalize(t.topic)}</Badge>
-          
-          {isTopTemplate(t) && (
-            <span className="text-xs flex items-center gap-1">
-              <Inbox className="w-4 h-4" />
-              {t.responses}
-            </span>
-          )}
-        </div>
-        <p className="self-end text-xs">
-          {intl.formatDate(t.createdAt)}
-        </p>
+        {isTopTemplate(t) ? (
+          <>
+            <div className="w-full flex items-center justify-between">
+              <Badge>{capitalize(t.topic)}</Badge>
+              <span className="text-xs flex items-center gap-1">
+                <Inbox className="w-4 h-4" />
+                {t.responses}
+              </span>
+            </div>
+            <p className="self-end text-xs">
+              {intl.formatDate(t.createdAt)}
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="w-full flex items-center justify-between">
+              <Badge>{capitalize(t.topic)}</Badge>
+              <p className="self-end text-xs">
+                {intl.formatDate(t.createdAt)}
+              </p>
+            </div>
+          </>
+        )}        
       </CardFooter>
     </Card>
   );

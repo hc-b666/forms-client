@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useIntl } from "react-intl";
-import { Rotate3d } from "lucide-react";
+import { Menu, Rotate3d } from "lucide-react";
 
 import { logout, selectIsAuthenticated, selectUser } from "@/app/features/authSlice";
 import { SearchComponent } from "./SearchComponent";
@@ -9,7 +9,11 @@ import { ModeToggle } from "./ModeToggle";
 import { Button } from "../ui/button";
 import { LanguageDropdown } from "./LanguageDropdown";
 
-export function Navbar() {
+interface INavbar {
+  setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function Navbar({ setSidebar }: INavbar) {
   const intl = useIntl();
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -29,7 +33,7 @@ export function Navbar() {
 
       <SearchComponent />
 
-      <div className="flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-4">
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
             <NavLink to={`/profile/${user?.id}`} className="hover:underline">
@@ -49,6 +53,8 @@ export function Navbar() {
         <ModeToggle />
         <LanguageDropdown />
       </div>
+        
+      <Menu onClick={() => setSidebar(true)} className="md:hidden" />        
     </nav>
   );
 }

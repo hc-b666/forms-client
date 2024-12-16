@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <div className="container flex-grow flex flex-col gap-10">
       
-      <div className="col-span-1 flex flex-col gap-5">
+      <div className="flex flex-col gap-5">
         <h3 className="text-xl font-semibold border-b pb-3">
           {intl.formatMessage({ id: "homepage.searchtags" })}
         </h3>
@@ -42,7 +42,7 @@ export default function HomePage() {
           <h3 className="text-xl font-semibold border-b pb-3">
             {intl.formatMessage({ id: "homepage.toptemplates" })}
           </h3>
-          <div className="w-full grid grid-cols-5 gap-5">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {top5Data && top5Data.map((t) => <TemplateCard t={t} key={t.id} />)}
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function HomePage() {
           <h3 className="text-xl font-semibold border-b pb-3">
             {intl.formatMessage({ id: "homepage.latesttemplates" })}
           </h3>
-          <div className="w-full grid grid-cols-5 gap-5">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {latestData && latestData.map((t) => <TemplateCard t={t} key={t.id} />)}
           </div>
         </div>
