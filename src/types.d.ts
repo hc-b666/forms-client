@@ -117,6 +117,10 @@ declare global {
     user: IUser;
     message: string;
   }
+
+  interface IRegisterResponse {
+    message: string;
+  }
 }
 
 export {};

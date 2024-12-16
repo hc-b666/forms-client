@@ -1,24 +1,24 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { PrivateRoute } from "./components/PrivateRoute";
-import LoadingSpinner from "./components/LoadingSpinner";
+import { PrivateRoute } from "@/components/layout/PrivateRoute";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
-const HomePage = lazy(() => import("./pages/home/Home"));
-const LoginPage = lazy(() => import("./pages/login/Login"));
-const RegisterPage = lazy(() => import("./pages/register/Register"));
-const TemplatesPage = lazy(() => import("./pages/templates/Templates"));
-const TemplatePage = lazy(() => import("./pages/template/Template"));
-const SearchPage = lazy(() => import("./pages/search/Search"));
+const HomePage = lazy(() => import("@/pages/Home"));
+const LoginPage = lazy(() => import("@/pages/Login"));
+const RegisterPage = lazy(() => import("@/pages/Register"));
+const TemplatesPage = lazy(() => import("@/pages/Templates"));
+const TemplatePage = lazy(() => import("@/pages/Template"));
+const SearchPage = lazy(() => import("@/pages/Search"));
 
-const ProfilePage = lazy(() => import("./pages/profile/Profile"));
-const CreateTemplatePage = lazy(() => import("./pages/create-template/CreateTemplate"));
-const EditTemplatePage = lazy(() => import("./pages/edit-template/EditTemplate"));
-const FormsPage = lazy(() => import("./pages/forms/Forms"));
-const FormPage = lazy(() => import("./pages/form/Form"));
-const AdminPage = lazy(() => import("./pages/admin/Admin"));
+const ProfilePage = lazy(() => import("@/pages/Profile"));
+const CreateTemplatePage = lazy(() => import("@/pages/CreateTemplate"));
+const EditTemplatePage = lazy(() => import("@/pages/EditTemplate"));
+const FormsPage = lazy(() => import("@/pages/Forms"));
+const FormPage = lazy(() => import("@/pages/Form"));
+const AdminPage = lazy(() => import("@/pages/Admin"));
 
-const NotFoundPage = lazy(() => import("./pages/notfound/NotFound"));
+const NotFoundPage = lazy(() => import("@/pages/NotFound"));
 
 export function Router() {
   return (
