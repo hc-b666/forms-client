@@ -24,5 +24,33 @@
 
   "homepage.searchtags": "Search by tags",
   "homepage.toptemplates": "Top Templates",
-  "homepage.latesttemplates": "Latest Templates"
+  "homepage.latesttemplates": "Latest Templates",
+
+  "createtemplatepage.header": "Create your questionnaire or survey template",
+  "createtemplatepage.goback": "Go Back",
+  "createtemplatepage.title": "Title",
+  "createtemplatepage.description": "Description",
+  "createtemplatepage.selecttopic": "Select topic",
+  "createtemplatepage.tags": "Common tags or keys to your template",
+  "createtemplatepage.writetag": "Write your tag",
+  "createtemplatepage.clear": "Clear",
+  "createtemplatepage.selecttype": "Select the type of your template",
+  "createtemplatepage.public": "Public",
+  "createtemplatepage.private": "Private",
+  "createtemplatepage.create": "Create template",
+  "createtemplatepage.creating": "Creating",
+  "createtemplatepage.type": "Type",
+  "createtemplatepage.questiontype": "Question Type",
+  "createtemplatepage.questions": "Your questions",
+  "createtemplatepage.addquestion": "Add question",
+  "createtemplatepage.addoption": "Add option",
+  "createtemplatepage.deletequestion": "Delete question",
+  "createtemplatepage.question.short": "Short answer text",
+  "createtemplatepage.question.paragraph": "Long answer text",
+
+  "createtemplatepage.toast.err.title": "There has to be 'Title' in the template",
+  "createtemplatepage.toast.err.description": "There has to be 'Description' in the template",
+  "createtemplatepage.toast.err.topic": "There has to be 'Topic' in the template",
+  "createtemplatepage.toast.err.tags": "There has to be at least one 'Tag' in the template",
+  "createtemplatepage.toast.err.question": "There has to be at least one 'Question' in the template"
 }

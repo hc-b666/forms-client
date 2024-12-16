@@ -38,7 +38,6 @@ export default function LoginPage() {
   };
 
   if (isAuthenticated) {
-    toast({ description: "You are already logged in" });
     return <Navigate to="/" />;
   }
 

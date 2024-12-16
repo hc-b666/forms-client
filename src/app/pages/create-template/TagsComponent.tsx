@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useIntl } from "react-intl";
 import { X } from "lucide-react";
 
 import { useSearchTagsQuery } from "@/app/services/tagApi";
@@ -14,6 +15,7 @@ interface ITagsComponent {
 }
 
 export function TagsComponent({ tags, setTags }: ITagsComponent) {
+  const intl = useIntl();
   const [tag, setTag] = useState("");
   const [debouncedTag, setDebouncedTag] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -44,7 +46,9 @@ export function TagsComponent({ tags, setTags }: ITagsComponent) {
 
   return (
     <div className="flex flex-col gap-3">
-      <Label>Common tags or keys to your template</Label>
+      <Label>
+        {intl.formatMessage({ id: "createtemplatepage.tags" })}
+      </Label>
       {tags.length > 0 && (
         <div className="flex flex-wrap items-center gap-1">
           {tags.map(t => <TagComponent t={t} key={t.id} handleDeleteTag={handleDeleteTag} />)}
@@ -59,7 +63,7 @@ export function TagsComponent({ tags, setTags }: ITagsComponent) {
               setShowSuggestions(true);
             }}
             onKeyDown={e => e.key === "Enter" && handleAddTag()}
-            placeholder="Write your tag" 
+            placeholder={intl.formatMessage({ id: "createtemplatepage.writetag" })}
             className="w-full"
           />
 
@@ -81,7 +85,9 @@ export function TagsComponent({ tags, setTags }: ITagsComponent) {
             </div>
           )}
         </div>
-        <Button onClick={() => setTags([])}>Clear</Button>
+        <Button onClick={() => setTags([])}>
+          {intl.formatMessage({ id: "createtemplatepage.clear" })}
+        </Button>
       </div>
     </div>
   );

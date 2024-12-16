@@ -24,5 +24,33 @@
 
   "homepage.searchtags": "Поиск по тегам",
   "homepage.toptemplates": "Лучшие шаблоны",
-  "homepage.latesttemplates": "Последние шаблоны"
+  "homepage.latesttemplates": "Последние шаблоны",
+
+  "createtemplatepage.header": "Создайте свой шаблон опроса или анкеты",
+  "createtemplatepage.goback": "Назад",
+  "createtemplatepage.title": "Название",
+  "createtemplatepage.description": "Описание",
+  "createtemplatepage.selecttopic": "Выберите тему",
+  "createtemplatepage.tags": "Общие теги или ключи к вашему шаблону",
+  "createtemplatepage.writetag": "Напишите свой тег",
+  "createtemplatepage.clear": "Очистить",
+  "createtemplatepage.selecttype": "Выберите тип вашего шаблона",
+  "createtemplatepage.public": "Публичный",
+  "createtemplatepage.private": "Приватный",
+  "createtemplatepage.create": "Создать шаблон",
+  "createtemplatepage.creating": "Создание",
+  "createtemplatepage.type": "Тип",
+  "createtemplatepage.questiontype": "Тип вопроса",
+  "createtemplatepage.questions": "Ваши вопросы",
+  "createtemplatepage.addquestion": "Добавить вопрос",
+  "createtemplatepage.addoption": "Добавить вариант",
+  "createtemplatepage.deletequestion": "Удалить вопрос",
+  "createtemplatepage.question.short": "Краткий ответ",
+  "createtemplatepage.question.paragraph": "Длинный ответ",
+
+  "createtemplatepage.toast.err.title": "В шаблоне должно быть 'Название'",
+  "createtemplatepage.toast.err.description": "В шаблоне должно быть 'Описание'",
+  "createtemplatepage.toast.err.topic": "В шаблоне должна быть 'Тема'",
+  "createtemplatepage.toast.err.tags": "В шаблоне должен быть хотя бы один 'Тег'",
+  "createtemplatepage.toast.err.question": "В шаблоне должен быть хотя бы один 'Вопрос'"
 }

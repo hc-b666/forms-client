@@ -38,7 +38,9 @@ export default function ProfilePage() {
               {user?.id === data.user.id ? "Your" : "Their"} templates (
               {data.templates.length})
             </h1>
-            <Button onClick={() => navigate("/create-template")}>Create Template</Button>
+            {user?.id === data.user.id && (
+              <Button onClick={() => navigate("/create-template")}>Create Template</Button>
+            )}
           </div>
           <div className="flex flex-col gap-5">
             {data.templates.length !== 0 ? (

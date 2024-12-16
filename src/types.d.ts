@@ -1,6 +1,8 @@
 declare global {
   type UserRole = "admin" | "user";
 
+  type QuestionType = "short" | "paragraph" | "mcq" | "checkbox";
+
   interface IUser {
     id: number;
     firstName: string;
@@ -13,11 +15,8 @@ declare global {
   interface IQuestion {
     id: string;
     question: string;
-    type: string;
-    options: {
-      id: string;
-      value: string;
-    }[];
+    type: QuestionType;
+    options: ITag[];
   }
 
   interface ITag {

@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select";
+import { capitalize } from "../lib/stringUtils";
 
 interface ISelect {
   onValueChange: (v: string) => void;
@@ -14,12 +15,13 @@ interface ISelect {
   placeholder: string;
   label: string;
   defaultValue?: string;
+  className?: string;
 }
 
-export function SelectComponent({ onValueChange, options, placeholder, label, defaultValue }: ISelect) {
+export function SelectComponent({ onValueChange, options, placeholder, label, defaultValue, className = "w-full" }: ISelect) {
   return (
     <Select onValueChange={onValueChange} value={defaultValue}>
-      <SelectTrigger className="w-full">
+      <SelectTrigger className={className}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
@@ -27,7 +29,7 @@ export function SelectComponent({ onValueChange, options, placeholder, label, de
           <SelectLabel>{label}</SelectLabel>
           {options.map((option, id) => (
             <SelectItem key={id} value={option}>
-              {option}
+              {capitalize(option)}
             </SelectItem>
           ))}
         </SelectGroup>
