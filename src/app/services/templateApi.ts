@@ -46,6 +46,7 @@ export const templateApi = createApi({
         url: `templates/${id}`,
         method: "GET",
       }),
+      providesTags: ["Template"],
     }),
     getProfile: builder.query<{ templates: IProfileTemplate[], user: IUserProfile }, string | undefined>({
       query: (userId) => ({
@@ -92,6 +93,14 @@ export const templateApi = createApi({
         method: "GET",
       }),
     }),
+    createComment: builder.mutation<{ message: string }, { templateId: string | undefined, content: string }>({
+      query: ({ templateId, content }) => ({
+        url: `comments/create/${templateId}`,
+        method: "POST",
+        body: { content },
+      }),
+      invalidatesTags: ["Template"],
+    }),
   }),
 });
 
@@ -107,4 +116,5 @@ export const {
   useHasUserSubmittedFormMutation,
   useGetFormsQuery,
   useGetFormQuery,
+  useCreateCommentMutation,
 } = templateApi;
