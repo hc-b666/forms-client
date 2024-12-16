@@ -22,7 +22,7 @@ declare global {
 
   interface ITag {
     id: string;
-    value: string;
+    tagName: string;
   }
 
   interface ITopTemplate {
@@ -44,11 +44,6 @@ declare global {
     topic: string;
     createdAt: string;
     email: string;
-  }
-
-  interface ITagServer {
-    id: number;
-    tagName: string;
   }
 
   interface IComment {

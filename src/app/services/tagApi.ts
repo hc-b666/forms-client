@@ -1,19 +1,23 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BACKEND_BASE_URL } from "./base-url";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryAuth } from "./base-url";
 
 export const tagApi = createApi({
   reducerPath: "tagApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${BACKEND_BASE_URL}/api/v1/`,
-  }),
+  baseQuery: baseQueryAuth,
   endpoints: (builder) => ({
-    getTags: builder.query<ITagServer[], void>({
+    getTags: builder.query<ITag[], void>({
       query: () => ({
         url: "tags",
+        method: "GET",
+      }),
+    }),
+    searchTags: builder.query<ITag[], string>({
+      query: (query) => ({
+        url: `tags/search?query=${query}`,
         method: "GET",
       }),
     }),
   }),
 });
 
-export const { useGetTagsQuery } = tagApi;
+export const { useGetTagsQuery, useSearchTagsQuery } = tagApi;

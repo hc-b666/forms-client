@@ -73,7 +73,7 @@ export default function CreateTemplatePage() {
       topic: topic.toLowerCase(),
       type,
       questions: questions.map(({ id, ...rest }) => ({ ...rest, options: rest.options.map(o => o.value) })),
-      tags: tags.map(({ value }) => value),
+      tags: tags.map(({ tagName }) => tagName),
     };
 
     try {
