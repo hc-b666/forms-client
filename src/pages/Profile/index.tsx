@@ -3,16 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { useGetProfileQuery } from "@/features/templates/services/templateApi";
 import { TemplateComponent } from "./TemplateComponent";
-import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { useSelector } from "react-redux";
-import { selectUser } from "@/features/auth/slices/authSlice";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useDispatch } from "react-redux";
 
 export default function ProfilePage() {
   const { userId } = useParams();
-  const { toast } = useToast();
-  const user = useSelector(selectUser);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { data, isLoading, isError, isSuccess } = useGetProfileQuery(userId);
 
@@ -21,7 +20,7 @@ export default function ProfilePage() {
   }
 
   if (isError) {
-    toast({ variant: "destructive", description: "Something went wrong" });
+    dispatch(logout());
   }
 
   return (

@@ -14,7 +14,6 @@ export const useAuth = () => {
       if (auth.refreshToken) {
         try {
           const res = await refreshToken({ refreshToken: auth.refreshToken }).unwrap();
-
           dispatch(updateAccessToken(res.accessToken));
 
         } catch (err) {

@@ -31,7 +31,6 @@ export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQu
   return result;
 };
 
-
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryInterceptor,
