@@ -1,12 +1,13 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useIntl } from "react-intl";
-import { Menu, Rotate3d } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import { SearchComponent } from "./SearchComponent";
 import { ModeToggle } from "./ModeToggle";
 import { Button } from "@/components/ui/button";
 import { LanguageDropdown } from "./LanguageDropdown";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import Logo from "../Logo";
 
 interface INavbar {
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,10 +19,7 @@ export function Navbar({ setSidebar }: INavbar) {
 
   return (
     <nav className="container py-3 flex items-center justify-between border-b">
-      <Link to={"/"} className="text-xl font-semibold flex items-center gap-1">
-        <Rotate3d />
-        Forms
-      </Link>
+      <Logo />
 
       <SearchComponent />
 
