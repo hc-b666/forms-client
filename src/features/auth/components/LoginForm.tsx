@@ -3,12 +3,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { useToast } from "@/hooks/use-toast";
-
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { useLoginMutation } from "../services/authApi";
+import { AuthInput } from "./AuthInput";
 
 export interface ILoginForm {
   firstName: string;
@@ -24,7 +22,7 @@ export function LoginForm() {
   const navigate = useNavigate();
   const [signin, { isLoading }] = useLoginMutation();
 
-  const { register, handleSubmit } = useForm<ILoginForm>();
+  const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>();
   const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
     try {
       const res: ILoginResponse = await signin(data).unwrap();
@@ -41,31 +39,23 @@ export function LoginForm() {
       <h1 className="text-xl font-semibold">
         {intl.formatMessage({ id: "loginpage.title" })}
       </h1>
+
+      <AuthInput 
+        label={intl.formatMessage({ id: "loginpage.email" })}
+        type="email"
+        id="email"
+        register={register("email", { required: intl.formatMessage({ id: "loginpage.email.error" }) })}
+        error={errors.email?.message}
+      />
+
+      <AuthInput 
+        label={intl.formatMessage({ id: "loginpage.password" })}
+        type="password"
+        id="password"
+        register={register("password", { required: intl.formatMessage({ id: "loginpage.password.error" }) })}
+        error={errors.password?.message}
+      />
       
-      <div className="flex flex-col items-start gap-2">
-        <Label htmlFor="email">
-          {intl.formatMessage({ id: "loginpage.email" })}
-        </Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder={intl.formatMessage({ id: "loginpage.email" })}
-          {...register("email")}
-        />
-      </div>
-
-      <div className="flex flex-col items-start gap-2">
-        <Label htmlFor="password">
-          {intl.formatMessage({ id: "loginpage.password" })}
-        </Label>
-        <Input
-          id="password"
-          type="password"
-          placeholder={intl.formatMessage({ id: "loginpage.password" })}
-          {...register("password")}
-        />
-      </div>
-
       <div className="text-sm flex items-center gap-1">
         <p>{intl.formatMessage({ id: "loginpage.noaccount" })}</p>
         <Link to={"/register"} className="underline">

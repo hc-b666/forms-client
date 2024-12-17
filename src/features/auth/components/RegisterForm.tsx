@@ -3,12 +3,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { useToast } from "@/hooks/use-toast";
-
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { useRegisterMutation } from "../services/authApi";
+import { AuthInput } from "./AuthInput";
 
 export interface IRegisterForm {
   firstName: string;
@@ -24,7 +22,7 @@ export function RegisterForm() {
   const navigate = useNavigate();
   const [signup, { isLoading }] = useRegisterMutation();
   
-  const { register, handleSubmit } = useForm<IRegisterForm>();
+  const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>();
   const onSubmit: SubmitHandler<IRegisterForm> = async (data) => {
     try {
       const res = await signup(data).unwrap();
@@ -42,65 +40,45 @@ export function RegisterForm() {
         {intl.formatMessage({ id: "registerpage.title" })}
       </h1>
 
-      <div className="flex flex-col items-start gap-2">
-        <Label htmlFor="firstName">
-          {intl.formatMessage({ id: "registerpage.firstname" })}
-        </Label>
-        <Input
-          id="firstName"
-          type="text"
-          placeholder={intl.formatMessage({ id: "registerpage.firstname" })}
-          {...register("firstName")}
-        />
-      </div>
+      <AuthInput
+        label={intl.formatMessage({ id: "registerpage.firstname" })}
+        type="text"
+        id="firstName"
+        register={register("firstName", { required: intl.formatMessage({ id: "registerpage.firstname.error" }) })}
+        error={errors.firstName?.message}
+      />
 
-      <div className="flex flex-col items-start gap-2">
-        <Label htmlFor="lastName">
-          {intl.formatMessage({ id: "registerpage.lastname" })}
-        </Label>
-        <Input
-          id="lastName"
-          type="text"
-          placeholder={intl.formatMessage({ id: "registerpage.lastname" })}
-          {...register("lastName")}
-        />
-      </div>
+      <AuthInput
+        label={intl.formatMessage({ id: "registerpage.lastname" })}
+        type="text"
+        id="lastName"
+        register={register("lastName", { required: intl.formatMessage({ id: "registerpage.lastname.error" }) })}
+        error={errors.lastName?.message}
+      />
 
-      <div className="flex flex-col items-start gap-2">
-        <Label htmlFor="username">
-          {intl.formatMessage({ id: "registerpage.username" })}
-        </Label>
-        <Input
-          id="username"
-          type="text"
-          placeholder={intl.formatMessage({ id: "registerpage.username" })}
-          {...register("username")}
-        />
-      </div>
+      <AuthInput
+        label={intl.formatMessage({ id: "registerpage.username" })}
+        type="text"
+        id="username"
+        register={register("username", { required: intl.formatMessage({ id: "registerpage.username.error" }) })}
+        error={errors.username?.message}
+      />
 
-      <div className="flex flex-col items-start gap-2">
-        <Label htmlFor="email">
-          {intl.formatMessage({ id: "registerpage.email" })}
-        </Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder={intl.formatMessage({ id: "registerpage.email" })}
-          {...register("email")}
-        />
-      </div>
+      <AuthInput
+        label={intl.formatMessage({ id: "registerpage.email" })}
+        type="email"
+        id="email"
+        register={register("email", { required: intl.formatMessage({ id: "registerpage.email.error" }) })}
+        error={errors.email?.message}
+      />
 
-      <div className="flex flex-col items-start gap-2">
-        <Label htmlFor="password">
-          {intl.formatMessage({ id: "registerpage.password" })}
-        </Label>
-        <Input
-          id="password"
-          type="password"
-          placeholder={intl.formatMessage({ id: "registerpage.password" })}
-          {...register("password")}
-        />
-      </div>
+      <AuthInput
+        label={intl.formatMessage({ id: "registerpage.password" })}
+        type="password"
+        id="password"
+        register={register("password", { required: intl.formatMessage({ id: "registerpage.password.error" }) })}
+        error={errors.password?.message}
+      />
 
       <div className="text-sm flex items-center gap-1">
         <p>{intl.formatMessage({ id: "registerpage.haveaccount" })}</p>

@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { RegisterForm } from "@/features/auth/components/RegisterForm";
-import { selectIsAuthenticated } from "@/features/auth/slices/authSlice";
+import { AuthLayout } from "@/components/layout/AuthLayout";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export interface IRegisterForm {
   firstName: string;
@@ -13,15 +13,15 @@ export interface IRegisterForm {
 }
 
 export default function RegisterPage() {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const { isAuthenticated } = useAuth();
 
   if (isAuthenticated) {
     return <Navigate to="/" />;
   }
 
   return (
-    <div className="container flex-grow flex items-center justify-center">
+    <AuthLayout>
       <RegisterForm />
-    </div>
+    </AuthLayout>
   );
 }
