@@ -113,13 +113,18 @@ declare global {
   }
 
   interface ILoginResponse {
-    token: string;
+    accessToken: string;
+    refreshToken: string;
     user: IUser;
     message: string;
   }
 
   interface IRegisterResponse {
     message: string;
+  }
+
+  interface IRefreshTokenResponse {
+    accessToken: string;
   }
 }
 

@@ -1,13 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { useIntl } from "react-intl";
 import { Menu, Rotate3d } from "lucide-react";
 
-import { logout, selectIsAuthenticated, selectUser } from "@/features/auth/slices/authSlice";
 import { SearchComponent } from "./SearchComponent";
 import { ModeToggle } from "./ModeToggle";
 import { Button } from "@/components/ui/button";
 import { LanguageDropdown } from "./LanguageDropdown";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface INavbar {
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,14 +14,7 @@ interface INavbar {
 
 export function Navbar({ setSidebar }: INavbar) {
   const intl = useIntl();
-
-  const isAuthenticated = useSelector(selectIsAuthenticated);
-  const user = useSelector(selectUser);
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logout());
-  }
+  const { isAuthenticated, user, logout } = useAuth();
 
   return (
     <nav className="container py-3 flex items-center justify-between border-b">
@@ -39,7 +31,7 @@ export function Navbar({ setSidebar }: INavbar) {
             <NavLink to={`/profile/${user?.id}`} className="hover:underline">
               {user?.username}
             </NavLink>
-            <Button onClick={handleLogout}>
+            <Button onClick={logout}>
               {intl.formatMessage({ id: "navbar.logout" })}
             </Button>
           </div>

@@ -8,7 +8,7 @@ import { BACKEND_BASE_URL } from "@/lib/constants";
 export const baseQuery = fetchBaseQuery({
   baseUrl: `${BACKEND_BASE_URL}/api/v1/`,
   prepareHeaders: (headers, { getState }) => {
-    const tkn = (getState() as RootState).authSlice.token;
+    const tkn = (getState() as RootState).authSlice.accessToken;
     if (tkn) {
       headers.set("Authorization", `Bearer ${tkn}`);
     }
