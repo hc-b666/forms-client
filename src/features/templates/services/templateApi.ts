@@ -43,7 +43,7 @@ export const templateApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Template"],
     }),
-    getProfile: builder.query<{ templates: IProfileTemplate[], user: IUserProfile }, string | undefined>({
+    getTemplatesByUserId: builder.query<IProfileTemplate[], number>({
       query: (userId) => ({
         url: `templates/profile/${userId}`,
         method: "GET",
@@ -104,7 +104,7 @@ export const {
   useGetTopTemplatesQuery,
   useGetLatestTemplatesQuery,
   useGetTemplateByIdQuery,
-  useGetProfileQuery,
+  useGetTemplatesByUserIdQuery,
   useLikeTemplateMutation,
   useUnlikeTemplateMutation,
   useCreateFormMutation,

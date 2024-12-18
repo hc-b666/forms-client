@@ -80,7 +80,7 @@ export default function TemplatePage() {
 
   if (createError) {
     return createError && <ErrorPage error={createError} />;
-  }console.log(template?.comments[0].createdAt)
+  }
 
   if (!template) {
     return <div className="container flex-grow flex justify-center">Template not found</div>;

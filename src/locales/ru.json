@@ -59,5 +59,16 @@
   "createtemplatepage.toast.err.description": "В шаблоне должно быть 'Описание'",
   "createtemplatepage.toast.err.topic": "В шаблоне должна быть 'Тема'",
   "createtemplatepage.toast.err.tags": "В шаблоне должен быть хотя бы один 'Тег'",
-  "createtemplatepage.toast.err.question": "В шаблоне должен быть хотя бы один 'Вопрос'"
+  "createtemplatepage.toast.err.question": "В шаблоне должен быть хотя бы один 'Вопрос'",
+
+  "profilepage.templates": "Шаблоны",
+  "profilepage.filledoutforms": "Заполненные формы",
+  "profilepage.create": "Создать шаблон",
+  "profilepage.noforms": "У вас нет заполненных форм",
+  "profilepage.notemplates": "Шаблоны отсутствуют",
+  "profilepage.title": "Название",
+  "profilepage.description": "Описание",
+  "profilepage.topic": "Тема",
+  "profilepage.tags": "Теги",
+  "profilepage.filledat": "Заполнено в"
 }

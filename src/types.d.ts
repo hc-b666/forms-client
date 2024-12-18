@@ -75,7 +75,7 @@ declare global {
     creator: {
       id: number;
       email: string;
-    }
+    };
     tags: string[];
     questions: IQuestionServer[];
     comments: IComment[];
@@ -84,10 +84,11 @@ declare global {
   interface IProfileTemplate {
     id: number;
     title: string;
+    description: string;
+    topic: TemplateTopic;
     createdAt: string;
-    topic: string;
+    responses: number;
     tags: string[];
-    responses: string;
   }
 
   interface IUserProfile {
@@ -130,6 +131,18 @@ declare global {
 
   interface IRefreshTokenResponse {
     accessToken: string;
+  }
+
+  interface IUserForm {
+    id: number;
+    filledAt: Date;
+    template: {
+      id: number;
+      title: string;
+      description: string;
+      topic: TemplateTopic;
+      tags: string[];
+    };
   }
 }
 

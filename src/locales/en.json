@@ -59,5 +59,16 @@
   "createtemplatepage.toast.err.description": "There has to be 'Description' in the template",
   "createtemplatepage.toast.err.topic": "There has to be 'Topic' in the template",
   "createtemplatepage.toast.err.tags": "There has to be at least one 'Tag' in the template",
-  "createtemplatepage.toast.err.question": "There has to be at least one 'Question' in the template"
+  "createtemplatepage.toast.err.question": "There has to be at least one 'Question' in the template",
+
+  "profilepage.templates": "Templates",
+  "profilepage.filledoutforms": "Filled out Forms",
+  "profilepage.create": "Create template",
+  "profilepage.noforms": "You have not filled out any forms yet",
+  "profilepage.notemplates": "No templates found",
+  "profilepage.title": "Title",
+  "profilepage.description": "Description",
+  "profilepage.topic": "Topic",
+  "profilepage.tags": "Tags",
+  "profilepage.filledat": "Filled at"
 }
