@@ -7,8 +7,8 @@ interface ITemplateHeaderComponent {
 export default function TemplateHeaderComponent({ template }: ITemplateHeaderComponent) {
   return (
     <>
-      <NavLink to={`/profile/${template.userId}`} className="w-full flex justify-end gap-1">
-        <span className="ml-auto hover:underline">{template.email}</span>
+      <NavLink to={`/profile/${template.creator.id}`} className="w-full flex justify-end gap-1">
+        <span className="ml-auto hover:underline">{template.creator.email}</span>
         <div className="bg-gray-100 w-6 h-6 rounded-full flex items-center justify-center">
           <User className="w-4 h-4" />
         </div>

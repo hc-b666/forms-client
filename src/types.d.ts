@@ -58,21 +58,24 @@ declare global {
   interface IQuestionServer {
     id: number;
     question: string;
-    type: string;
+    type: QuestionType;
     options: {
       id: number;
       option: string;
+      questionId: number;
     }[];
   }
 
   interface ISingleTemplate {
-    templateId: number;
+    id: number;
     title: string;
     description: string;
     topic: string;
     createdAt: string;
-    userId: number;
-    email: string;
+    creator: {
+      id: number;
+      email: string;
+    }
     tags: string[];
     questions: IQuestionServer[];
     comments: IComment[];

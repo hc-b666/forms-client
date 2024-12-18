@@ -15,7 +15,7 @@ import { ErrorPage } from "../error/Error";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useCreateCommentMutation } from "@/features/templates/services/templateApi";
-import { formatDate } from "@/lib/utils/dateUtils";
+import { useIntl } from "react-intl";
 
 interface ITemplateForm {
   [key: string]: any;
@@ -26,6 +26,7 @@ interface ICommentForm {
 }
 
 export default function TemplatePage() {
+  const intl = useIntl();
   const { templateId } = useParams();
   const { toast } = useToast();
   const user = useSelector(selectUser);
@@ -79,7 +80,7 @@ export default function TemplatePage() {
 
   if (createError) {
     return createError && <ErrorPage error={createError} />;
-  }
+  }console.log(template?.comments[0].createdAt)
 
   if (!template) {
     return <div className="container flex-grow flex justify-center">Template not found</div>;
@@ -136,7 +137,7 @@ export default function TemplatePage() {
               <div key={c.commentId} className="border-y py-5">
                 <h1>{c.email}</h1>
                 <p>{c.content}</p>
-                <p>{formatDate(c.createdAt)}</p>
+                <p>{intl.formatDate(c.createdAt)}</p>
               </div>
             ))}
           </div>
