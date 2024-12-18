@@ -21,28 +21,28 @@ export default function FormPage() {
         <div className="w-[720px] flex flex-col gap-5">
           {data.map((res) => (
             <div key={res.responseId} className="border p-5">
-              {res.type === "short" && (
+              {res.type === "TEXT" && (
                 <>
                   <h3>{res.question}</h3>
                   <p>{res.answer}</p>
                 </>
               )}
 
-              {res.type === "paragraph" && (
+              {res.type === "PARAGRAPH" && (
                 <>
                   <h3>{res.question}</h3>
                   <p>{res.answer}</p>
                 </>
               )}
 
-              {res.type === "mcq" && (
+              {res.type === "MCQ" && (
                 <>
                   <h3>{res.question}</h3>
                   <p>{res.option}</p>
                 </>
               )}
 
-              {res.type === "checkbox" && (
+              {res.type === "CHECKBOX" && (
                 <>
                   <h3>{res.question}</h3>
                   <p>{res.options.join(", ")}</p>

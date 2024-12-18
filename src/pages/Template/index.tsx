@@ -36,7 +36,6 @@ export default function TemplatePage() {
   const [hasSubmittedForm, { isLoading: hasSubmittedLoading }] = useHasUserSubmittedFormMutation();
   const [createComment] = useCreateCommentMutation();
 
-  
   const { register, handleSubmit } = useForm<ITemplateForm>();
   const { onSubmit } = useFormSubmission({ templateId, template, createForm, toast });
 

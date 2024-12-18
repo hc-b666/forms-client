@@ -15,7 +15,7 @@ interface ITemplateQuestionRenderer {
 }
 export default function TemplateQuestionRenderer({ question, register, user }: ITemplateQuestionRenderer) {
   switch (question.type) {
-    case "short":
+    case "TEXT":
       return (
         <Input
           {...register(`${question.id}`)}
@@ -25,7 +25,7 @@ export default function TemplateQuestionRenderer({ question, register, user }: I
         />
       );
 
-    case "paragraph":
+    case "PARAGRAPH":
       return (
         <Textarea
           {...register(`${question.id}`)}
@@ -35,7 +35,7 @@ export default function TemplateQuestionRenderer({ question, register, user }: I
         />
       );
 
-    case "mcq":
+    case "MCQ":
       return (
         <div className="flex flex-col gap-2">
           {question.options.map((option) => (
@@ -53,7 +53,7 @@ export default function TemplateQuestionRenderer({ question, register, user }: I
         </div>
       );
 
-    case "checkbox":
+    case "CHECKBOX":
       return (
         <div className="flex flex-col gap-2">
           {question.options.map((option) => (

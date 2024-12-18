@@ -1,6 +1,6 @@
+import { useIntl } from "react-intl";
 import { Button } from "@/components/ui/button";
 import { capitalize } from "@/lib/utils/stringUtils";
-import { formatDate } from "@/lib/utils/dateUtils";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 
@@ -10,6 +10,7 @@ interface ITemplateComponent {
 }
 
 export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
+  const intl = useIntl();
   const navigate = useNavigate();
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -23,7 +24,7 @@ export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
         <NavLink to={isAuthor ? `/template/${t.id}/forms` : `/template/${t.id}`} className="font-medium hover:underline">
           {t.title}
         </NavLink>
-        <span>{formatDate(t.createdAt)}</span>
+        <span>{intl.formatDate(t.createdAt)}</span>
       </div>
 
       <div className="flex flex-col justify-between gap-3">

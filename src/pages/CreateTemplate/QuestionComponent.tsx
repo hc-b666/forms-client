@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-const questions: string[] = ["short", "paragraph", "mcq", "checkbox"];
+const questions: string[] = ["TEXT", "PARAGRAPH", "MCQ", "CHECKBOX"];
 
 interface IQuestionsComponent {
   q: IQuestion;
@@ -47,25 +47,25 @@ export function QuestionComponent({
         />
       </div>
 
-      {q.type === "short" && (
+      {q.type === "TEXT" && (
         <Input 
           placeholder={intl.formatMessage({ id: "createtemplatepage.question.short" })} 
           readOnly 
         />
       )}
 
-      {q.type === "paragraph" && (
+      {q.type === "PARAGRAPH" && (
         <Textarea 
           placeholder={intl.formatMessage({ id: "createtemplatepage.question.paragraph" })} 
           readOnly 
         />
       )}
 
-      {(q.type === "mcq" || q.type === "checkbox") && (
+      {(q.type === "MCQ" || q.type === "CHECKBOX") && (
         <div className="flex flex-col gap-3">
           {(q.options || []).map((option) => (
             <div key={option.id} className="flex items-center gap-3">
-              <input type={q.type === "mcq" ? "radio" : "checkbox"} disabled />
+              <input type={q.type === "MCQ" ? "radio" : "checkbox"} disabled />
               <Input
                 type="text"
                 defaultValue={option.tagName}

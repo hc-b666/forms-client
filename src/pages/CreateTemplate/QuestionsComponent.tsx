@@ -13,7 +13,7 @@ export function QuestionsComponent({ questions, setQuestions }: IQuestionsCompon
   const intl = useIntl();
 
   const handleAddQuestion = () => {
-    setQuestions((p) => [...p, { id: uuidv4(), question: `Question ${p.length + 1}`, type: "short", options: [] }]);
+    setQuestions((p) => [...p, { id: uuidv4(), question: `Question ${p.length + 1}`, type: "TEXT", options: [] }]);
   };
 
   const handleUpdateQuestion = (id: string, v: string) => {

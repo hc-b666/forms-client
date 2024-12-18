@@ -1,7 +1,9 @@
 declare global {
-  type UserRole = "admin" | "user";
+  type UserRole = "ADMIN" | "USER";
 
-  type QuestionType = "short" | "paragraph" | "mcq" | "checkbox";
+  type TemplateTopic = "EDU" | "QUIZ" | "OTHER";
+
+  type QuestionType = "TEXT" | "PARAGRAPH" | "MCQ" | "CHECKBOX";
 
   interface IUser {
     id: number;
@@ -31,8 +33,8 @@ declare global {
     topic: string;
     createdAt: string;
     email: string;
-    responses: string;
-    totalLikes: string;
+    responses: number;
+    totalLikes: number;
     hasLiked: boolean;
   }
 
@@ -104,7 +106,7 @@ declare global {
   interface IResponse {
     questionId: number;
     question: string;
-    type: 'short' | 'paragraph' | 'mcq' | 'checkbox';
+    type: QuestionType;
     responseId: number;
     answer: string | null;
     optionId: number | null;

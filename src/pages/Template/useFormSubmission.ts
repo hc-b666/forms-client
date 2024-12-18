@@ -17,15 +17,15 @@ export default function useFormSubmission({ templateId, template, createForm, to
       try {
         template?.questions.forEach(q => {
           switch (q.type) {
-            case "short":
-            case "paragraph":
+            case "TEXT":
+            case "PARAGRAPH":
               responses.push({ 
                 questionId: q.id, 
                 answer: data[q.id] 
               });
               break;
   
-            case "mcq":
+            case "MCQ":
               const selectedOption = q.options.find(option => option.option === data[q.id]);
               if (!selectedOption) {
                 isValid = false;
@@ -38,7 +38,7 @@ export default function useFormSubmission({ templateId, template, createForm, to
               });
               break;
   
-            case "checkbox":
+            case "CHECKBOX":
               const selectedCheckboxOptions = q.options
                 .filter(option => data[q.id]?.includes(option.option))
                 .map(option => option.id);

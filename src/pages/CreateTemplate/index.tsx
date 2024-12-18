@@ -17,7 +17,7 @@ import { TagsComponent } from "./TagsComponent";
 import { useSelector } from "react-redux";
 import { selectUser } from "@/features/auth/slices/authSlice";
 
-const topics = ["Edu", "Quiz", "Other"];
+const topics = ["EDU", "QUIZ", "OTHER"];
 
 export default function CreateTemplatePage() {
   const intl = useIntl();
@@ -35,7 +35,7 @@ export default function CreateTemplatePage() {
     {
       id: uuidv4(),
       question: "Question 1",
-      type: "short",
+      type: "TEXT",
       options: [],
     },
   ]);
@@ -85,8 +85,7 @@ export default function CreateTemplatePage() {
     const data = {
       title,
       description,
-      createdBy: user.id,
-      topic: topic.toLowerCase(),
+      topic: topic.toUpperCase() as TemplateTopic,
       type,
       questions: questions.map(({ id, ...rest }) => ({ ...rest, options: rest.options.map(o => o.tagName) })),
       tags: tags.map(({ tagName }) => tagName),

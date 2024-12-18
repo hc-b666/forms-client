@@ -3,12 +3,11 @@ import { baseApi } from "@/services/baseApi";
 interface ICreateTemplateBody {
   title: string;
   description: string;
-  createdBy: number;
-  topic: string;
+  topic: TemplateTopic;
   type: "public" | "private";
   questions: {
     question: string;
-    type: string;
+    type: QuestionType;
     options: string[];
   }[];
   tags: string[];
@@ -25,7 +24,7 @@ export const templateApi = baseApi.injectEndpoints({
     }),
     getTopTemplates: builder.query<ITopTemplate[], void>({
       query: () => ({
-        url: "templates/top5",
+        url: "templates/top",
         method: "GET",
       }),
       providesTags: ["Template"],
