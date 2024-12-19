@@ -7,7 +7,7 @@
 
   "loginpage.title": "Log In Form",
   "loginpage.email": "Email",
-  "loginpageg.email.error": "First name is required",
+  "loginpage.email.error": "First name is required",
   "loginpage.password": "Password",
   "loginpage.password.error": "Password is required",
   "loginpage.noaccount": "Don't have an account?",

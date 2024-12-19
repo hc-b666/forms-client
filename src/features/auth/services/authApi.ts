@@ -9,17 +9,17 @@ export const authApi = createApi({
   baseQuery,
   endpoints: (builder) => ({
     register: builder.mutation<IRegisterResponse, IRegisterForm>({
-      query: (data) => ({
+      query: (body) => ({
         url: `auth/register`,
         method: "POST",
-        body: data,
+        body,
       }),
     }),
     login: builder.mutation<ILoginResponse, ILoginForm>({
-      query: (data) => ({
+      query: (body) => ({
         url: `auth/login`,
         method: "POST",
-        body: data,
+        body,
       }),
     }),
     refreshToken: builder.mutation<IRefreshTokenResponse, { refreshToken: string }>({
