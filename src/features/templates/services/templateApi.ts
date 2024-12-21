@@ -6,7 +6,7 @@ interface ICreateTemplateBody {
   topic: TemplateTopic;
   type: "public" | "private";
   questions: {
-    question: string;
+    questionText: string;
     type: QuestionType;
     options: string[];
   }[];

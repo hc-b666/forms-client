@@ -20,9 +20,9 @@ declare global {
 
   interface IQuestion {
     id: string;
-    question: string;
+    questionText: string;
     type: QuestionType;
-    options: ITag[];
+    options: { id: string, optionText: string }[];
   }
 
   interface ITag {

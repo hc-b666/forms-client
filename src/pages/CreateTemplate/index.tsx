@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SelectComponent } from "@/components/common/SelectComponent";
-import { QuestionsComponent } from "./QuestionsComponent";
+import { QuestionsManager } from "./QuestionsManager";
 import { Button } from "@/components/ui/button";
 import { TagsComponent } from "./TagsComponent";
 import { useSelector } from "react-redux";
@@ -34,7 +34,7 @@ export default function CreateTemplatePage() {
   const [questions, setQuestions] = useState<IQuestion[]>([
     {
       id: uuidv4(),
-      question: "Question 1",
+      questionText: "Question 1",
       type: "TEXT",
       options: [],
     },
@@ -87,7 +87,7 @@ export default function CreateTemplatePage() {
       description,
       topic: topic.toUpperCase() as TemplateTopic,
       type,
-      questions: questions.map(({ id, ...rest }) => ({ ...rest, options: rest.options.map(o => o.tagName) })),
+      questions: questions.map(({ id, ...rest }) => ({ ...rest, options: rest.options.map(o => o.optionText) })),
       tags: tags.map(({ tagName }) => tagName),
     };
 
@@ -184,7 +184,7 @@ export default function CreateTemplatePage() {
           </RadioGroup>
         </div>
 
-        <QuestionsComponent questions={questions} setQuestions={setQuestions}  />
+        <QuestionsManager questions={questions} setQuestions={setQuestions}  />
 
         <Button disabled={isLoading} onClick={handleCreateTemplate}>
           {isLoading 

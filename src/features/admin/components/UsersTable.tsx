@@ -1,3 +1,4 @@
+import { MoonLoader } from "react-spinners";
 import {
   Table,
   TableBody,
@@ -8,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import { useGetUsersQuery } from "../services";
 import { capitalize } from "@/lib/utils/stringUtils";
-import { MoonLoader } from "react-spinners";
 
 export function UsersTable() {
   const { data, isLoading, isSuccess } = useGetUsersQuery();
@@ -30,7 +30,6 @@ export function UsersTable() {
           </TableHeader>
           <TableBody>
             {isSuccess &&
-              data.length !== 0 &&
               data.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>{user.id}</TableCell>
