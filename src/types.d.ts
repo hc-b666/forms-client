@@ -52,11 +52,13 @@ declare global {
   }
 
   interface IComment {
-    commentId: number;
-    content: string;
+    id: number;
     createdAt: string;
-    authorId: number;
-    email: string;
+    content: string;
+    user: {
+      id: number;
+      email: string;
+    };
   }
 
   interface IQuestionServer {
@@ -82,7 +84,6 @@ declare global {
     };
     tags: string[];
     questions: IQuestionServer[];
-    comments: IComment[];
   }
 
   interface IProfileTemplate {

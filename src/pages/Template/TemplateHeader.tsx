@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { User } from "lucide-react";
 
-interface ITemplateHeaderComponent {
+interface ITemplateHeader {
   template: ISingleTemplate;
 }
-export default function TemplateHeaderComponent({ template }: ITemplateHeaderComponent) {
+export default function TemplateHeader({ template }: ITemplateHeader) {
   return (
     <>
       <NavLink to={`/profile/${template.creator.id}`} className="w-full flex justify-end gap-1">

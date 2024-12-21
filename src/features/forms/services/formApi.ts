@@ -8,7 +8,15 @@ export const formApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    submitForm: builder.mutation({
+      query: ({ templateId, body }) => ({
+        url: `forms/submit/${templateId}`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Template"],
+    }),
   }),
 });
 
-export const { useGetFormsByUserQuery } = formApi;
+export const { useGetFormsByUserQuery, useSubmitFormMutation } = formApi;

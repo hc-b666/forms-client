@@ -1,54 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { SubmitHandler, useForm } from "react-hook-form";
 
-import { useCreateFormMutation, useGetTemplateByIdQuery, useHasUserSubmittedFormMutation } from "@/features/templates/services/templateApi";
+import { useGetTemplateByIdQuery, useHasUserSubmittedFormMutation } from "@/features/templates/services/templateApi";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import TemplateHeaderComponent from "./TemplateHeaderComponent";
-import TemplateQuestionRenderer from "./TemplateQuestionRenderer";
-import useFormSubmission from "./useFormSubmission";
-import { selectUser } from "@/features/auth/slices/authSlice";
+import TemplateHeader from "./TemplateHeader";
 import { ErrorPage } from "../error/Error";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { useCreateCommentMutation } from "@/features/templates/services/templateApi";
-import { useIntl } from "react-intl";
-
-interface ITemplateForm {
-  [key: string]: any;
-}
-
-interface ICommentForm {
-  content: string;
-}
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Comments } from "@/features/comments/components/Comments";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Form } from "@/features/forms/components/Form";
 
 export default function TemplatePage() {
-  const intl = useIntl();
   const { templateId } = useParams();
   const { toast } = useToast();
-  const user = useSelector(selectUser);
+  const { user } = useAuth();
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const { data: template, isLoading, isSuccess, error: templateError } = useGetTemplateByIdQuery(templateId);
-  const [createForm, { isLoading: createLoading, error: createError }] = useCreateFormMutation();
   const [hasSubmittedForm, { isLoading: hasSubmittedLoading }] = useHasUserSubmittedFormMutation();
-  const [createComment] = useCreateCommentMutation();
-
-  const { register, handleSubmit } = useForm<ITemplateForm>();
-  const { onSubmit } = useFormSubmission({ templateId, template, createForm, toast });
-
-  const { register: commentRegister, handleSubmit: commentHandleSubmit } = useForm<ICommentForm>();
-  const onCommentSubmit: SubmitHandler<ICommentForm> = async (data) => {
-    try {
-      const res = await createComment({ templateId: templateId, content: data.content }).unwrap();
-      toast({ description: res.message });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   useEffect(() => {
     const checkUserSubmitted = async () => {
@@ -70,16 +40,12 @@ export default function TemplatePage() {
     checkUserSubmitted();
   }, [user]);
 
-  if (isLoading || createLoading || hasSubmittedLoading) {
+  if (isLoading || hasSubmittedLoading) {
     return <LoadingSpinner />;
   }
 
   if (templateError) {
     return templateError && <ErrorPage error={templateError} />;
-  }
-
-  if (createError) {
-    return createError && <ErrorPage error={createError} />;
   }
 
   if (!template) {
@@ -88,62 +54,31 @@ export default function TemplatePage() {
 
   return (
     <div className="container flex-grow flex justify-center gap-20">
-      {isSuccess && !hasSubmitted ? (
-        <div className="w-full h-full flex flex-col gap-5 border-x py-5 px-10">
-          <TemplateHeaderComponent template={template} />
+      <Tabs defaultValue="form" className="w-full">
+        <TabsList className="grid w-full grid-cols-2 mb-5">
+          <TabsTrigger value="form">Form</TabsTrigger>
+          <TabsTrigger value="comments">Comments</TabsTrigger>
+        </TabsList>
+      
+        <TabsContent value="form">
+          {isSuccess && !hasSubmitted ? (
+            <div className="w-full h-full flex flex-col gap-5 py-5">
+              <TemplateHeader template={template} />
 
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-            {template.questions.map(q => (
-              <div className="flex flex-col gap-3 border-y py-2" key={q.id}>
-                <h3>{q.question}</h3>
-
-                <TemplateQuestionRenderer question={q} register={register} user={user} />
-              </div>
-            ))}
-
-            {user && <Button type="submit" className="mt-5 self-end">Submit</Button>}
-          </form>
-        </div>
-      ) : (
-        <div className="w-fullh-full flex flex-col gap-5 border-x py-5 px-10">
-          <TemplateHeaderComponent template={template} />
-
-          <p className="text-center">You have already submitted the form</p>
-        </div>
-      )}
-
-      {isSuccess && (
-        <div className="w-full border-x px-10 py-5 flex flex-col gap-5">
-          <h1 className="text-2xl">Comments</h1>
-
-          <form onSubmit={commentHandleSubmit(onCommentSubmit)} className="flex flex-col gap-3 pb-5 border-b">
-            <Label htmlFor="content">Add your comment</Label>
-            <div className="grid grid-cols-4 gap-3">
-              <Input 
-                id="content" 
-                placeholder="Add your comment" 
-                className="col-span-3"
-                {...commentRegister("content")}
-                disabled={!user}
-              />
-              <Button disabled={!user} type="submit" className="col-span-1">
-                Add
-              </Button>
+              <Form template={template} />
             </div>
-          </form>
+          ) : (
+            <div className="w-fullh-full flex flex-col gap-5 py-5">
+              <TemplateHeader template={template} />
 
-          <div>
-            {template.comments.map(c => (
-              <div key={c.commentId} className="border-y py-5">
-                <h1>{c.email}</h1>
-                <p>{c.content}</p>
-                <p>{intl.formatDate(c.createdAt)}</p>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      )}
+              <p className="text-center">You have already submitted the form</p>
+            </div>
+          )}
+        </TabsContent>
+        <TabsContent value="comments">
+          <Comments templateId={templateId} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

@@ -63,13 +63,6 @@ export const templateApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Template"],
     }),
-    createForm: builder.mutation({
-      query: ({ templateId, body }) => ({
-        url: `forms/submit/${templateId}`,
-        method: "POST",
-        body,
-      }),
-    }),
     hasUserSubmittedForm: builder.mutation({
       query: (templateId: string | undefined) => ({
         url: `forms/check/${templateId}`,
@@ -88,14 +81,6 @@ export const templateApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    createComment: builder.mutation<{ message: string }, { templateId: string | undefined, content: string }>({
-      query: ({ templateId, content }) => ({
-        url: `comments/create/${templateId}`,
-        method: "POST",
-        body: { content },
-      }),
-      invalidatesTags: ["Template"],
-    }),
   }),
 });
 
@@ -107,9 +92,7 @@ export const {
   useGetTemplatesByUserIdQuery,
   useLikeTemplateMutation,
   useUnlikeTemplateMutation,
-  useCreateFormMutation,
   useHasUserSubmittedFormMutation,
   useGetFormsQuery,
   useGetFormQuery,
-  useCreateCommentMutation,
 } = templateApi;
