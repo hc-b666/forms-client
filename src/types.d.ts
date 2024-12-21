@@ -14,6 +14,10 @@ declare global {
     role: UserRole;
   }
 
+  interface IUserAdmin extends IUser {
+    isBlocked: boolean;
+  }
+
   interface IQuestion {
     id: string;
     question: string;

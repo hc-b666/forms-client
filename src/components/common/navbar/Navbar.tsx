@@ -26,6 +26,11 @@ export function Navbar({ setSidebar }: INavbar) {
       <div className="hidden md:flex items-center gap-4">
         {isAuthenticated ? (
           <div className="flex items-center gap-4">
+            {user?.role === "ADMIN" && (
+              <NavLink to="/admin" className="hover:underline">
+                Dashboard
+              </NavLink>
+            )}
             <NavLink to={`/profile/${user?.id}`} className="hover:underline">
               {user?.username}
             </NavLink>
@@ -35,16 +40,14 @@ export function Navbar({ setSidebar }: INavbar) {
           </div>
         ) : (
           <NavLink to="/login">
-            <Button>
-              {intl.formatMessage({ id: "navbar.login" })}
-            </Button>
+            <Button>{intl.formatMessage({ id: "navbar.login" })}</Button>
           </NavLink>
         )}
         <ModeToggle />
         <LanguageDropdown />
       </div>
-        
-      <Menu onClick={() => setSidebar(true)} className="md:hidden" />        
+
+      <Menu onClick={() => setSidebar(true)} className="md:hidden" />
     </nav>
   );
 }

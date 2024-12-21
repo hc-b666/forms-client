@@ -1,12 +1,15 @@
+import { UsersTable } from "@/features/admin/components/UsersTable";
+
 export default function AdminPage() {
+
   return (
-    <main>
+    <div className="container flex-grow">
 
       <h1>Admin</h1>
 
-      <p>user management</p>
-      <p>view, block, unblock, delete, add admin</p>
+      <UsersTable />
 
-    </main>
+
+    </div>
   );
 }
