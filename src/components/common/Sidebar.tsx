@@ -51,6 +51,9 @@ export function Sidebar({ sidebar, setSidebar }: ISidebar) {
               <NavLink to="/search">
                 Search
               </NavLink>
+              {user?.role === "ADMIN" && (
+                <NavLink to="/admin">Dashboard</NavLink>
+              )}
             </div>
 
             <div className="mt-auto flex flex-col gap-3">
