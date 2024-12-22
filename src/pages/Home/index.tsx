@@ -43,7 +43,7 @@ export default function HomePage() {
             {intl.formatMessage({ id: "homepage.toptemplates" })}
           </h3>
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-            {top5Data && top5Data.map((t) => <TemplateCard t={t} key={t.id} />)}
+            {top5Data && top5Data.map((template) => <TemplateCard template={template} key={template.id} />)}
           </div>
         </div>
         
@@ -52,7 +52,7 @@ export default function HomePage() {
             {intl.formatMessage({ id: "homepage.latesttemplates" })}
           </h3>
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-            {latestData && latestData.map((t) => <TemplateCard t={t} key={t.id} />)}
+            {latestData && latestData.map((template) => <TemplateCard template={template} key={template.id} />)}
           </div>
         </div>
       </div>

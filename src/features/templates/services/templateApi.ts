@@ -22,14 +22,14 @@ export const templateApi = baseApi.injectEndpoints({
         body,
       }),
     }),
-    getTopTemplates: builder.query<ITopTemplate[], void>({
+    getTopTemplates: builder.query<Template[], void>({
       query: () => ({
         url: "templates/top",
         method: "GET",
       }),
       providesTags: ["Template"],
     }),
-    getLatestTemplates: builder.query<ILatestTemplate[], void>({
+    getLatestTemplates: builder.query<Template[], void>({
       query: () => ({
         url: "templates/latest",
         method: "GET",

@@ -30,25 +30,19 @@ declare global {
     tagName: string;
   }
 
-  interface ITopTemplate {
+  interface Template {
     id: number;
     title: string;
     description: string;
-    topic: string;
+    topic: TemplateTopic;
     createdAt: string;
-    email: string;
+    creator: {
+      id: number;
+      email: string;
+  };
     responses: number;
-    totalLikes: number;
-    hasLiked: boolean;
-  }
-
-  interface ILatestTemplate {
-    id: number;
-    title: string;
-    description: string;
-    topic: string;
-    createdAt: string;
-    email: string;
+    likes: number;
+    // hasLiked: boolean;
   }
 
   interface IComment {
