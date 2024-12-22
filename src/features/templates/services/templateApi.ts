@@ -1,11 +1,12 @@
 import { baseApi } from "@/services/baseApi";
 
-interface ICreateTemplateBody {
+interface CreateTemplateBody {
   title: string;
   description: string;
   topic: TemplateTopic;
   type: "public" | "private";
   questions: {
+    order: number;
     questionText: string;
     type: QuestionType;
     options: string[];
@@ -16,7 +17,7 @@ interface ICreateTemplateBody {
 export const templateApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createTemplate: builder.mutation({
-      query: (body: ICreateTemplateBody) => ({
+      query: (body: CreateTemplateBody) => ({
         url: "templates/create",
         method: "POST",
         body,

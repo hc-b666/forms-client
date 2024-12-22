@@ -31,11 +31,12 @@ export default function CreateTemplatePage() {
   const [topic, setTopic] = useState("");
   const [type, setType] = useState<"public" | "private">("public");
   const [tags, setTags] = useState<ITag[]>([]);
-  const [questions, setQuestions] = useState<IQuestion[]>([
+  const [questions, setQuestions] = useState<Question[]>([
     {
       id: uuidv4(),
       questionText: "Question 1",
       type: "TEXT",
+      order: 1,
       options: [],
     },
   ]);
@@ -87,7 +88,10 @@ export default function CreateTemplatePage() {
       description,
       topic: topic.toUpperCase() as TemplateTopic,
       type,
-      questions: questions.map(({ id, ...rest }) => ({ ...rest, options: rest.options.map(o => o.optionText) })),
+      questions: questions.map(({ id, ...rest }) => ({ 
+        ...rest, 
+        options: rest.options.map(option => option.optionText) 
+      })),
       tags: tags.map(({ tagName }) => tagName),
     };
 

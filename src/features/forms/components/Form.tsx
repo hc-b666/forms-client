@@ -91,7 +91,7 @@ export function Form({ template }: IForm) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       {template.questions.map((q) => (
         <div className="flex flex-col gap-3 border-y py-2" key={q.id}>
-          <h3>{q.question}</h3>
+          <h3>{q.questionText}</h3>
 
           <TemplateQuestionRenderer
             question={q}

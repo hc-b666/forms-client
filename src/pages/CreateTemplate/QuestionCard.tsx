@@ -9,13 +9,17 @@ import { useTranslations } from "@/hooks/useTranslations";
 const questions: string[] = ["TEXT", "PARAGRAPH", "MCQ", "CHECKBOX"];
 
 interface QuestionCardProps {
-  question: IQuestion;
+  question: Question;
   updateQuestion: (questionId: string, newQuestionText: string) => void;
   updateQuestionType: (questionId: string, newQuestionType: QuestionType) => void;
   deleteQuestion: (questionId: string) => void;
   addOption: (questionId: string) => void;
   updateOption: (questionId: string, optionId: string, newOptionText: string) => void;
   deleteOption: (questionId: string, optionId: string) => void;
+  handleDragStart: (e: React.DragEvent<HTMLDivElement>, quesiton: Question) => void;
+  handleDragEnd: (e: React.DragEvent<HTMLDivElement>) => void;
+  handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
+  handleDrop: (e: React.DragEvent<HTMLDivElement>, targetQuestion: Question) => void;
 }
 
 export function QuestionCard({
@@ -26,11 +30,22 @@ export function QuestionCard({
   updateOption,
   addOption,
   deleteOption,
+  handleDragStart,
+  handleDragEnd,
+  handleDragOver,
+  handleDrop,
 }: QuestionCardProps) {
   const { t } = useTranslations();
 
   return (
-    <div className="w-full flex flex-col gap-5 border p-3 md:p-5 rounded-md">
+    <div 
+      draggable 
+      onDragStart={(e) => handleDragStart(e, question)}
+      onDragEnd={handleDragEnd}
+      onDragOver={handleDragOver}
+      onDrop={(e) => handleDrop(e, question)}
+      className="w-full flex flex-col gap-5 border p-3 md:p-5 rounded-md hover:cursor-grab"
+    >
       <div className="w-full grid grid-cols-4 gap-5">
         <Input
           onChange={(e) => updateQuestion(question.id, e.target.value)}

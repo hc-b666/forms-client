@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { QuestionCard } from "./QuestionCard";
@@ -5,12 +6,14 @@ import { Button } from "@/components/ui/button";
 import { useQuestionManager } from "./hooks/useQuestionManager";
 
 interface QuestionsManagerProps {
-  questions: IQuestion[];
-  setQuestions: React.Dispatch<React.SetStateAction<IQuestion[]>>;
+  questions: Question[];
+  setQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
 }
 
 export function QuestionsManager({ questions, setQuestions}: QuestionsManagerProps) {
   const intl = useIntl();
+  const [draggedItem, setDraggedItem] = useState<Question | null>(null);
+
   const { 
     addQuestion, 
     updateQuestion, 
@@ -19,7 +22,41 @@ export function QuestionsManager({ questions, setQuestions}: QuestionsManagerPro
     addOption, 
     updateOption, 
     deleteOption
-  } = useQuestionManager({ setQuestions });
+  } = useQuestionManager({ questions, setQuestions });
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, question: Question) => {
+    setDraggedItem(question);
+    e.currentTarget.style.opacity = "0.7";
+  };
+
+  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+    e.currentTarget.style.opacity = "1";
+    setDraggedItem(null);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, targetQuestion: Question) => {
+    e.preventDefault();
+
+    if (!draggedItem || draggedItem.id === targetQuestion.id) return;
+
+    const reOrderedQuestions = questions.map((question) => {
+      if (question.id === draggedItem.id) {
+        return { ...question, order: targetQuestion.order };
+      }
+
+      if (question.order === targetQuestion.order) {
+        return { ...question, order: draggedItem.order };
+      }
+
+      return question;
+    });
+
+    setQuestions(reOrderedQuestions.sort((a, b) => a.order - b.order));
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -27,7 +64,7 @@ export function QuestionsManager({ questions, setQuestions}: QuestionsManagerPro
         {intl.formatMessage({ id: "createtemplatepage.questions" })}
       </h2>
 
-      {questions.map((question) => (
+      {questions.sort((a, b) => a.order - b.order).map((question) => (
         <QuestionCard
           question={question}
           updateQuestion={updateQuestion}
@@ -36,6 +73,10 @@ export function QuestionsManager({ questions, setQuestions}: QuestionsManagerPro
           addOption={addOption}
           updateOption={updateOption}
           deleteOption={deleteOption}
+          handleDragStart={handleDragStart}
+          handleDragEnd={handleDragEnd}
+          handleDragOver={handleDragOver}
+          handleDrop={handleDrop}
           key={question.id}
         />
       ))}

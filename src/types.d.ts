@@ -18,10 +18,11 @@ declare global {
     isBlocked: boolean;
   }
 
-  interface IQuestion {
+  interface Question {
     id: string;
     questionText: string;
     type: QuestionType;
+    order: number;
     options: { id: string, optionText: string }[];
   }
 
@@ -57,7 +58,7 @@ declare global {
 
   interface IQuestionServer {
     id: number;
-    question: string;
+    questionText: string;
     type: QuestionType;
     options: {
       id: number;

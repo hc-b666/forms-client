@@ -1,11 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 
 interface useQuestionsManagerProps {
-  setQuestions: React.Dispatch<React.SetStateAction<IQuestion[]>>;
+  questions: Question[];
+  setQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
 }
 
-export function useQuestionManager({ setQuestions }: useQuestionsManagerProps) {
+export function useQuestionManager({ questions, setQuestions }: useQuestionsManagerProps) {
   const addQuestion = () => {
+    const newOrder = Math.max(...questions.map((question) => question.order), 0) + 1;
+
     setQuestions((previousQuestions) => [
       ...previousQuestions,
       {
@@ -13,6 +16,7 @@ export function useQuestionManager({ setQuestions }: useQuestionsManagerProps) {
         questionText: `Question ${previousQuestions.length + 1}`,
         type: "TEXT",
         options: [],
+        order: newOrder,
       },
     ]);
   };
@@ -38,9 +42,14 @@ export function useQuestionManager({ setQuestions }: useQuestionsManagerProps) {
   };
 
   const deleteQuestion = (questionId: string) => {
-    setQuestions((previousQuestions) =>
-      previousQuestions.filter((question) => question.id !== questionId)
-    );
+    const updatedQuestions = questions
+      .filter(question => question.id != questionId)
+      .map((question, idx) => ({
+        ...question,
+        order: idx + 1,
+      }));
+
+    setQuestions(updatedQuestions);
   };
 
   const addOption = (questionId: string) => {
@@ -70,7 +79,7 @@ export function useQuestionManager({ setQuestions }: useQuestionsManagerProps) {
               ...question,
               options: question.options.map((option) =>
                 option.id === optionId
-                  ? { ...option, tagName: newValue }
+                  ? { ...option, optionText: newValue }
                   : option
               ),
             }
