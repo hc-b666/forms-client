@@ -65,12 +65,6 @@ export const templateApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
-    getForms: builder.query<{ forms: IForm[], template: ISingleTemplate }, string | undefined>({
-      query: (templateId) => ({
-        url: `forms/${templateId}`,
-        method: "GET",
-      }),
-    }),
     getForm: builder.query<IResponse[], { templateId: string, formId: string }>({
       query: ({ templateId, formId }) => ({
         url: `forms/${templateId}/responses/${formId}`,
@@ -88,6 +82,5 @@ export const {
   useLikeTemplateMutation,
   useUnlikeTemplateMutation,
   useHasUserSubmittedFormMutation,
-  useGetFormsQuery,
   useGetFormQuery,
 } = templateApi;

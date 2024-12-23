@@ -100,7 +100,7 @@ declare global {
     username: string;
   }
 
-  interface IForm {
+  interface Form {
     id: number;
     filledAt: string;
     author: {

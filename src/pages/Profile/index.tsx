@@ -18,22 +18,24 @@ export default function ProfilePage() {
     <div className="container flex-grow flex flex-col md:grid grid-cols-4 gap-20">
       <UserProfile userId={userId} />
       <Tabs defaultValue="templates" className="col-span-3">
-        {currentUser?.id === parseInt(userId as string) && (
-          <TabsList className="grid w-full grid-cols-4 mb-5">
-            <TabsTrigger value="templates">
-              {intl.formatMessage({ id: "profilepage.templates" })}
-            </TabsTrigger>
-            <TabsTrigger value="private-templates">
-              Private Templates
-            </TabsTrigger>
-            <TabsTrigger value="forms">
-              {intl.formatMessage({ id: "profilepage.filledoutforms" })}
-            </TabsTrigger>
-            <TabsTrigger value="private-accessible-templates">
-              Private Accessible templates
-            </TabsTrigger>
-          </TabsList>
-        )}
+        <div className="overflow-x-auto">
+          {currentUser?.id === parseInt(userId as string) && (
+            <TabsList className="grid w-full min-w-[800px] grid-cols-4 mb-5">
+              <TabsTrigger value="templates">
+                {intl.formatMessage({ id: "profilepage.templates" })}
+              </TabsTrigger>
+              <TabsTrigger value="private-templates">
+                Private Templates
+              </TabsTrigger>
+              <TabsTrigger value="forms">
+                {intl.formatMessage({ id: "profilepage.filledoutforms" })}
+              </TabsTrigger>
+              <TabsTrigger value="private-accessible-templates">
+                Private Accessible templates
+              </TabsTrigger>
+            </TabsList>
+          )}
+        </div>
         <TabsContent value="templates">
           <ProfileTemplates userId={parseInt(userId as string)} />
         </TabsContent>

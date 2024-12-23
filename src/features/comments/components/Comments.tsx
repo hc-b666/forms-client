@@ -1,7 +1,7 @@
 import { useIntl } from "react-intl";
-import { MoonLoader } from "react-spinners";
 import { useGetCommentsQuery } from "../services";
 import { CreateCommentForm } from "./CreateCommentForm";
+import { Loader } from "@/components/common/LoadingSpinner";
 
 interface IComments {
   templateId: string | undefined;
@@ -18,11 +18,7 @@ export function Comments({ templateId }: IComments) {
       <CreateCommentForm templateId={templateId} />
 
       <div className="flex flex-col gap-3">
-        {isLoading && (
-          <div className="h-40 flex items-center justify-center">
-            <MoonLoader color="black" />
-          </div>
-        )}
+        {isLoading && <Loader />}
         {isSuccess &&
           data.map((comment) => (
             <div key={comment.id} className="border p-3">
