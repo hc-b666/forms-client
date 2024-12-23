@@ -10,8 +10,8 @@ export default function LoadingSpinner() {
 
 export function Loader() {
   return (
-    <div className="w-full h-80 flex items-center justify-center">
-      <MoonLoader color="black" />
+    <div className="w-full h-20 flex items-center justify-center">
+      <MoonLoader color="green" />
     </div>
   );
 }
