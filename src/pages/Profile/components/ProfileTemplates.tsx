@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
+import { useIntl } from "react-intl";
 
-import { useGetTemplatesByUserIdQuery } from "../services/templateApi";
+import { useGetTemplatesByUserIdQuery } from "../services";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { TemplateComponent } from "./TemplateComponent";
-import { useIntl } from "react-intl";
 
 interface IProfileTemplates {
   userId: number;

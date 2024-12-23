@@ -23,28 +23,28 @@ export default function FormPage() {
             <div key={res.responseId} className="border p-5">
               {res.type === "TEXT" && (
                 <>
-                  <h3>{res.question}</h3>
+                  <h3>{res.questionText}</h3>
                   <p>{res.answer}</p>
                 </>
               )}
 
               {res.type === "PARAGRAPH" && (
                 <>
-                  <h3>{res.question}</h3>
+                  <h3>{res.questionText}</h3>
                   <p>{res.answer}</p>
                 </>
               )}
 
               {res.type === "MCQ" && (
                 <>
-                  <h3>{res.question}</h3>
+                  <h3>{res.questionText}</h3>
                   <p>{res.option}</p>
                 </>
               )}
 
               {res.type === "CHECKBOX" && (
                 <>
-                  <h3>{res.question}</h3>
+                  <h3>{res.questionText}</h3>
                   <p>{res.options.join(", ")}</p>
                 </>
               )}

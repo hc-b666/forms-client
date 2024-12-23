@@ -2,10 +2,12 @@ import { useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserFilledForms } from "@/features/forms/components/UserFilledForms";
+import { UserFilledForms } from "./components/UserFilledForms";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { UserProfile } from "@/features/users/components/UserProfile";
-import { ProfileTemplates } from "@/features/templates/components/ProfileTemplates";
+import { ProfileTemplates } from "@/pages/Profile/components/ProfileTemplates";
+import { PrivateTemplates } from "./components/PrivateTemplates";
+import { PrivateAccessibleTemplates } from "./components/PrivateAccessibleTemplates";
 
 export default function ProfilePage() {
   const { userId } = useParams();
@@ -17,20 +19,32 @@ export default function ProfilePage() {
       <UserProfile userId={userId} />
       <Tabs defaultValue="templates" className="col-span-3">
         {currentUser?.id === parseInt(userId as string) && (
-          <TabsList className="grid w-full grid-cols-2 mb-5">
+          <TabsList className="grid w-full grid-cols-4 mb-5">
             <TabsTrigger value="templates">
               {intl.formatMessage({ id: "profilepage.templates" })}
             </TabsTrigger>
+            <TabsTrigger value="private-templates">
+              Private Templates
+            </TabsTrigger>
             <TabsTrigger value="forms">
               {intl.formatMessage({ id: "profilepage.filledoutforms" })}
+            </TabsTrigger>
+            <TabsTrigger value="private-accessible-templates">
+              Private Accessible templates
             </TabsTrigger>
           </TabsList>
         )}
         <TabsContent value="templates">
           <ProfileTemplates userId={parseInt(userId as string)} />
         </TabsContent>
+        <TabsContent value="private-templates">
+          <PrivateTemplates />
+        </TabsContent>
         <TabsContent value="forms" className="h-full">
           <UserFilledForms />
+        </TabsContent>
+        <TabsContent value="private-accessible-templates">
+          <PrivateAccessibleTemplates />
         </TabsContent>
       </Tabs>
     </div>

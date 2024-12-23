@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { TagsComponent } from "./TagsComponent";
 import { useSelector } from "react-redux";
 import { selectUser } from "@/features/auth/slices/authSlice";
+import { AddUsers } from "./AddUsers";
 
 const topics = ["EDU", "QUIZ", "OTHER"];
 
@@ -40,6 +41,7 @@ export default function CreateTemplatePage() {
       options: [],
     },
   ]);
+  const [users, setUsers] = useState<{ id: number, email: string }[]>([]);
 
   if (!user) {
     navigate("/login");
@@ -93,6 +95,7 @@ export default function CreateTemplatePage() {
         options: rest.options.map(option => option.optionText) 
       })),
       tags: tags.map(({ tagName }) => tagName),
+      users: users.map((u) => u.id),
     };
 
     try {
@@ -187,6 +190,8 @@ export default function CreateTemplatePage() {
             </div>
           </RadioGroup>
         </div>
+
+        {type === "private" && <AddUsers users={users} setUsers={setUsers} />}
 
         <QuestionsManager questions={questions} setQuestions={setQuestions}  />
 

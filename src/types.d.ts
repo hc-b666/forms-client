@@ -60,6 +60,7 @@ declare global {
     id: number;
     questionText: string;
     type: QuestionType;
+    order: number;
     options: {
       id: number;
       option: string;
@@ -100,16 +101,17 @@ declare global {
   }
 
   interface IForm {
-    formId: number;
-    filledBy: number;
-    templateTitle: string;
+    id: number;
     filledAt: string;
-    email: string;
+    author: {
+      id: number;
+      email: string;
+    };
   }
 
   interface IResponse {
     questionId: number;
-    question: string;
+    questionText: string;
     type: QuestionType;
     responseId: number;
     answer: string | null;

@@ -68,17 +68,17 @@ export function TagsComponent({ tags, setTags }: ITagsComponent) {
           />
 
           {tag.trim() && showSuggestions && (
-            <div className="absolute top-full left-0 w-full bg-white shadow-lg border rounded-md p-3 z-10 max-h-60 overflow-y-auto">
+            <div className="absolute top-full left-0 w-full bg-white dark:bg-zinc-800 shadow-lg border rounded-md p-3 z-10 max-h-60 overflow-y-auto">
               {isLoading ? (
                 <div className="text-gray-500">Loading...</div>
               ) : suggestedTags.length > 0 ? (
                 suggestedTags.map(t => (
-                  <div key={t.id} className="cursor-pointer hover:bg-gray-100 p-2 rounded" onClick={() => handleAddTag(t)}>
+                  <div key={t.id} className="cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-700 p-2 rounded" onClick={() => handleAddTag(t)}>
                     {t.tagName}
                   </div>
                 ))
               ) : (
-                <div className="cursor-pointer hover:bg-gray-100 p-2 rounded" onClick={() => handleAddTag()}>
+                <div className="cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-700 p-2 rounded" onClick={() => handleAddTag()}>
                   Create new tag: {tag}
                 </div>
               )}

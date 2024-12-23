@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 
 interface ITemplateComponent {
   t: IProfileTemplate;
-  isAuthor: boolean;
+  isAuthor?: boolean;
 }
 
 export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {

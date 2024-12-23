@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetFormsByUserQuery } from "../services/formApi";
+import { useGetFormsByUserQuery } from "../services";
 import { MoonLoader } from "react-spinners";
 import { capitalize, truncateText } from "@/lib/utils/stringUtils";
 import { useIntl } from "react-intl";
@@ -42,7 +42,7 @@ export function UserFilledForms() {
             {isSuccess &&
               (data.length === 0 ? (
                 <TableRow>
-                  {intl.formatMessage({ id: "profilepage.noforms" })}
+                  <TableCell>{intl.formatMessage({ id: "profilepage.noforms" })}</TableCell>
                 </TableRow>
               ) : (
                 data.map((form) => (

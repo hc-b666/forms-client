@@ -12,6 +12,7 @@ interface CreateTemplateBody {
     options: string[];
   }[];
   tags: string[];
+  users: number[];
 }
 
 export const templateApi = baseApi.injectEndpoints({
@@ -43,12 +44,6 @@ export const templateApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["Template"],
-    }),
-    getTemplatesByUserId: builder.query<IProfileTemplate[], number>({
-      query: (userId) => ({
-        url: `templates/profile/${userId}`,
-        method: "GET",
-      }),
     }),
     likeTemplate: builder.mutation({
       query: (templateId: number) => ({
@@ -90,7 +85,6 @@ export const {
   useGetTopTemplatesQuery,
   useGetLatestTemplatesQuery,
   useGetTemplateByIdQuery,
-  useGetTemplatesByUserIdQuery,
   useLikeTemplateMutation,
   useUnlikeTemplateMutation,
   useHasUserSubmittedFormMutation,
