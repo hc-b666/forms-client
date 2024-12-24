@@ -13,7 +13,6 @@ const SearchPage = lazy(() => import("@/pages/Search"));
 
 const ProfilePage = lazy(() => import("@/pages/Profile"));
 const CreateTemplatePage = lazy(() => import("@/pages/CreateTemplate"));
-const EditTemplatePage = lazy(() => import("@/pages/EditTemplate"));
 const FormsPage = lazy(() => import("@/pages/Forms"));
 const FormPage = lazy(() => import("@/pages/Form"));
 const AdminPage = lazy(() => import("@/pages/Admin"));
@@ -43,13 +42,6 @@ export function Router() {
           path="/create-template"
           element={
             <PrivateRoute roles={["USER", "ADMIN"]} component={CreateTemplatePage} />
-          }
-        />
-
-        <Route
-          path="/edit-template/:templateId"
-          element={
-            <PrivateRoute roles={["USER", "ADMIN"]} component={EditTemplatePage} />
           }
         />
 

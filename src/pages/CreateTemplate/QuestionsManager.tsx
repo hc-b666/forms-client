@@ -64,6 +64,11 @@ export function QuestionsManager({ questions, setQuestions}: QuestionsManagerPro
         {intl.formatMessage({ id: "createtemplatepage.questions" })}
       </h2>
 
+      <p>
+        Remember! You can not add new questions after creating template. 
+        You can update existing question's text or options but not question type. 
+      </p>
+
       {questions.sort((a, b) => a.order - b.order).map((question) => (
         <QuestionCard
           question={question}

@@ -15,7 +15,7 @@ export function App() {
 
   return (
     <IntlProvider locale={locale} messages={localizationDictionaries[locale]}>
-      <main className="w-full h-screen flex flex-col gap-10">
+      <main className="w-full h-screen flex flex-col gap-5">
         <Navbar setSidebar={setSidebar} />
         <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
         <Router />

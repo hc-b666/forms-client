@@ -1,4 +1,4 @@
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 import { useGetFormsQuery } from "./services";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,8 +8,10 @@ import { TemplateForms } from "./components/TemplateForms";
 import { TemplateQuestions } from "./components/TemplateQuestions";
 import { Loader } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "../error/Error";
+import { Button } from "@/components/ui/button";
 
 export default function FormsPage() {
+  const navigate = useNavigate();
   const { templateId } = useParams();
   if (!templateId) {
     return <Navigate to="/error" replace />;
@@ -22,7 +24,8 @@ export default function FormsPage() {
   }
 
   return (
-    <div className="container flex-grow flex flex-col items-center">
+    <div className="container flex-grow flex flex-col items-center gap-5">
+      <Button onClick={() => navigate(-1)} className="self-start">Go Back</Button>
       <Tabs defaultValue="details" className="w-full">
         <div className="overflow-x-auto">
           <TabsList className="grid w-full min-w-[480px] grid-cols-4 mb-5">

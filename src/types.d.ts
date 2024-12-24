@@ -72,7 +72,7 @@ declare global {
     id: number;
     title: string;
     description: string;
-    topic: string;
+    topic: TemplateTopic;
     createdAt: string;
     creator: {
       id: number;

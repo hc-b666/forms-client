@@ -10,15 +10,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SelectComponent } from "@/components/common/SelectComponent";
 import { QuestionsManager } from "./QuestionsManager";
 import { Button } from "@/components/ui/button";
 import { TagsComponent } from "./TagsComponent";
 import { useSelector } from "react-redux";
 import { selectUser } from "@/features/auth/slices/authSlice";
 import { AddUsers } from "./AddUsers";
-
-const topics = ["EDU", "QUIZ", "OTHER"];
+import { SelectTopic } from "./SelectTopic";
 
 export default function CreateTemplatePage() {
   const intl = useIntl();
@@ -162,12 +160,7 @@ export default function CreateTemplatePage() {
           />
         </div>
 
-        <SelectComponent
-          onValueChange={handleTopicChange}
-          options={topics}
-          placeholder={intl.formatMessage({ id: "createtemplatepage.selecttopic" })}
-          label="Topic"
-        />
+        <SelectTopic handleTopicChange={handleTopicChange} />
 
         <TagsComponent tags={tags} setTags={setTags} />
 
