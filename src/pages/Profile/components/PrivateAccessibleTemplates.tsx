@@ -23,7 +23,7 @@ export function PrivateAccessibleTemplates() {
       <div className="w-full">
         <div className="flex items-center justify-between mb-5">
           <h1 className="text-2xl font-semibold">
-            Private Templates ({data.length})
+            {t("profilepage.private-accessible-templates")} ({data.length})
           </h1>
 
           <Button onClick={() => navigate("/create-template")}>

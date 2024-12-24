@@ -62,7 +62,9 @@
   "createtemplatepage.toast.err.question": "В шаблоне должен быть хотя бы один 'Вопрос'",
 
   "profilepage.templates": "Шаблоны",
-  "profilepage.filledoutforms": "Заполненные формы",
+  "profilepage.private-templates": "Приватные шаблоны",
+  "profilepage.filledout-forms": "Заполненные формы",
+  "profilepage.private-accessible-templates": "Приватные доступные шаблоны",
   "profilepage.create": "Создать шаблон",
   "profilepage.noforms": "У вас нет заполненных форм",
   "profilepage.notemplates": "Шаблоны отсутствуют",

@@ -19,6 +19,7 @@ export const profileApi = baseApi.injectEndpoints({
         url: `templates/profile/${userId}`,
         method: "GET",
       }),
+      providesTags: ["Profile"],
     }),
     getPrivateAccessibleTemplates: builder.query<IProfileTemplate[], void>({
       query: () => ({
@@ -31,6 +32,7 @@ export const profileApi = baseApi.injectEndpoints({
         url: `templates/${templateId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Profile"],
     }),
   }),
 });

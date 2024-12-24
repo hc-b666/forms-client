@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useIntl } from "react-intl";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserFilledForms } from "./components/UserFilledForms";
@@ -8,11 +7,12 @@ import { UserProfile } from "@/features/users/components/UserProfile";
 import { ProfileTemplates } from "@/pages/Profile/components/ProfileTemplates";
 import { PrivateTemplates } from "./components/PrivateTemplates";
 import { PrivateAccessibleTemplates } from "./components/PrivateAccessibleTemplates";
+import { useTranslations } from "@/hooks/useTranslations";
 
 export default function ProfilePage() {
   const { userId } = useParams();
   const { user: currentUser } = useAuth();
-  const intl = useIntl();
+  const { t } = useTranslations();
 
   return (
     <div className="container flex-grow flex flex-col md:grid grid-cols-4 gap-20">
@@ -22,16 +22,16 @@ export default function ProfilePage() {
           {currentUser?.id === parseInt(userId as string) && (
             <TabsList className="grid w-full min-w-[800px] grid-cols-4 mb-5">
               <TabsTrigger value="templates">
-                {intl.formatMessage({ id: "profilepage.templates" })}
+                {t("profilepage.templates")}
               </TabsTrigger>
               <TabsTrigger value="private-templates">
-                Private Templates
+                {t("profilepage.private-templates")}
               </TabsTrigger>
               <TabsTrigger value="forms">
-                {intl.formatMessage({ id: "profilepage.filledoutforms" })}
+                {t("profilepage.filledout-forms")}
               </TabsTrigger>
               <TabsTrigger value="private-accessible-templates">
-                Private Accessible templates
+                {t("profilepage.private-accessible-templates")}
               </TabsTrigger>
             </TabsList>
           )}

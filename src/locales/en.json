@@ -62,7 +62,9 @@
   "createtemplatepage.toast.err.question": "There has to be at least one 'Question' in the template",
 
   "profilepage.templates": "Templates",
-  "profilepage.filledoutforms": "Filled out Forms",
+  "profilepage.private-templates": "Private Templates",
+  "profilepage.filledout-forms": "Filled out Forms",
+  "profilepage.private-accessible-templates": "Private Accessible Templates",
   "profilepage.create": "Create template",
   "profilepage.noforms": "You have not filled out any forms yet",
   "profilepage.notemplates": "No templates found",
