@@ -1,8 +1,22 @@
+import { NavLink } from "react-router-dom";
 import { useIntl } from "react-intl";
-import { Button } from "@/components/ui/button";
+
 import { capitalize } from "@/lib/utils/stringUtils";
-import { NavLink, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { useDeleteTemplateMutation } from "../services";
+import { toast } from "@/hooks/use-toast";
 
 interface ITemplateComponent {
   t: IProfileTemplate;
@@ -11,17 +25,25 @@ interface ITemplateComponent {
 
 export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
   const intl = useIntl();
-  const navigate = useNavigate();
 
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.stopPropagation();
-    alert(`Delete coming soon ${t.id}`);
+  const [deleteTemplate, { isLoading }] = useDeleteTemplateMutation();
+
+  const handleDelete = async () => {
+    try {
+      const res = await deleteTemplate(t.id).unwrap();
+      toast({ description: res.message });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <Card className="flex flex-col border rounded-md p-3">
       <div className="flex items-center justify-between mb-3 text-sm">
-        <NavLink to={isAuthor ? `/template/${t.id}/forms` : `/template/${t.id}`} className="font-medium hover:underline">
+        <NavLink
+          to={isAuthor ? `/template/${t.id}/forms` : `/template/${t.id}`}
+          className="font-medium hover:underline"
+        >
           {t.title}
         </NavLink>
         <span>{intl.formatDate(t.createdAt)}</span>
@@ -33,13 +55,36 @@ export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
           <span>Topic: {capitalize(t.topic)}</span>
           <div className="flex items-center gap-1 flex-wrap">
             <p>Tags:</p>
-            {t.tags.map((t: string) => <span key={t}>{t}</span>)}
+            {t.tags.map((t: string) => (
+              <span key={t}>{t}</span>
+            ))}
           </div>
         </div>
         {isAuthor && (
           <div className="flex self-end items-center gap-3">
-            <Button onClick={() => navigate(`/edit-template/${t.id}`)}>Edit</Button>
-            <Button onClick={(e) => handleDelete(e)}>Delete</Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button>Delete</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your delete and remove it from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDelete}
+                    disabled={isLoading}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         )}
       </div>

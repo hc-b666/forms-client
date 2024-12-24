@@ -26,6 +26,12 @@ export const profileApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    deleteTemplate: builder.mutation<{ message: string }, number>({
+      query: (templateId) => ({
+        url: `templates/${templateId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -34,4 +40,5 @@ export const {
   useGetFormsByUserQuery,
   useGetTemplatesByUserIdQuery,
   useGetPrivateAccessibleTemplatesQuery,
+  useDeleteTemplateMutation,
 } = profileApi;

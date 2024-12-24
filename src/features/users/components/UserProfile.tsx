@@ -25,7 +25,7 @@ export function UserProfile({ userId }: { userId: string | undefined }) {
             <User className="w-4" />
             {data.username}
           </h3>
-          {user?.id === userId && (
+          {user?.id === parseInt(userId as string) && (
             <Button onClick={logout} className="mt-5">
               {t("navbar.logout")}
             </Button>
