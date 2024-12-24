@@ -50,7 +50,7 @@ declare global {
     id: number;
     createdAt: string;
     content: string;
-    user: {
+    author: {
       id: number;
       email: string;
     };

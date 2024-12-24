@@ -22,7 +22,7 @@ export function Comments({ templateId }: IComments) {
         {isSuccess &&
           data.map((comment) => (
             <div key={comment.id} className="border p-3">
-              <h1>{comment.user.email}</h1>
+              <h1>{comment.author.email}</h1>
               <p>{comment.content}</p>
               <p>{intl.formatDate(comment.createdAt)}</p>
             </div>
