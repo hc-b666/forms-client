@@ -8,8 +8,8 @@ export const searchApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    searchTemplates: builder.query({
-      query: (query: string) => ({
+    searchTemplates: builder.query<Template[], string>({
+      query: (query) => ({
         url: `templates/search?query=${query}`,
         method: "GET",
       }),

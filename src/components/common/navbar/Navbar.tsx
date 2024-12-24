@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Menu } from "lucide-react";
 
-import { SearchComponent } from "./SearchComponent";
+import { SearchComponent } from "@/features/search/components/SearchComponent";
 import { ModeToggle } from "./ModeToggle";
 import { Button } from "@/components/ui/button";
 import { LanguageDropdown } from "./LanguageDropdown";
@@ -15,7 +15,7 @@ interface INavbar {
 
 export function Navbar({ setSidebar }: INavbar) {
   const intl = useIntl();
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   return (
     <nav className="container py-3 flex items-center justify-between border-b">
@@ -34,9 +34,6 @@ export function Navbar({ setSidebar }: INavbar) {
             <NavLink to={`/profile/${user?.id}`} className="hover:underline">
               {user?.username}
             </NavLink>
-            <Button onClick={logout}>
-              {intl.formatMessage({ id: "navbar.logout" })}
-            </Button>
           </div>
         ) : (
           <NavLink to="/login">

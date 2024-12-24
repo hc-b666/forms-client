@@ -15,7 +15,7 @@ interface IFormBody {
 
 export function Form({ template }: IForm) {
   const { user } = useAuth();
-  const [submitForm, { isLoading } ] = useSubmitFormMutation();
+  const [submitForm, { isLoading }] = useSubmitFormMutation();
 
   const { register, handleSubmit } = useForm<IFormBody>();
   const onSubmit: SubmitHandler<IFormBody> = async (data) => {
@@ -90,7 +90,7 @@ export function Form({ template }: IForm) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       {template.questions.map((q) => (
-        <div className="flex flex-col gap-3 border-y py-2" key={q.id}>
+        <div className="flex flex-col gap-3 py-2" key={q.id}>
           <h3>{q.questionText}</h3>
 
           <TemplateQuestionRenderer

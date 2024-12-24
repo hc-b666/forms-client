@@ -1,13 +1,18 @@
 import { MoonLoader } from "react-spinners";
 import { useGetUserByIdQuery } from "../services/userApi";
 import { Mail, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTranslations } from "@/hooks/useTranslations";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export function UserProfile({ userId }: { userId: string | undefined }) {
   const { data, isLoading, isSuccess } = useGetUserByIdQuery(userId);
+  const { t } = useTranslations();
+  const { user, logout } = useAuth();
 
   return (
     <div className="col-span-1 flex justify-center">
-      {isLoading && <MoonLoader color="black" />}
+      {isLoading && <MoonLoader color="green" />}
       {isSuccess && (
         <div className="w-full flex flex-col">
           <h3 className="text-xl font-bold">
@@ -20,6 +25,11 @@ export function UserProfile({ userId }: { userId: string | undefined }) {
             <User className="w-4" />
             {data.username}
           </h3>
+          {user?.id === userId && (
+            <Button onClick={logout} className="mt-5">
+              {t("navbar.logout")}
+            </Button>
+          )}
         </div>
       )}
     </div>
