@@ -1,7 +1,7 @@
 import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { useGetFormQuery } from "@/features/templates/services/templateApi";
+import { useGetFormQuery } from "./services";
 import { Button } from "@/components/ui/button";
 
 export default function FormPage() {

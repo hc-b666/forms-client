@@ -4,6 +4,7 @@ import { BaseQueryApi, FetchArgs, fetchBaseQuery } from "@reduxjs/toolkit/query"
 import { RootState } from "@/app/store";
 import { logout, updateAccessToken } from "@/features/auth/slices/authSlice";
 import { BACKEND_BASE_URL } from "@/lib/constants";
+import { toast } from "@/hooks/use-toast";
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: `${BACKEND_BASE_URL}/api/v1/`,
@@ -19,7 +20,7 @@ export const baseQuery = fetchBaseQuery({
 
 const handleLogout = (api: BaseQueryApi) => {
   api.dispatch(logout());
-  window.alert("Your session is expired. Please log in again.");
+  toast({ description: "Your session is expired. Please log in again." });
   window.location.href = "/login";
 };
 
@@ -30,7 +31,7 @@ export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQu
     const refreshToken = (api.getState() as RootState).authSlice.refreshToken;
 
     if (!refreshToken) {
-      handleLogout(api);
+      toast({ description: "Your are not logged in. Please login." });
       return result;
     }
 
@@ -63,6 +64,6 @@ export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQu
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryInterceptor,
-  tagTypes: ["Template", "Comment", "SingleTemplate", "Profile"],
+  tagTypes: ["Template", "Comment", "SingleTemplate", "Profile", "Likes"],
   endpoints: () => ({}),
 });

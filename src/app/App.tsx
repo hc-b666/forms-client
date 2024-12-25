@@ -3,7 +3,7 @@ import { IntlProvider } from "react-intl";
 
 import { useLocale } from "@/app/providers/LocaleProvider";
 import { Router } from "./router";
-import { Navbar } from "@/components/common/navbar/Navbar";
+import { Navbar } from "@/components/common/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/common/Footer";
 import { Sidebar } from "@/components/common/Sidebar";

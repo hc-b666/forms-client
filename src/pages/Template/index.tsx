@@ -1,46 +1,20 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useGetTemplateByIdQuery, useHasUserSubmittedFormMutation } from "@/features/templates/services/templateApi";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { useToast } from "@/hooks/use-toast";
 import TemplateHeader from "./TemplateHeader";
 import { ErrorPage } from "../error/Error";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Comments } from "@/features/comments/components/Comments";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Form } from "@/features/forms/components/Form";
+import { useGetTemplateByIdQuery, useHasUserSubmittedFormQuery } from "./services";
 
 export default function TemplatePage() {
   const { templateId } = useParams();
-  const { toast } = useToast();
-  const { user } = useAuth();
-  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const { data: template, isLoading, isSuccess, error: templateError } = useGetTemplateByIdQuery(templateId);
-  const [hasSubmittedForm, { isLoading: hasSubmittedLoading }] = useHasUserSubmittedFormMutation();
+  const { data } = useHasUserSubmittedFormQuery(templateId);
 
-  useEffect(() => {
-    const checkUserSubmitted = async () => {
-      try {
-        if (user) {
-          const res = await hasSubmittedForm(templateId).unwrap();
-          setHasSubmitted(res.hasSubmitted);
-        }
-      } catch (err: any) {
-        if (err.status === 403) {
-          toast({ variant: "destructive", description: "Unauthorized. Log In" });
-        } else {
-          toast({ variant: "destructive", description: "Something went wrong"});
-        }
-
-      }
-    };
-
-    checkUserSubmitted();
-  }, [user]);
-
-  if (isLoading || hasSubmittedLoading) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
 
@@ -61,7 +35,7 @@ export default function TemplatePage() {
         </TabsList>
       
         <TabsContent value="form">
-          {isSuccess && !hasSubmitted ? (
+          {isSuccess && !data?.hasSubmitted ? (
             <div className="w-full h-full flex flex-col gap-5 py-5">
               <TemplateHeader template={template} />
 

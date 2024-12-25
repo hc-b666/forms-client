@@ -42,7 +42,7 @@ declare global {
       email: string;
   };
     responses: number;
-    likes: number;
+    // likes: number;
     // hasLiked: boolean;
   }
 

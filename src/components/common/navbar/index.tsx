@@ -40,6 +40,9 @@ export function Navbar({ setSidebar }: INavbar) {
             <Button>{intl.formatMessage({ id: "navbar.login" })}</Button>
           </NavLink>
         )}
+        <NavLink to="/templates" className="hover:underline">
+          Templates
+        </NavLink>
         <ModeToggle />
         <LanguageDropdown />
       </div>

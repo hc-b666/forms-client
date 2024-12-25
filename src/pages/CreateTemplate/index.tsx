@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useToast } from "@/hooks/use-toast";
 
-import { useCreateTemplateMutation } from "@/features/templates/services/templateApi";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,6 +16,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "@/features/auth/slices/authSlice";
 import { AddUsers } from "./AddUsers";
 import { SelectTopic } from "./SelectTopic";
+import { useCreateTemplateMutation } from "./services";
 
 export default function CreateTemplatePage() {
   const intl = useIntl();
