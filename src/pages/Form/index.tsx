@@ -1,9 +1,15 @@
-import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { Loader } from "@/components/common/LoadingSpinner";
 import { useGetFormQuery } from "./services";
 import { Button } from "@/components/ui/button";
 import { ErrorMessage } from "../error/Error";
+import { Response } from "./components/Response";
 
 export default function FormPage() {
   const { templateId, formId } = useParams();
@@ -13,61 +19,37 @@ export default function FormPage() {
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const title = queryParams.get("title"); 
+  const title = queryParams.get("title");
 
   const navigate = useNavigate();
-  const { data, isLoading, isError, isSuccess, error } = useGetFormQuery({
+  const { data, isLoading, isError, isSuccess, error, refetch } = useGetFormQuery({
     templateId,
     formId,
   });
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
 
   if (isError) {
     return <ErrorMessage error={error} />;
   }
 
   return (
-    <div className="container flex-grow flex flex-col gap-5">
-      <div className="w-full flex items-center justify-between">
-        <h1>{title}</h1>
+    <div className="container flex-grow flex flex-col items-center gap-5">
+      <div className="w-[720px] flex items-center justify-between">
+        <h1 className="text-xl font-bold">{title}</h1>
         <Button onClick={() => navigate(-1)}>Go Back</Button>
       </div>
 
+      {isLoading && <Loader />}
+
       {isSuccess && (
-        <div className="w-full flex flex-col gap-5">
-          {data.map((res) => (
-            <div key={res.responseId} className="border p-5">
-              {res.type === "TEXT" && (
-                <>
-                  <h3>{res.questionText}</h3>
-                  <p>{res.answer}</p>
-                </>
-              )}
-
-              {res.type === "PARAGRAPH" && (
-                <>
-                  <h3>{res.questionText}</h3>
-                  <p>{res.answer}</p>
-                </>
-              )}
-
-              {res.type === "MCQ" && (
-                <>
-                  <h3>{res.questionText}</h3>
-                  <p>{res.option}</p>
-                </>
-              )}
-
-              {res.type === "CHECKBOX" && (
-                <>
-                  <h3>{res.questionText}</h3>
-                  <p>{res.options.join(", ")}</p>
-                </>
-              )}
-            </div>
+        <div className="w-[720px] flex flex-col gap-5">
+          {data.questions.map((question) => (
+            <Response
+              question={question}
+              responses={data.responses}
+              authorId={data.form.authorId}
+              key={question.id}
+              refetch={refetch}
+            />
           ))}
         </div>
       )}

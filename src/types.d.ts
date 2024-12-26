@@ -108,15 +108,29 @@ declare global {
     };
   }
 
-  interface IResponse {
-    questionId: number;
-    questionText: string;
-    type: QuestionType;
-    responseId: number;
-    answer: string | null;
-    optionId: number | null;
-    option: string | null;
-    options: string[];
+  interface FormResponses {
+    form: {
+      id: number;
+      authorId: number;
+      filledAt: Date;
+    };
+    questions: {
+      id: number;
+      questionText: string;
+      type: QuestionType;
+      order: number;
+      options: {
+        id: number;
+        option: string
+      }[];
+    }[];
+    responses: {
+      id: number;
+      formId: number;
+      questionId: number;
+      answer: string | null;
+      optionId: number | null;
+    }[];
   }
 
   interface ILoginResponse {
