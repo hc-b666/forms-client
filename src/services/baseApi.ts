@@ -64,6 +64,6 @@ export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQu
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryInterceptor,
-  tagTypes: ["Template", "Comment", "SingleTemplate", "Profile", "Likes"],
+  tagTypes: ["Template", "Comment", "SingleTemplate", "Profile", "Likes", "Forms"],
   endpoints: () => ({}),
 });

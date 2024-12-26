@@ -15,9 +15,9 @@ export default function ProfilePage() {
   const { t } = useTranslations();
 
   return (
-    <div className="container flex-grow flex flex-col md:grid grid-cols-4 gap-20">
+    <div className="container flex-grow flex flex-col md:grid grid-cols-4 xl:grid-cols-5 gap-20">
       <UserProfile userId={userId} />
-      <Tabs defaultValue="templates" className="col-span-3">
+      <Tabs defaultValue="templates" className="col-span-3 xl:col-span-4">
         <div className="overflow-x-auto">
           {currentUser?.id === parseInt(userId as string) && (
             <TabsList className="grid w-full min-w-[800px] grid-cols-4 mb-5">

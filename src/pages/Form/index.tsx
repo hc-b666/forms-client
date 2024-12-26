@@ -3,6 +3,7 @@ import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { useGetFormQuery } from "./services";
 import { Button } from "@/components/ui/button";
+import { ErrorMessage } from "../error/Error";
 
 export default function FormPage() {
   const { templateId, formId } = useParams();
@@ -15,13 +16,17 @@ export default function FormPage() {
   const title = queryParams.get("title"); 
 
   const navigate = useNavigate();
-  const { data, isLoading, isSuccess } = useGetFormQuery({
+  const { data, isLoading, isError, isSuccess, error } = useGetFormQuery({
     templateId,
     formId,
   });
 
   if (isLoading) {
     return <LoadingSpinner />;
+  }
+
+  if (isError) {
+    return <ErrorMessage error={error} />;
   }
 
   return (

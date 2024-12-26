@@ -1,3 +1,5 @@
+import { MoonLoader } from "react-spinners";
+import { useIntl } from "react-intl";
 import {
   Table,
   TableBody,
@@ -7,16 +9,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetFormsByUserQuery } from "../services";
-import { MoonLoader } from "react-spinners";
-import { capitalize, truncateText } from "@/lib/utils/stringUtils";
-import { useIntl } from "react-intl";
+import { FormRow } from "./FormRow";
+import { Button } from "@/components/ui/button";
+import { RefreshCcw } from "lucide-react";
 
 export function UserFilledForms() {
-  const { data, isLoading, isSuccess } = useGetFormsByUserQuery({});
   const intl = useIntl();
+
+  const { data, isLoading, isSuccess, refetch } = useGetFormsByUserQuery({});
 
   return (
     <div className="h-full overflow-x-auto">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-semibold">
+          {intl.formatMessage({ id: "profilepage.filledout-forms" })}
+        </h1>
+        <Button onClick={() => refetch()} size="icon">
+          <RefreshCcw />
+        </Button>
+      </div>
       <div className="min-w-[600px]">
         <Table className="h-full">
           <TableHeader>
@@ -36,32 +47,19 @@ export function UserFilledForms() {
               <TableHead>
                 {intl.formatMessage({ id: "profilepage.filledat" })}
               </TableHead>
+              <TableHead>More</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="h-full w-full">
             {isSuccess &&
               (data.length === 0 ? (
                 <TableRow>
-                  <TableCell>{intl.formatMessage({ id: "profilepage.noforms" })}</TableCell>
+                  <TableCell>
+                    {intl.formatMessage({ id: "profilepage.noforms" })}
+                  </TableCell>
                 </TableRow>
               ) : (
-                data.map((form) => (
-                  <TableRow key={form.id}>
-                    <TableCell>
-                      {truncateText(form.template.title, 20)}
-                    </TableCell>
-                    <TableCell>
-                      {truncateText(form.template.description, 60)}
-                    </TableCell>
-                    <TableCell>{capitalize(form.template.topic)}</TableCell>
-                    <TableCell>
-                      {form.template.tags.slice(0, 3).join(", ")}
-                    </TableCell>
-                    <TableCell>
-                      {new Date(form.filledAt).toLocaleDateString()}
-                    </TableCell>
-                  </TableRow>
-                ))
+                data.map((form) => <FormRow form={form} key={form.id} />)
               ))}
           </TableBody>
         </Table>

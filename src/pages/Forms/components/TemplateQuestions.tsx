@@ -1,19 +1,13 @@
-import { capitalize } from "@/lib/utils/stringUtils";
+import { Question } from "./Question";
 
 interface TemplateQuestionsProps {
-  template: ISingleTemplate;
+  questions: IQuestionServer[];
 }
-export function TemplateQuestions({ template }: TemplateQuestionsProps) {
+export function TemplateQuestions({ questions }: TemplateQuestionsProps) {
   return (
-    <div className="flex flex-col gap-3">
-      {template.questions.map((question) => (
-        <div key={question.id} className="border rounded-md p-5">
-          <div className="flex items-center gap-1">
-            <span>{question.order}.</span>
-            <p>{question.questionText}</p>
-          </div>
-          <span>Question Type: {capitalize(question.type)}</span>
-        </div>
+    <div className="w-[720px] mx-auto flex flex-col gap-3">
+      {questions.map((question) => (
+        <Question question={question} key={question.id} />
       ))}
     </div>
   );

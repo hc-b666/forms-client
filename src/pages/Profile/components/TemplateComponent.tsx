@@ -71,7 +71,7 @@ export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will permanently delete
-                    your delete and remove it from our servers.
+                    your template and remove it from our servers.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

@@ -64,7 +64,6 @@ declare global {
     options: {
       id: number;
       option: string;
-      questionId: number;
     }[];
   }
 

@@ -13,6 +13,7 @@ export const profileApi = baseApi.injectEndpoints({
         url: "forms/user",
         method: "GET",
       }),
+      providesTags: ["Forms"],
     }),
     getTemplatesByUserId: builder.query<IProfileTemplate[], number>({
       query: (userId) => ({
@@ -34,6 +35,13 @@ export const profileApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Profile"],
     }),
+    deleteForm: builder.mutation<{ message: string }, number>({
+      query: (formId) => ({
+        url: `forms/${formId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Forms"],
+    }),
   }),
 });
 
@@ -43,4 +51,5 @@ export const {
   useGetTemplatesByUserIdQuery,
   useGetPrivateAccessibleTemplatesQuery,
   useDeleteTemplateMutation,
+  useDeleteFormMutation,
 } = profileApi;

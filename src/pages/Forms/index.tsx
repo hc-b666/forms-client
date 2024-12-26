@@ -43,7 +43,7 @@ export default function FormsPage() {
 
         <TabsContent value="questions">
           {isLoading && <Loader />}
-          {isSuccess && <TemplateQuestions template={data.template} />}
+          {isSuccess && <TemplateQuestions questions={data.template.questions} />}
         </TabsContent>
 
         <TabsContent value="forms">
