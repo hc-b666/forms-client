@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 
@@ -9,14 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { QuestionsManager } from "./QuestionsManager";
+import { QuestionsManager } from "./components/QuestionsManager";
 import { Button } from "@/components/ui/button";
-import { TagsComponent } from "./TagsComponent";
-import { useSelector } from "react-redux";
+import { TagsComponent } from "./components/TagsComponent";
 import { selectUser } from "@/features/auth/slices/authSlice";
-import { AddUsers } from "./AddUsers";
-import { SelectTopic } from "./SelectTopic";
+import { AddUsers } from "./components/AddUsers";
+import { SelectTopic } from "./components/SelectTopic";
 import { useCreateTemplateMutation } from "./services";
+import { GoBack } from "@/components/common/GoBack";
 
 export default function CreateTemplatePage() {
   const intl = useIntl();
@@ -126,12 +127,10 @@ export default function CreateTemplatePage() {
   return (
     <div className="container flex-grow flex flex-col items-center gap-5">
       <div className="flex items-center justify-between gap-10 w-full md:w-[720px]">
-        <h1 className="text-lg lg:text-2xl font-semibold">
+        <h1 className="lg:text-2xl font-semibold">
           {intl.formatMessage({ id: "createtemplatepage.header" })}
         </h1>
-        <Button onClick={() => navigate(-1)}>
-          {intl.formatMessage({ id: "createtemplatepage.goback" })}
-        </Button>
+        <GoBack />
       </div>
 
       <div className="w-full md:w-[720px] md:p-10 flex flex-col gap-4 md:border rounded-md">

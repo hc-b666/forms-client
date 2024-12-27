@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { useIntl } from "react-intl";
 
 import { capitalize } from "@/lib/utils/stringUtils";
 import { Card } from "@/components/ui/card";
@@ -17,20 +16,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDeleteTemplateMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
+import { formatDate } from "@/lib/utils/dateUtils";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface ITemplateComponent {
-  t: IProfileTemplate;
+  template: IProfileTemplate;
   isAuthor?: boolean;
 }
 
-export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
-  const intl = useIntl();
+export function TemplateComponent({ template, isAuthor }: ITemplateComponent) {
+  const { t } = useTranslations();
 
   const [deleteTemplate, { isLoading }] = useDeleteTemplateMutation();
 
   const handleDelete = async () => {
     try {
-      const res = await deleteTemplate(t.id).unwrap();
+      const res = await deleteTemplate(template.id).unwrap();
       toast({ description: res.message });
     } catch (err) {
       console.log(err);
@@ -41,21 +42,25 @@ export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
     <Card className="flex flex-col border rounded-md p-3">
       <div className="flex items-center justify-between mb-3 text-sm">
         <NavLink
-          to={isAuthor ? `/template/${t.id}/forms` : `/template/${t.id}`}
+          to={
+            isAuthor
+              ? `/template/${template.id}/forms`
+              : `/template/${template.id}`
+          }
           className="font-medium hover:underline"
         >
-          {t.title}
+          {template.title}
         </NavLink>
-        <span>{intl.formatDate(t.createdAt)}</span>
+        <span>{formatDate(template.createdAt)}</span>
       </div>
 
       <div className="flex flex-col justify-between gap-3">
         <div className="flex flex-col md:flex-row md:flex-wrap justify-start gap-5 text-sm">
-          <span>Responses: {t.responses}</span>
-          <span>Topic: {capitalize(t.topic)}</span>
+          <span>{t("profilepage.responses")}: {template.responses}</span>
+          <span>{t("profilepage.topic")}: {capitalize(template.topic)}</span>
           <div className="flex items-center gap-1 flex-wrap">
-            <p>Tags:</p>
-            {t.tags.map((t: string) => (
+            <p>{t("profilepage.tags")}:</p>
+            {template.tags.map((t: string) => (
               <span key={t}>{t}</span>
             ))}
           </div>
@@ -64,23 +69,26 @@ export function TemplateComponent({ t, isAuthor }: ITemplateComponent) {
           <div className="flex self-end items-center gap-3">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button>Delete</Button>
+                <Button>{t("profilepage.delete")}</Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogTitle>
+                    {t("profilepage.delete.alert.title")}
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your template and remove it from our servers.
+                    {t("profilepage.delete.alert.description")}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>
+                    {t("profilepage.cancel")}
+                  </AlertDialogCancel>
                   <AlertDialogAction
                     onClick={handleDelete}
                     disabled={isLoading}
                   >
-                    Delete
+                    {t("profilepage.delete")}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

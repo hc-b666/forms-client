@@ -2,6 +2,12 @@ import { baseApi } from "@/services/baseApi";
 
 export const searchApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getTags: builder.query<ITag[], void>({
+      query: () => ({
+        url: "tags",
+        method: "GET",
+      }),
+    }),
     getTemplates: builder.query({
       query: () => ({
         url: "templates",
@@ -24,6 +30,7 @@ export const searchApi = baseApi.injectEndpoints({
 });
 
 export const { 
+  useGetTagsQuery,
   useGetTemplatesQuery,
   useSearchTemplatesQuery, 
   useSearchTemplatesByTagQuery 

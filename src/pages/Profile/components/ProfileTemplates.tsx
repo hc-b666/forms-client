@@ -29,7 +29,7 @@ export function ProfileTemplates({ userId }: IProfileTemplates) {
       {isSuccess && (
         <div className="w-full">
           <div className="flex items-center justify-between mb-5">
-            <h1 className="text-2xl font-semibold">
+            <h1 className="md:text-2xl font-semibold">
               {intl.formatMessage({ id: "profilepage.templates" })} (
               {data.length})
             </h1>
@@ -45,7 +45,7 @@ export function ProfileTemplates({ userId }: IProfileTemplates) {
             {data.length !== 0 ? (
               data.map((t) => (
                 <TemplateComponent
-                  t={t}
+                  template={t}
                   key={t.id}
                   isAuthor={user?.id === userId}
                 />

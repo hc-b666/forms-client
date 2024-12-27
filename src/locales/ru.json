@@ -3,6 +3,13 @@
   "navbar.logout": "Выйти",
   "navbar.search": "Поиск по ключевому слову...",
 
+  "goback": "Назад",
+
+  "sidebar.home": "Главная",
+  "sidebar.search": "Поиск",
+  "sidebar.templates": "Шаблоны",
+  "sidebar.dashboard": "Панель управления",
+
   "footer.copyright": "Все права защищены",
 
   "loginpage.title": "Форма входа",
@@ -54,6 +61,12 @@
   "createtemplatepage.deletequestion": "Удалить вопрос",
   "createtemplatepage.question.short": "Краткий ответ",
   "createtemplatepage.question.paragraph": "Длинный ответ",
+  "createtemplatepage.questions.reminder": "Помнить! Вы не сможете добавлять новые вопросы после создания шаблона. Вы можете обновить текст или параметры существующего вопроса, но не тип вопроса.",
+  "createtemplatepage.search.user": "Поиск пользователя",
+  "createtemplatepage.search.placeholder": "Введите email пользователя",
+  "createtemplatepage.search.no.user": "Пользователь не найден",
+  "createtemplatepage.add": "Добавить",
+  "createtemplatepage.create.tag": "Создать тег",
 
   "createtemplatepage.toast.err.title": "В шаблоне должно быть 'Название'",
   "createtemplatepage.toast.err.description": "В шаблоне должно быть 'Описание'",
@@ -72,5 +85,26 @@
   "profilepage.description": "Описание",
   "profilepage.topic": "Тема",
   "profilepage.tags": "Теги",
-  "profilepage.filledat": "Заполнено в"
+  "profilepage.filledat": "Заполнено в",
+  "profilepage.delete": "Удалить",
+  "profilepage.cancel": "Отмена",
+  "profilepage.delete.alert.title": "Вы абсолютно уверены?",
+  "profilepage.delete.alert.description": "Это действие нельзя будет отменить",
+  "profilepage.responses": "Ответы",
+
+  "formspage.details": "Детали",
+  "formspage.questions": "Вопросы",
+  "formspage.forms": "Формы",
+  "formspage.comments": "Комментарии",
+  "formspage.title": "Название",
+  "formspage.description": "Описание",
+  "formspage.topic": "Тема",
+  "formspage.tags": "Теги",
+  "formspage.created-at": "Создано в",
+  "formspage.edit": "Редактировать",
+  "formspage.save": "Сохранить",
+  "formspage.saving": "Сохранение",
+  "formspage.cancel": "Отмена",
+  "formspage.noforms": "Формы отсутствуют"
+
 }

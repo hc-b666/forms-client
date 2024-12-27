@@ -22,7 +22,7 @@ export function PrivateAccessibleTemplates() {
     {isSuccess && (
       <div className="w-full">
         <div className="flex items-center justify-between mb-5">
-          <h1 className="text-2xl font-semibold">
+          <h1 className="md:text-2xl font-semibold">
             {t("profilepage.private-accessible-templates")} ({data.length})
           </h1>
 
@@ -33,7 +33,7 @@ export function PrivateAccessibleTemplates() {
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
           {data.length !== 0 ? (
-            data.map((t) => <TemplateComponent t={t} key={t.id} />)
+            data.map((t) => <TemplateComponent template={t} key={t.id} />)
           ) : (
             <p>{t("profilepage.notemplates")}</p>
           )}

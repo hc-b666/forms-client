@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useIntl } from "react-intl";
 import { X } from "lucide-react";
 
-import { useSearchTagsQuery } from "@/features/tags/services/tagApi";
+import { useSearchTagsQuery } from "../services";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface ITagsComponent {
   tags: ITag[];
@@ -15,7 +15,7 @@ interface ITagsComponent {
 }
 
 export function TagsComponent({ tags, setTags }: ITagsComponent) {
-  const intl = useIntl();
+  const { t } = useTranslations();
   const [tag, setTag] = useState("");
   const [debouncedTag, setDebouncedTag] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -47,7 +47,7 @@ export function TagsComponent({ tags, setTags }: ITagsComponent) {
   return (
     <div className="flex flex-col gap-3">
       <Label>
-        {intl.formatMessage({ id: "createtemplatepage.tags" })}
+        {t("createtemplatepage.tags")}
       </Label>
       {tags.length > 0 && (
         <div className="flex flex-wrap items-center gap-1">
@@ -55,7 +55,7 @@ export function TagsComponent({ tags, setTags }: ITagsComponent) {
         </div>
       )}
       <div className="grid grid-cols-4 gap-5">
-        <div className="col-span-3 relative">
+        <div className="col-span-4 lg:col-span-3 flex items-center gap-3 relative">
           <Input
             value={tag}
             onChange={e => {
@@ -63,9 +63,12 @@ export function TagsComponent({ tags, setTags }: ITagsComponent) {
               setShowSuggestions(true);
             }}
             onKeyDown={e => e.key === "Enter" && handleAddTag()}
-            placeholder={intl.formatMessage({ id: "createtemplatepage.writetag" })}
-            className="w-full"
+            placeholder={t("createtemplatepage.writetag")}
           />
+
+          <Button className="lg:hidden" onClick={() => handleAddTag()}>
+            {t("createtemplatepage.add")}
+          </Button>
 
           {tag.trim() && showSuggestions && (
             <div className="absolute top-full left-0 w-full bg-white dark:bg-zinc-800 shadow-lg border rounded-md p-3 z-10 max-h-60 overflow-y-auto">
@@ -79,14 +82,14 @@ export function TagsComponent({ tags, setTags }: ITagsComponent) {
                 ))
               ) : (
                 <div className="cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-700 p-2 rounded" onClick={() => handleAddTag()}>
-                  Create new tag: {tag}
+                  {t("createtemplatepage.create.tag")}: {tag}
                 </div>
               )}
             </div>
           )}
         </div>
         <Button onClick={() => setTags([])}>
-          {intl.formatMessage({ id: "createtemplatepage.clear" })}
+          {t("createtemplatepage.clear")}
         </Button>
       </div>
     </div>

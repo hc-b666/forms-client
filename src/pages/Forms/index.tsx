@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 import { useGetFormsQuery } from "./services";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,16 +8,19 @@ import { TemplateForms } from "./components/TemplateForms";
 import { TemplateQuestions } from "./components/TemplateQuestions";
 import { Loader } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "../error/Error";
-import { Button } from "@/components/ui/button";
+import { GoBack } from "@/components/common/GoBack";
+import { Skeleton } from "@/components/ui/skeleton";
+import { truncateText } from "@/lib/utils/stringUtils";
+import { useTranslations } from "@/hooks/useTranslations";
 
 export default function FormsPage() {
-  const navigate = useNavigate();
   const { templateId } = useParams();
   if (!templateId) {
     return <Navigate to="/error" replace />;
   }
+  const { t } = useTranslations();
 
-  const { data, isLoading, isError, isSuccess, error } = useGetFormsQuery(templateId);
+  const { data, isLoading, isError, isSuccess, error, refetch } = useGetFormsQuery(templateId);
 
   if (isError) {
     return <ErrorMessage error={error} />
@@ -25,20 +28,32 @@ export default function FormsPage() {
 
   return (
     <div className="container flex-grow flex flex-col items-center gap-5">
-      <Button onClick={() => navigate(-1)} className="self-start">Go Back</Button>
+      <div className="flex items-center justify-between w-full">
+        {isLoading && <Skeleton className="w-40 h-8" />}
+        {isSuccess && <h1 className="text-lg font-semibold">{truncateText(data?.template.title, 20)}</h1>}
+        <GoBack />
+      </div>
       <Tabs defaultValue="details" className="w-full">
         <div className="overflow-x-auto">
           <TabsList className="grid w-full min-w-[480px] grid-cols-4 mb-5">
-            <TabsTrigger value="details" >Details</TabsTrigger>
-            <TabsTrigger value="questions">Questions</TabsTrigger>
-            <TabsTrigger value="forms">Forms</TabsTrigger>
-            <TabsTrigger value="comments">Comments</TabsTrigger>
+            <TabsTrigger value="details" >
+              {t("formspage.details")}
+            </TabsTrigger>
+            <TabsTrigger value="questions">
+              {t("formspage.questions")}
+            </TabsTrigger>
+            <TabsTrigger value="forms">
+              {t("formspage.forms")}
+            </TabsTrigger>
+            <TabsTrigger value="comments">
+              {t("formspage.comments")}
+            </TabsTrigger>
           </TabsList>
         </div>
 
         <TabsContent value="details">
           {isLoading && <Loader />}
-          {isSuccess && <TemplateDetails template={data.template} />}
+          {isSuccess && <TemplateDetails template={data.template} refetch={refetch} />}
         </TabsContent>
 
         <TabsContent value="questions">

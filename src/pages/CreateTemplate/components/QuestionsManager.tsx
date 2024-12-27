@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useIntl } from "react-intl";
 
 import { QuestionCard } from "./QuestionCard";
 import { Button } from "@/components/ui/button";
-import { useQuestionManager } from "./hooks/useQuestionManager";
+import { useQuestionManager } from "../hooks/useQuestionManager";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface QuestionsManagerProps {
   questions: Question[];
@@ -11,7 +11,7 @@ interface QuestionsManagerProps {
 }
 
 export function QuestionsManager({ questions, setQuestions}: QuestionsManagerProps) {
-  const intl = useIntl();
+  const { t } = useTranslations();
   const [draggedItem, setDraggedItem] = useState<Question | null>(null);
 
   const { 
@@ -61,12 +61,11 @@ export function QuestionsManager({ questions, setQuestions}: QuestionsManagerPro
   return (
     <div className="flex flex-col gap-3">
       <h2 className="font-semibold">
-        {intl.formatMessage({ id: "createtemplatepage.questions" })}
+        {t("createtemplatepage.questions")}
       </h2>
 
-      <p>
-        Remember! You can not add new questions after creating template. 
-        You can update existing question's text or options but not question type. 
+      <p className="text-justify">
+        {t("createtemplatepage.questions.reminder")}
       </p>
 
       {questions.sort((a, b) => a.order - b.order).map((question) => (
@@ -86,7 +85,7 @@ export function QuestionsManager({ questions, setQuestions}: QuestionsManagerPro
         />
       ))}
       <Button onClick={addQuestion} type="button" variant={"secondary"}>
-        {intl.formatMessage({ id: "createtemplatepage.addquestion" })}
+        {t("createtemplatepage.addquestion")}
       </Button>
     </div>
   );

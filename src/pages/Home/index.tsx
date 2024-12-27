@@ -1,4 +1,3 @@
-import { Loader } from "@/components/common/LoadingSpinner";
 import { TemplateCard } from "../../components/common/TemplateCard";
 import { Tags } from "@/features/search/components/Tags";
 import {
@@ -6,6 +5,7 @@ import {
   useGetTopTemplatesQuery,
 } from "./services";
 import { useTranslations } from "@/hooks/useTranslations";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function HomePage() {
   const { t } = useTranslations();
@@ -28,8 +28,14 @@ export default function HomePage() {
           <h3 className="text-xl font-semibold border-b pb-3">
             {t("homepage.toptemplates")}
           </h3>
-          {topLoading && <Loader />}
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+            {topLoading && (
+              <>
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton key={i} className="w-full h-[160px]" />
+                ))}
+              </>
+            )}
             {topData &&
               topData.map((template) => (
                 <TemplateCard template={template} key={template.id} />
@@ -41,8 +47,15 @@ export default function HomePage() {
           <h3 className="text-xl font-semibold border-b pb-3">
             {t("homepage.latesttemplates")}
           </h3>
-          {latestLoading && <Loader />}
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+            {latestLoading && (
+              <>
+                {[...Array(10)].map((_, i) => (
+                  <Skeleton key={i} className="w-full h-[160px]" />
+                ))}
+              </>
+            )}
+
             {latestData &&
               latestData.map((template) => (
                 <TemplateCard template={template} key={template.id} />

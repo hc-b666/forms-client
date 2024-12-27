@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { TagsComponent } from "@/pages/CreateTemplate/TagsComponent";
-import { SelectTopic } from "@/pages/CreateTemplate/SelectTopic";
+import { TagsComponent } from "@/pages/CreateTemplate/components/TagsComponent";
+import { SelectTopic } from "@/pages/CreateTemplate/components/SelectTopic";
 import { useEditTemplateDetailsMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
 import { ErrorMessage } from "@/pages/error/Error";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface FormData {
   title: string;
@@ -20,7 +21,13 @@ interface FormData {
   topic: TemplateTopic;
 }
 
-export function TemplateDetails({ template }: { template: ISingleTemplate }) {
+interface TemplateDetailsProps {
+  template: ISingleTemplate;
+  refetch: () => void;
+}
+
+export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
+  const { t } = useTranslations();
   const [editMode, setEditMode] = useState(false);
   const [tags, setTags] = useState<ITag[]>(
     template.tags.map((tag) => ({
@@ -59,8 +66,10 @@ export function TemplateDetails({ template }: { template: ISingleTemplate }) {
       const res = await editTemplateDetails(data).unwrap();
       toast({ description: res.message });
       setEditMode(false);
+      refetch();
     } catch (err) {
       console.log(err);
+      setEditMode(false);
     }
   };
 
@@ -79,7 +88,9 @@ export function TemplateDetails({ template }: { template: ISingleTemplate }) {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div>
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title">
+            {t("formspage.title")}
+          </Label>
           <Input
             id="title"
             {...register("title", { required: "Title is required" })}
@@ -91,7 +102,9 @@ export function TemplateDetails({ template }: { template: ISingleTemplate }) {
         </div>
 
         <div>
-          <Label htmlFor="description">Description</Label>
+          <Label htmlFor="description">
+            {t("formspage.description")}
+          </Label>
           <Textarea
             id="description"
             {...register("description", {
@@ -126,10 +139,10 @@ export function TemplateDetails({ template }: { template: ISingleTemplate }) {
 
         <div className="flex gap-2 mt-2">
           <Button disabled={isLoading} type="submit">
-            {isLoading ? "Saving changes" : "Save Changes"}
+            {isLoading ? t("formspage.saving") : t("formspage.save")}
           </Button>
           <Button type="button" variant="outline" onClick={handleCancel}>
-            Cancel
+            {t("formspage.cancel")}
           </Button>
         </div>
       </form>
@@ -142,13 +155,13 @@ export function TemplateDetails({ template }: { template: ISingleTemplate }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <p>Title: {template.title}</p>
-      <p>Description: {template.description}</p>
-      <p>Topic: {capitalize(template.topic)}</p>
-      <div>Tags: {template.tags.join(", ")}</div>
-      <span>Created at: {formatDate(template.createdAt)}</span>
+      <p>{t("formspage.title")}: {template.title}</p>
+      <p>{t("formspage.description")}: {template.description}</p>
+      <p>{t("formspage.topic")}: {capitalize(template.topic)}</p>
+      <div>{t("formspage.tags")}: {template.tags.join(", ")}</div>
+      <span>{t("formspage.created-at")}: {formatDate(template.createdAt)}</span>
       <Button onClick={() => setEditMode(true)} className="w-fit mt-2">
-        Edit Template
+        {t("formspage.edit")}
       </Button>
     </div>
   );

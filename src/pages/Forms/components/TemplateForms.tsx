@@ -1,3 +1,4 @@
+import { useTranslations } from "@/hooks/useTranslations";
 import { formatDate } from "@/lib/utils/dateUtils";
 import { NavLink } from "react-router-dom";
 
@@ -7,6 +8,8 @@ interface TemplateFormsProps {
 }
 
 export function TemplateForms({ forms, template }: TemplateFormsProps) {
+  const { t } = useTranslations();
+
   return (
     <div className="flex flex-col items-center gap-5">
       {forms.length > 0 ? (
@@ -23,7 +26,7 @@ export function TemplateForms({ forms, template }: TemplateFormsProps) {
           ))}
         </>
       ) : (
-        <p>There is no filled forms yet</p>
+        <p>{t("formspage.noforms")}</p>
       )}
     </div>
   );

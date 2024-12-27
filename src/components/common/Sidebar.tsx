@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useIntl } from "react-intl";
 import { Moon, Sun, X } from "lucide-react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -11,6 +10,7 @@ import Logo from "./Logo";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface ISidebar {
   sidebar: boolean;
@@ -18,8 +18,8 @@ interface ISidebar {
 }
 
 export function Sidebar({ sidebar, setSidebar }: ISidebar) {
-  const intl = useIntl();
-  const { isAuthenticated, user, logout } = useAuth();
+  const { t } = useTranslations();
+  const { isAuthenticated, user } = useAuth();
   const { setTheme } = useTheme();
   const { locale, onLocaleChange } = useLocale();
 
@@ -46,17 +46,22 @@ export function Sidebar({ sidebar, setSidebar }: ISidebar) {
 
             <div className="flex flex-col gap-3">
               <NavLink to="/">
-                Home
+                {t("sidebar.home")}
               </NavLink>
               <NavLink to="/search">
-                Search
+                {t("sidebar.search")}
+              </NavLink>
+              <NavLink to="/templates">
+                {t("sidebar.templates")}
               </NavLink>
               {user?.role === "ADMIN" && (
-                <NavLink to="/admin">Dashboard</NavLink>
+                <NavLink to="/admin">
+                  {t("sidebar.dashboard")}
+                </NavLink>
               )}
             </div>
 
-            <div className="mt-auto flex flex-col gap-3">
+            <div className="flex flex-col gap-3">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button className="w-full">
@@ -81,13 +86,13 @@ export function Sidebar({ sidebar, setSidebar }: ISidebar) {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button className="w-full">
-                    <span>{locale === "en" ? "English" : "Russian"}</span>
+                    <span>{locale === "en" ? "English" : "Русский"}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-64">
                   {Object.entries(locales).map(([key, value]) => (
                     <DropdownMenuItem key={key} onClick={() => onLocaleChange(value)}>
-                      {value === "en" ? "English" : "Russian"}
+                      {value === "en" ? "English" : "Русский"}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -100,14 +105,11 @@ export function Sidebar({ sidebar, setSidebar }: ISidebar) {
                       {user?.email}
                     </Button>
                   </NavLink>
-                  <Button onClick={logout} className="w-full">
-                    {intl.formatMessage({ id: "navbar.logout" })}
-                  </Button>
                 </>
               ) : (
                 <NavLink to="/login">
                   <Button className="w-full">
-                    {intl.formatMessage({ id: "navbar.login" })}
+                    {t("navbar.login")}
                   </Button>
                 </NavLink>
               )}

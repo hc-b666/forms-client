@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserFilledForms } from "./components/UserFilledForms";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { UserProfile } from "@/features/users/components/UserProfile";
+import { UserProfile } from "./components/UserProfile";
 import { ProfileTemplates } from "@/pages/Profile/components/ProfileTemplates";
 import { PrivateTemplates } from "./components/PrivateTemplates";
 import { PrivateAccessibleTemplates } from "./components/PrivateAccessibleTemplates";
@@ -20,7 +20,7 @@ export default function ProfilePage() {
       <Tabs defaultValue="templates" className="col-span-3 xl:col-span-4">
         <div className="overflow-x-auto">
           {currentUser?.id === parseInt(userId as string) && (
-            <TabsList className="grid w-full min-w-[800px] grid-cols-4 mb-5">
+            <TabsList className="grid w-full min-w-[920px] grid-cols-4 mb-5">
               <TabsTrigger value="templates">
                 {t("profilepage.templates")}
               </TabsTrigger>

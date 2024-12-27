@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { X } from "lucide-react";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { useSearchUserByEmailQuery } from "./services";
-import { X } from "lucide-react";
+import { useSearchUserByEmailQuery } from "../services";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface AddUsersProps {
   users: { id: number; email: string }[];
@@ -12,6 +14,7 @@ interface AddUsersProps {
 }
 
 export function AddUsers({ users, setUsers }: AddUsersProps) {
+  const { t } = useTranslations();
   const [user, setUser] = useState("");
   const [debouncedUser, setDebouncedUser] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -45,7 +48,7 @@ export function AddUsers({ users, setUsers }: AddUsersProps) {
   return (
     <div className="flex flex-col gap-3">
       <Label htmlFor="add-user-input">
-        Search and add users by their email
+        {t("createtemplatepage.search.user")}
       </Label>
       {users.length > 0 && (
         <div>
@@ -66,8 +69,9 @@ export function AddUsers({ users, setUsers }: AddUsersProps) {
               setUser(e.target.value);
               setShowSuggestions(true);
             }}
-            placeholder="Search by email"
+            placeholder={t("createtemplatepage.search.placeholder")}
           />
+
           {user.trim() && showSuggestions && (
             <div className="absolute top-full left-0 w-full bg-white dark:bg-zinc-800 shadow-lg border rounded-md p-3 z-10 max-h-60 overflow-y-auto">
               {isLoading ? (
@@ -84,14 +88,16 @@ export function AddUsers({ users, setUsers }: AddUsersProps) {
                     </div>
                   ))
                 ) : (
-                  <div className="text-gray-500">There is no user with this email</div>
+                  <div className="text-gray-500">{t("createtemplatepage.search.no.user")}</div>
                 )
               )}
             </div>
           )}
         </div>
 
-        <Button onClick={() => setUsers([])}>Clear</Button>
+        <Button onClick={() => setUsers([])}>
+          {t("createtemplatepage.clear")}
+        </Button>
       </div>
     </div>
   );

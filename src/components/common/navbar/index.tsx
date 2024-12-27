@@ -21,33 +21,35 @@ export function Navbar({ setSidebar }: INavbar) {
     <nav className="container py-3 flex items-center justify-between border-b">
       <Logo />
 
-      <SearchComponent />
+      <div className="flex items-center gap-3">
+        <SearchComponent />
 
-      <div className="hidden md:flex items-center gap-4">
-        {isAuthenticated ? (
-          <div className="flex items-center gap-4">
-            {user?.role === "ADMIN" && (
-              <NavLink to="/admin" className="hover:underline">
-                Dashboard
+        <div className="hidden lg:flex items-center gap-4">
+          {isAuthenticated ? (
+            <div className="flex items-center gap-4">
+              {user?.role === "ADMIN" && (
+                <NavLink to="/admin" className="hover:underline">
+                  Dashboard
+                </NavLink>
+              )}
+              <NavLink to={`/profile/${user?.id}`} className="hover:underline">
+                {user?.username}
               </NavLink>
-            )}
-            <NavLink to={`/profile/${user?.id}`} className="hover:underline">
-              {user?.username}
+            </div>
+          ) : (
+            <NavLink to="/login">
+              <Button>{intl.formatMessage({ id: "navbar.login" })}</Button>
             </NavLink>
-          </div>
-        ) : (
-          <NavLink to="/login">
-            <Button>{intl.formatMessage({ id: "navbar.login" })}</Button>
+          )}
+          <NavLink to="/templates" className="hover:underline">
+            Templates
           </NavLink>
-        )}
-        <NavLink to="/templates" className="hover:underline">
-          Templates
-        </NavLink>
-        <ModeToggle />
-        <LanguageDropdown />
-      </div>
+          <ModeToggle />
+          <LanguageDropdown />
+        </div>
 
-      <Menu onClick={() => setSidebar(true)} className="md:hidden" />
+        <Menu onClick={() => setSidebar(true)} className="lg:hidden" />
+      </div>
     </nav>
   );
 }

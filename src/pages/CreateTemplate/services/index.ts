@@ -30,7 +30,17 @@ export const createTemplateApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+    searchTags: builder.query<ITag[], string>({
+      query: (query) => ({
+        url: `tags/search?query=${query}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useSearchUserByEmailQuery, useCreateTemplateMutation } = createTemplateApi;
+export const {
+  useSearchUserByEmailQuery,
+  useCreateTemplateMutation,
+  useSearchTagsQuery,
+} = createTemplateApi;

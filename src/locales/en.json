@@ -3,6 +3,11 @@
   "navbar.logout": "Log Out",
   "navbar.search": "Search by keyword...",
 
+  "sidebar.home": "Home",
+  "sidebar.search": "Search",
+  "sidebar.templates": "Templates",
+  "sidebar.dashboard": "Dashboard",
+
   "footer.copyright": "All rights reserved",
 
   "loginpage.title": "Log In Form",
@@ -54,6 +59,12 @@
   "createtemplatepage.deletequestion": "Delete question",
   "createtemplatepage.question.short": "Short answer text",
   "createtemplatepage.question.paragraph": "Long answer text",
+  "createtemplatepage.questions.reminder": "Remember! You can not add new questions after creating template. You can update existing question's text or options but not question type.",
+  "createtemplatepage.search.user": "Search and add users by their email",
+  "createmplatepage.search.placeholder": "Search by email",
+  "createtemplatepage.search.no.user": "There is no user with this email",
+  "createtemplatepage.add": "Add",
+  "createtemplatepage.create.tag": "Create tag",
 
   "createtemplatepage.toast.err.title": "There has to be 'Title' in the template",
   "createtemplatepage.toast.err.description": "There has to be 'Description' in the template",
@@ -72,5 +83,25 @@
   "profilepage.description": "Description",
   "profilepage.topic": "Topic",
   "profilepage.tags": "Tags",
-  "profilepage.filledat": "Filled at"
+  "profilepage.filledat": "Filled at",
+  "profilepage.delete": "Delete",
+  "profilepage.cancel": "Cancel",
+  "profilepage.delete.alert.title": "Are you absolutely sure?",
+  "profilepage.delete.alert.description": "This action cannot be undone. This will permanently delete your template and remove it from our servers.",
+  "profilepage.responses": "Responses",
+
+  "formspage.details": "Details",
+  "formspage.questions": "questions",
+  "formspage.forms": "Forms",
+  "formspage.comments": "Comments",
+  "formspage.title": "Title",
+  "formspage.description": "Description",
+  "formspage.topic": "Topic",
+  "formspage.tags": "Tags",
+  "formspage.created-at": "Created at",
+  "formspage.edit": "Edit",
+  "formspage.save": "Save changes",
+  "formspage.saving": "Saving changes",
+  "formspage.cancel": "Cancel",
+  "formspage.noforms": "There is no form filled out yet"
 }

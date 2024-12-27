@@ -1,5 +1,5 @@
 import { MoonLoader } from "react-spinners";
-import { useGetUserByIdQuery } from "../services/userApi";
+import { useGetUserByIdQuery } from "../services";
 import { Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/hooks/useTranslations";

@@ -2,6 +2,12 @@ import { baseApi } from "@/services/baseApi";
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getUserById: builder.query<IUserProfile, string | undefined>({
+      query: (userId) => ({
+        url: `user/profile/${userId}`,
+        method: "GET",
+      }),
+    }),
     getPrivateTemplates: builder.query<IProfileTemplate[], void>({
       query: () => ({
         url: "templates/profile/private",
@@ -46,6 +52,7 @@ export const profileApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetUserByIdQuery,
   useGetPrivateTemplatesQuery,
   useGetFormsByUserQuery,
   useGetTemplatesByUserIdQuery,
