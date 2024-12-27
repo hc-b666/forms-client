@@ -7,13 +7,14 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface IForm {
   template: ISingleTemplate;
+  refetch: () => void;
 }
 
 interface IFormBody {
   [key: string]: any;
 }
 
-export function Form({ template }: IForm) {
+export function Form({ template, refetch }: IForm) {
   const { user } = useAuth();
   const [submitForm, { isLoading }] = useSubmitFormMutation();
 
@@ -82,6 +83,7 @@ export function Form({ template }: IForm) {
         body: { responses },
       }).unwrap();
       toast({ description: res.message });
+      refetch();
     } catch (err) {
       console.log(err);
     }

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,7 +31,11 @@ export function FormRow({ form }: { form: IUserForm }) {
 
   return (
     <TableRow>
-      <TableCell>{truncateText(form.template.title, 20)}</TableCell>
+      <TableCell>
+        <Link to={`/template/${form.template.id}`} className="text-blue-500">
+          {truncateText(form.template.title, 20)}
+        </Link>
+      </TableCell>
       <TableCell>{truncateText(form.template.description, 60)}</TableCell>
       <TableCell>{capitalize(form.template.topic)}</TableCell>
       <TableCell>{form.template.tags.slice(0, 3).join(", ")}</TableCell>

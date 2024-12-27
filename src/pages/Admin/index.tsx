@@ -1,4 +1,4 @@
-import { UsersTable } from "@/features/admin/components/UsersTable";
+import { UsersTable } from "@/pages/Admin/components/UsersTable";
 
 export default function AdminPage() {
 

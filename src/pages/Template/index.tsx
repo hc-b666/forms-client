@@ -12,7 +12,7 @@ export default function TemplatePage() {
   const { templateId } = useParams();
 
   const { data: template, isLoading, isSuccess, error: templateError } = useGetTemplateByIdQuery(templateId);
-  const { data } = useHasUserSubmittedFormQuery(templateId);
+  const { data, refetch } = useHasUserSubmittedFormQuery(templateId);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -39,7 +39,7 @@ export default function TemplatePage() {
             <div className="w-full h-full flex flex-col gap-5 py-5">
               <TemplateHeader template={template} />
 
-              <Form template={template} />
+              <Form template={template} refetch={refetch} />
             </div>
           ) : (
             <div className="w-fullh-full flex flex-col gap-5 py-5">

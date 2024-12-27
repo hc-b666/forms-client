@@ -18,14 +18,19 @@ export const baseQuery = fetchBaseQuery({
   },
 });
 
-const handleLogout = (api: BaseQueryApi) => {
+const handleLogout = (api: BaseQueryApi, message: string) => {
   api.dispatch(logout());
-  toast({ description: "Your session is expired. Please log in again." });
+  toast({ description: message });
   window.location.href = "/login";
 };
 
 export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
   let result = await baseQuery(args, api, extraOptions);
+
+  if (result.error && result.error.status === 403) {
+    handleLogout(api, "Access forbidden. Please login with appropriate permissions");
+    return result;
+  }
 
   if (result.error && result.error.status === 401) {
     const refreshToken = (api.getState() as RootState).authSlice.refreshToken;
@@ -51,10 +56,10 @@ export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQu
         api.dispatch(updateAccessToken(newAccessToken));
         result = await baseQuery(args, api, extraOptions);
       } else {
-        handleLogout(api);
+        handleLogout(api, "Your session has expired. Please log in again.");
       }
     } catch (err) {
-      handleLogout(api);
+      handleLogout(api, "Your session has expired. Please log in again.");
     }
   }
 
