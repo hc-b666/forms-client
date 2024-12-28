@@ -1,5 +1,5 @@
 import { MoonLoader } from "react-spinners";
-import { Lock, LockOpen } from "lucide-react";
+import { Lock, LockOpen, Trash } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import {
   useBlockUserMutation,
+  useDeleteUserMutation,
   useDemoteToUserMutation,
   useGetUsersQuery,
   usePromoteToAdminMutation,
@@ -21,16 +22,29 @@ import { Link } from "react-router-dom";
 import { RoleSelect } from "./SelectRole";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ErrorMessage } from "@/pages/error/Error";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export function UsersTable() {
   const { user: currentUser } = useAuth();
 
-  const { data, isLoading, isError, isSuccess, error, refetch } = useGetUsersQuery();
+  const { data, isLoading, isError, isSuccess, error, refetch } =
+    useGetUsersQuery();
 
   const [blockUser] = useBlockUserMutation();
   const [unblockUser] = useUnblockUserMutation();
   const [promoteToAdmin] = usePromoteToAdminMutation();
   const [demoteToUser] = useDemoteToUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   const handleBlock = async (userId: number) => {
     try {
@@ -65,6 +79,16 @@ export function UsersTable() {
   const handleDemote = async (userId: number) => {
     try {
       const res = await demoteToUser(userId).unwrap();
+      toast({ description: res.message });
+      refetch();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDelete = async (userId: number) => {
+    try {
+      const res = await deleteUser(userId).unwrap();
       toast({ description: res.message });
       refetch();
     } catch (err) {
@@ -144,6 +168,35 @@ export function UsersTable() {
                     >
                       <LockOpen />
                     </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          size="icon"
+                          variant="destructive"
+                          title="Delete User"
+                        >
+                          <Trash />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you sure you want to delete this user?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDelete(user.id)}
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </TableCell>
                 </TableRow>
               ))}
