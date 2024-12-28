@@ -111,9 +111,7 @@ export function SearchComponent() {
       <div className="flex flex-col gap-3 absolute left-0 w-full bg-background shadow-lg border rounded-md p-3 z-10 max-h-60 overflow-y-auto">
         {isLoading ? (
           <div className="text-muted-foreground">Loading...</div>
-        ) : (
-          isSuccess &&
-          suggestedTemplates.length > 0 &&
+        ) : isSuccess && suggestedTemplates.length > 0 ? (
           suggestedTemplates.map((t) => (
             <Link
               to={
@@ -131,6 +129,8 @@ export function SearchComponent() {
               {t.title}
             </Link>
           ))
+        ) : (
+          <div>No templates found</div>
         )}
       </div>
     );
