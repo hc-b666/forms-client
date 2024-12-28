@@ -7,10 +7,10 @@ export function useGetPath(basePath: string, userId: number) {
   const isAdmin = user?.id === userId && user?.role === "ADMIN";
 
   if (isAdmin || user?.id === userId) {
-    return path;
+    return { isAdmin, path };
   } else {
     path = `${basePath}?userId=${userId}`;
   }
 
-  return path;
+  return { isAdmin, path };
 }

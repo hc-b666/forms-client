@@ -8,7 +8,7 @@ export const profileApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    getPrivateTemplates: builder.query<IProfileTemplate[], string | undefined>({
+    getPrivateTemplates: builder.query<IProfileTemplate[], number>({
       query: (userId) => ({
         url: `templates/profile/private/${userId}`,
         method: "GET",

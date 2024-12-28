@@ -1,8 +1,7 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-import { selectIsAuthenticated, selectUser } from "@/features/auth/slices/authSlice";
 import AccessDeniedPage from "@/pages/access-denied/AccessDenied";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface IPrivateRoute {
   component: React.ComponentType;
@@ -10,8 +9,7 @@ interface IPrivateRoute {
 }
 
 export function PrivateRoute({ component: RouteComponent, roles }: IPrivateRoute) {
-  const user = useSelector(selectUser);
-  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const { user, isAuthenticated } = useAuth();
   const hasRequiredRole = user && roles.includes(user.role) ? true : false;
 
   if (isAuthenticated && hasRequiredRole) {

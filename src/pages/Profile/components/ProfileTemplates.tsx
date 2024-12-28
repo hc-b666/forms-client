@@ -13,7 +13,7 @@ export function ProfileTemplates({ userId }: { userId: number }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslations();
-  const createtemplatepath = useGetPath("/create-template", userId);
+  const { path } = useGetPath("/create-template", userId);
 
   const { data, isLoading, isError, isSuccess, error } = useGetTemplatesByUserIdQuery(userId);
 
@@ -37,7 +37,7 @@ export function ProfileTemplates({ userId }: { userId: number }) {
             </h1>
 
             {(user?.id === userId || user?.role === "ADMIN") && (
-              <Button onClick={() => navigate(createtemplatepath)}>
+              <Button onClick={() => navigate(path)}>
                 {t("profilepage.create")}
               </Button>
             )}
@@ -49,7 +49,7 @@ export function ProfileTemplates({ userId }: { userId: number }) {
                 <TemplateComponent
                   template={t}
                   key={t.id}
-                  isAuthor={user?.id === userId}
+                  userId={userId}
                 />
               ))
             ) : (

@@ -40,7 +40,7 @@ export default function ProfilePage() {
           <ProfileTemplates userId={parseInt(userId as string)} />
         </TabsContent>
         <TabsContent value="private-templates">
-          <PrivateTemplates />
+          <PrivateTemplates userId={parseInt(userId as string)} />
         </TabsContent>
         <TabsContent value="forms" className="h-full">
           <UserFilledForms />
