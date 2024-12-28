@@ -6,6 +6,7 @@ import { useGetTemplatesByUserIdQuery } from "../services";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { TemplateComponent } from "./TemplateComponent";
+import { ErrorMessage } from "@/pages/error/Error";
 
 interface IProfileTemplates {
   userId: number;
@@ -16,7 +17,11 @@ export function ProfileTemplates({ userId }: IProfileTemplates) {
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const { data, isLoading, isSuccess } = useGetTemplatesByUserIdQuery(userId);
+  const { data, isLoading, isError, isSuccess, error } = useGetTemplatesByUserIdQuery(userId);
+
+  if (isError) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <>

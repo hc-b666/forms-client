@@ -5,12 +5,17 @@ import { useTranslations } from "@/hooks/useTranslations";
 import { useGetPrivateAccessibleTemplatesQuery } from "../services";
 import { Button } from "@/components/ui/button";
 import { TemplateComponent } from "./TemplateComponent";
+import { ErrorMessage } from "@/pages/error/Error";
 
 export function PrivateAccessibleTemplates() {
   const { t } = useTranslations();
-  const { data, isLoading, isSuccess } = useGetPrivateAccessibleTemplatesQuery();
+  const { data, isLoading, isError, isSuccess, error } = useGetPrivateAccessibleTemplatesQuery();
   const navigate = useNavigate();
   
+  if (isError) {
+    return <ErrorMessage error={error} />;
+  }
+
   return (
     <>
     {isLoading && (

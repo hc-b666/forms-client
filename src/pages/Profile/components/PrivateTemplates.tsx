@@ -5,11 +5,16 @@ import { useGetPrivateTemplatesQuery } from "../services";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/hooks/useTranslations";
 import { TemplateComponent } from "./TemplateComponent";
+import { ErrorMessage } from "@/pages/error/Error";
 
 export function PrivateTemplates() {
   const { t } = useTranslations();
-  const { data, isLoading, isSuccess } = useGetPrivateTemplatesQuery();
+  const { data, isLoading, isError, isSuccess, error } = useGetPrivateTemplatesQuery();
   const navigate = useNavigate();
+
+  if (isError) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <>

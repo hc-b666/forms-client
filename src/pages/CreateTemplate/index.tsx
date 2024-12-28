@@ -18,13 +18,14 @@ import { AddUsers } from "./components/AddUsers";
 import { SelectTopic } from "./components/SelectTopic";
 import { useCreateTemplateMutation } from "./services";
 import { GoBack } from "@/components/common/GoBack";
+import { ErrorMessage } from "../error/Error";
 
 export default function CreateTemplatePage() {
   const intl = useIntl();
   const user = useSelector(selectUser);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [createTemplate, { isLoading }] = useCreateTemplateMutation();
+  const [createTemplate, { isLoading, isError, error }] = useCreateTemplateMutation();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -123,6 +124,10 @@ export default function CreateTemplatePage() {
   const handleTypeChange = (v: "public" | "private") => {
     setType(v);
   };
+
+  if (isError) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <div className="container flex-grow flex flex-col items-center gap-5">

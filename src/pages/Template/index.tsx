@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import TemplateHeader from "./TemplateHeader";
-import { ErrorPage } from "../error/Error";
+import { ErrorMessage } from "../error/Error";
 import { Comments } from "@/features/comments/components/Comments";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Form } from "@/features/forms/components/Form";
@@ -11,15 +11,15 @@ import { useGetTemplateByIdQuery, useHasUserSubmittedFormQuery } from "./service
 export default function TemplatePage() {
   const { templateId } = useParams();
 
-  const { data: template, isLoading, isSuccess, error: templateError } = useGetTemplateByIdQuery(templateId);
+  const { data: template, isError, isLoading, isSuccess, error } = useGetTemplateByIdQuery(templateId);
   const { data, refetch } = useHasUserSubmittedFormQuery(templateId);
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (templateError) {
-    return templateError && <ErrorPage error={templateError} />;
+  if (isError) {
+    return <ErrorMessage error={error} />;
   }
 
   if (!template) {

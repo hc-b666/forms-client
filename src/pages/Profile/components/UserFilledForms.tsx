@@ -12,11 +12,16 @@ import { useGetFormsByUserQuery } from "../services";
 import { FormRow } from "./FormRow";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";
+import { ErrorMessage } from "@/pages/error/Error";
 
 export function UserFilledForms() {
   const intl = useIntl();
 
-  const { data, isLoading, isSuccess, refetch } = useGetFormsByUserQuery({});
+  const { data, isLoading, isError, isSuccess, error, refetch } = useGetFormsByUserQuery({});
+
+  if (isError) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <div className="h-full">
