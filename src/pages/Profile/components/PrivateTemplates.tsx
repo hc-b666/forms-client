@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
 
 import { useGetPrivateTemplatesQuery } from "../services";
@@ -8,8 +8,9 @@ import { TemplateComponent } from "./TemplateComponent";
 import { ErrorMessage } from "@/pages/error/Error";
 
 export function PrivateTemplates() {
+  const { userId } = useParams();
   const { t } = useTranslations();
-  const { data, isLoading, isError, isSuccess, error } = useGetPrivateTemplatesQuery();
+  const { data, isLoading, isError, isSuccess, error } = useGetPrivateTemplatesQuery(userId);
   const navigate = useNavigate();
 
   if (isError) {

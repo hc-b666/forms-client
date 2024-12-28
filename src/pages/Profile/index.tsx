@@ -19,7 +19,7 @@ export default function ProfilePage() {
       <UserProfile userId={userId} />
       <Tabs defaultValue="templates" className="col-span-3 xl:col-span-4">
         <div className="overflow-x-auto">
-          {currentUser?.id === parseInt(userId as string) && (
+          {(currentUser?.id === parseInt(userId as string) || currentUser?.role === "ADMIN") && (
             <TabsList className="grid w-full min-w-[920px] grid-cols-4 mb-5">
               <TabsTrigger value="templates">
                 {t("profilepage.templates")}

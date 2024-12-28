@@ -13,11 +13,13 @@ import { FormRow } from "./FormRow";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";
 import { ErrorMessage } from "@/pages/error/Error";
+import { useParams } from "react-router-dom";
 
 export function UserFilledForms() {
   const intl = useIntl();
+  const { userId } = useParams();
 
-  const { data, isLoading, isError, isSuccess, error, refetch } = useGetFormsByUserQuery({});
+  const { data, isLoading, isError, isSuccess, error, refetch } = useGetFormsByUserQuery(userId);
 
   if (isError) {
     return <ErrorMessage error={error} />;
