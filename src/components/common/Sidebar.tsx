@@ -48,9 +48,9 @@ export function Sidebar({ sidebar, setSidebar }: ISidebar) {
               <NavLink to="/">
                 {t("sidebar.home")}
               </NavLink>
-              <NavLink to="/search">
+              {/* <NavLink to="/search">
                 {t("sidebar.search")}
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/templates">
                 {t("sidebar.templates")}
               </NavLink>

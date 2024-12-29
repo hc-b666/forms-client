@@ -25,7 +25,7 @@ export function Tags() {
           <>
             {data.map((tag) => (
               <Badge
-                onClick={() => navigate(`/templates?tagId=${tag.id}`)}
+                onClick={() => navigate(`/search?tagId=${tag.id}`)}
                 className="cursor-pointer"
                 key={tag.id}
               >

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function ErrorPage(error: any) {
@@ -22,6 +23,11 @@ interface ErrorMessageProps {
 }
 
 export function ErrorMessage({ error }: ErrorMessageProps) {
+
+  useEffect(() => {
+    document.title = "Forms | Error";
+  }, []);
+
   const navigate = useNavigate();
   let message = "An unexpected error occurred";
 

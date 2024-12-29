@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 export default function NotFoundPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Forms | 404 Not Found";
+  }, []);
 
   return (
     <div className="container flex-grow flex flex-col items-center justify-center gap-5">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
@@ -20,6 +20,10 @@ import { useTranslations } from "@/hooks/useTranslations";
 
 export default function CreateTemplatePage() {
   const { t } = useTranslations();
+
+  useEffect(() => {
+    document.title = "Forms | Create Template";
+  }, []);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);

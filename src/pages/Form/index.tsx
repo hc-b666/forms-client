@@ -5,6 +5,7 @@ import { useGetFormQuery } from "./services";
 import { ErrorMessage } from "../error/Error";
 import { Response } from "./components/Response";
 import { GoBack } from "@/components/common/GoBack";
+import { useEffect } from "react";
 
 export default function FormPage() {
   const { templateId, formId } = useParams();
@@ -21,6 +22,10 @@ export default function FormPage() {
       templateId,
       formId,
     });
+
+  useEffect(() => {
+    document.title = `Forms | ${title}`; 
+  }, []);
 
   if (isError) {
     return <ErrorMessage error={error} />;

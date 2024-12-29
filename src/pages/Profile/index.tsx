@@ -8,11 +8,16 @@ import { ProfileTemplates } from "@/pages/Profile/components/ProfileTemplates";
 import { PrivateTemplates } from "./components/PrivateTemplates";
 import { PrivateAccessibleTemplates } from "./components/PrivateAccessibleTemplates";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useEffect } from "react";
 
 export default function ProfilePage() {
   const { userId } = useParams();
   const { user: currentUser } = useAuth();
   const { t } = useTranslations();
+
+  useEffect(() => {
+    document.title = `Forms | Profile of ${userId}`;
+  }, []);
 
   return (
     <div className="container flex-grow flex flex-col md:grid grid-cols-4 xl:grid-cols-5 gap-20">
