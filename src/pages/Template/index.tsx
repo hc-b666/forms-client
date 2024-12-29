@@ -16,7 +16,9 @@ export default function TemplatePage() {
   const { data, refetch } = useHasUserSubmittedFormQuery(templateId);
   
   useEffect(() => {
-    document.title = `Forms | ${template?.title}`;
+    if (template) {
+      document.title = `Forms | ${template?.title}`;
+    }
   }, []);
 
   if (isLoading) {
