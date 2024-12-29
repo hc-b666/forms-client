@@ -1,4 +1,4 @@
-import { Navigate, useLocation, useParams } from "react-router-dom";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 
 import { Loader } from "@/components/common/LoadingSpinner";
 import { useGetFormQuery } from "./services";
@@ -13,9 +13,9 @@ export default function FormPage() {
     return <Navigate to="/error" replace />;
   }
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const title = queryParams.get("title");
+  const [searchParams] = useSearchParams();
+
+  const title = searchParams.get("title");
 
   const { data, isLoading, isError, isSuccess, error, refetch } =
     useGetFormQuery({

@@ -16,7 +16,7 @@ export default function ProfilePage() {
   const { t } = useTranslations();
 
   useEffect(() => {
-    document.title = `Forms | Profile of ${userId}`;
+    document.title = `Forms | Profile`;
   }, []);
 
   return (
