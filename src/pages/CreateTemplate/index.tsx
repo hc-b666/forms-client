@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useIntl } from "react-intl";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import { useToast } from "@/hooks/use-toast";
@@ -13,16 +11,24 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { QuestionsManager } from "./components/QuestionsManager";
 import { Button } from "@/components/ui/button";
 import { TagsComponent } from "./components/TagsComponent";
-import { selectUser } from "@/features/auth/slices/authSlice";
 import { AddUsers } from "./components/AddUsers";
 import { SelectTopic } from "./components/SelectTopic";
 import { useCreateTemplateMutation } from "./services";
 import { GoBack } from "@/components/common/GoBack";
 import { ErrorMessage } from "../error/Error";
+import { useTranslations } from "@/hooks/useTranslations";
 
 export default function CreateTemplatePage() {
-  const intl = useIntl();
-  const user = useSelector(selectUser);
+  const { t } = useTranslations();
+
+  useEffect(() => {
+    document.title = "Forms | Create Template";
+  }, []);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const userId = queryParams.get("userId");
+
   const { toast } = useToast();
   const navigate = useNavigate();
   const [createTemplate, { isLoading, isError, error }] = useCreateTemplateMutation();
@@ -43,44 +49,39 @@ export default function CreateTemplatePage() {
   ]);
   const [users, setUsers] = useState<{ id: number, email: string }[]>([]);
 
-  if (!user) {
-    navigate("/login");
-    return;
-  }
-
   const handleCreateTemplate = async () => {
     if (!title.trim()) {
       toast({ 
         variant: "destructive", 
-        description: intl.formatMessage({ id: "createtemplatepage.toast.err.title" }) 
+        description: t("createtemplatepage.toast.err.title"), 
       });
       return;
     }
     if (!description.trim()) {
       toast({ 
         variant: "destructive", 
-        description: intl.formatMessage({ id: "createtemplatepage.toast.err.description" }) 
+        description: t("createtemplatepage.toast.err.description"), 
       });
       return;
     }
     if (!topic) {
       toast({ 
         variant: "destructive", 
-        description: intl.formatMessage({ id: "createtemplatepage.toast.err.topic" }) 
+        description: t("createtemplatepage.toast.err.topic"), 
       });
       return;
     }
     if (tags.length === 0) {
       toast({ 
         variant: "destructive", 
-        description: intl.formatMessage({ id: "createtemplatepage.toast.err.tags" }) 
+        description: t("createtemplatepage.toast.err.tags"), 
       });
       return;
     }
     if (questions.length === 0) {
       toast({ 
         variant: "destructive", 
-        description: intl.formatMessage({ id: "createtemplatepage.toast.err.question" }) 
+        description: t("createtemplatepage.toast.err.question"), 
       });
       return;
     }
@@ -99,9 +100,9 @@ export default function CreateTemplatePage() {
     };
 
     try {
-      const res = await createTemplate(data).unwrap();
+      const res = await createTemplate({ userId: parseInt(userId as string), body: data }).unwrap();
       toast({ description: res.message });
-      navigate(`/profile/${user.id}`);
+      navigate(`/profile/${userId}`);
     } catch (err) {
       const status = (err as any).status;
       const msg = (err as any).data.message;
@@ -133,7 +134,7 @@ export default function CreateTemplatePage() {
     <div className="container flex-grow flex flex-col items-center gap-5">
       <div className="flex items-center justify-between gap-10 w-full md:w-[720px]">
         <h1 className="lg:text-2xl font-semibold">
-          {intl.formatMessage({ id: "createtemplatepage.header" })}
+          {t("createtemplatepage.header")}
         </h1>
         <GoBack />
       </div>
@@ -141,25 +142,25 @@ export default function CreateTemplatePage() {
       <div className="w-full md:w-[720px] md:p-10 flex flex-col gap-4 md:border rounded-md">
         <div className="flex flex-col gap-2">
           <Label htmlFor="title">
-            {intl.formatMessage({ id: "createtemplatepage.title" })}
+            {t("createtemplatepage.title")}
           </Label>
           <Input
             id="title"
             name="title"
             type="text"
-            placeholder={intl.formatMessage({ id: "createtemplatepage.title" })}
+            placeholder={t("createtemplatepage.title")}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
         <div className="flex flex-col gap-2">
           <Label htmlFor="description">
-            {intl.formatMessage({ id: "createtemplatepage.description" })}
+            {t("createtemplatepage.description")}
           </Label>
           <Textarea
             id="description"
             name="description"
-            placeholder={intl.formatMessage({ id: "createtemplatepage.description" })}
+            placeholder={t("createtemplatepage.description")}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
@@ -170,19 +171,19 @@ export default function CreateTemplatePage() {
 
         <div className="flex flex-col gap-2">
           <h3 className="text-sm font-semibold">
-            {intl.formatMessage({ id: "createtemplatepage.selecttype" })}
+            {t("createtemplatepage.selecttype")}
           </h3>
           <RadioGroup onValueChange={handleTypeChange} defaultValue={type}>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="public" id="public" />
               <Label htmlFor="public">
-                {intl.formatMessage({ id: "createtemplatepage.public" })}
+                {t("createtemplatepage.public")}
               </Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="private" id="private" />
               <Label htmlFor="private">
-                {intl.formatMessage({ id: "createtemplatepage.private" })}
+                {t("createtemplatepage.private")}
               </Label>
             </div>
           </RadioGroup>
@@ -194,8 +195,8 @@ export default function CreateTemplatePage() {
 
         <Button disabled={isLoading} onClick={handleCreateTemplate}>
           {isLoading 
-            ? intl.formatMessage({ id: "createtemplatepage.creating" }) 
-            : intl.formatMessage({ id: "createtemplatepage.create" })}
+            ? t("createtemplatepage.creating") 
+            : t("createtemplatepage.create")}
         </Button>
       </div>
     </div>

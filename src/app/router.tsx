@@ -7,6 +7,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 const HomePage = lazy(() => import("@/pages/Home"));
 const LoginPage = lazy(() => import("@/pages/Login"));
 const RegisterPage = lazy(() => import("@/pages/Register"));
+const VerifyEmailPage = lazy(() => import("@/pages/verify"));
 const TemplatesPage = lazy(() => import("@/pages/Templates"));
 const TemplatePage = lazy(() => import("@/pages/Template"));
 const SearchPage = lazy(() => import("@/pages/Search"));
@@ -26,6 +27,7 @@ export function Router() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/verify" element={<VerifyEmailPage />} />
         <Route path="/templates" element={<TemplatesPage />} />
         <Route path="/template/:templateId" element={<TemplatePage />} />
 

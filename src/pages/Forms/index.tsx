@@ -12,6 +12,7 @@ import { GoBack } from "@/components/common/GoBack";
 import { Skeleton } from "@/components/ui/skeleton";
 import { truncateText } from "@/lib/utils/stringUtils";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useEffect } from "react";
 
 export default function FormsPage() {
   const { templateId } = useParams();
@@ -21,6 +22,12 @@ export default function FormsPage() {
   const { t } = useTranslations();
 
   const { data, isLoading, isError, isSuccess, error, refetch } = useGetFormsQuery(templateId);
+
+  useEffect(() => {
+    if (data) {
+      document.title = `Forms | ${data.template.title}`;
+    }
+  }, [data]);
 
   if (isError) {
     return <ErrorMessage error={error} />

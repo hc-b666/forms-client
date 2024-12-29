@@ -6,11 +6,15 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/hooks/useTranslations";
 import { TemplateComponent } from "./TemplateComponent";
 import { ErrorMessage } from "@/pages/error/Error";
+import { useGetPath } from "@/hooks/useGetPath";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
-export function PrivateTemplates() {
+export function PrivateTemplates({ userId }: { userId: number }) {
   const { t } = useTranslations();
-  const { data, isLoading, isError, isSuccess, error } = useGetPrivateTemplatesQuery();
+  const { user } = useAuth();
+  const { data, isLoading, isError, isSuccess, error } = useGetPrivateTemplatesQuery(userId);
   const navigate = useNavigate();
+  const { path } = useGetPath("/create-template", userId);
 
   if (isError) {
     return <ErrorMessage error={error} />;
@@ -31,14 +35,16 @@ export function PrivateTemplates() {
               {t("profilepage.private-templates")} ({data.length})
             </h1>
 
-            <Button onClick={() => navigate("/create-template")}>
-              {t("profilepage.create")}
-            </Button>
+            {(user?.id === userId || user?.role === "ADMIN") && (
+              <Button onClick={() => navigate(path)}>
+                {t("profilepage.create")}
+              </Button>
+            )}
           </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
             {data.length !== 0 ? (
-              data.map((t) => <TemplateComponent template={t} key={t.id} isAuthor={true} />)
+              data.map((t) => <TemplateComponent template={t} key={t.id} userId={userId} />)
             ) : (
               <p>{t("profilepage.notemplates")}</p>
             )}

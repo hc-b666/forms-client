@@ -24,8 +24,8 @@ export const createTemplateApi = baseApi.injectEndpoints({
       }),
     }),
     createTemplate: builder.mutation({
-      query: (body: CreateTemplateBody) => ({
-        url: "templates/create",
+      query: ({ userId, body }: { userId: number, body: CreateTemplateBody }) => ({
+        url: `templates/create/${userId}`,
         method: "POST",
         body,
       }),

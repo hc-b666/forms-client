@@ -15,6 +15,13 @@ export const authApi = createApi({
         body,
       }),
     }),
+    verify: builder.mutation<{ message: string }, string>({
+      query: (token) => ({
+        url: "auth/verify",
+        method: "POST",
+        body: { token },
+      }),
+    }),
     login: builder.mutation<ILoginResponse, ILoginForm>({
       query: (body) => ({
         url: `auth/login`,
@@ -34,6 +41,7 @@ export const authApi = createApi({
 
 export const {
   useRegisterMutation,
+  useVerifyMutation,
   useLoginMutation,
   useRefreshTokenMutation,
 } = authApi;

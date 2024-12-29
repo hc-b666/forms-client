@@ -18,14 +18,16 @@ import { useDeleteTemplateMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
 import { formatDate } from "@/lib/utils/dateUtils";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface ITemplateComponent {
   template: IProfileTemplate;
-  isAuthor?: boolean;
+  userId?: number;
 }
 
-export function TemplateComponent({ template, isAuthor }: ITemplateComponent) {
+export function TemplateComponent({ template, userId }: ITemplateComponent) {
   const { t } = useTranslations();
+  const { user } = useAuth();
 
   const [deleteTemplate, { isLoading }] = useDeleteTemplateMutation();
 
@@ -43,7 +45,7 @@ export function TemplateComponent({ template, isAuthor }: ITemplateComponent) {
       <div className="flex items-center justify-between mb-3 text-sm">
         <NavLink
           to={
-            isAuthor
+            user?.role === "ADMIN" || user?.id === userId
               ? `/template/${template.id}/forms`
               : `/template/${template.id}`
           }
@@ -56,8 +58,12 @@ export function TemplateComponent({ template, isAuthor }: ITemplateComponent) {
 
       <div className="flex flex-col justify-between gap-3">
         <div className="flex flex-col md:flex-row md:flex-wrap justify-start gap-5 text-sm">
-          <span>{t("profilepage.responses")}: {template.responses}</span>
-          <span>{t("profilepage.topic")}: {capitalize(template.topic)}</span>
+          <span>
+            {t("profilepage.responses")}: {template.responses}
+          </span>
+          <span>
+            {t("profilepage.topic")}: {capitalize(template.topic)}
+          </span>
           <div className="flex items-center gap-1 flex-wrap">
             <p>{t("profilepage.tags")}:</p>
             {template.tags.map((t: string) => (
@@ -65,7 +71,7 @@ export function TemplateComponent({ template, isAuthor }: ITemplateComponent) {
             ))}
           </div>
         </div>
-        {isAuthor && (
+        {(user?.id === userId || user?.role === "ADMIN") && (
           <div className="flex self-end items-center gap-3">
             <AlertDialog>
               <AlertDialogTrigger asChild>

@@ -8,15 +8,15 @@ export const profileApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    getPrivateTemplates: builder.query<IProfileTemplate[], void>({
-      query: () => ({
-        url: "templates/profile/private",
+    getPrivateTemplates: builder.query<IProfileTemplate[], number>({
+      query: (userId) => ({
+        url: `templates/profile/private/${userId}`,
         method: "GET",
       }),
     }),
-    getFormsByUser: builder.query<IUserForm[], {}>({
-      query: () => ({
-        url: "forms/user",
+    getFormsByUser: builder.query<IUserForm[], string | undefined>({
+      query: (userId) => ({
+        url: `forms/user/${userId}`,
         method: "GET",
       }),
       providesTags: ["Forms"],
@@ -28,9 +28,9 @@ export const profileApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Profile"],
     }),
-    getPrivateAccessibleTemplates: builder.query<IProfileTemplate[], void>({
-      query: () => ({
-        url: "templates/profile/private/templates",
+    getPrivateAccessibleTemplates: builder.query<IProfileTemplate[], string | undefined>({
+      query: (userId) => ({
+        url: `templates/profile/private/templates/${userId}`,
         method: "GET",
       }),
     }),

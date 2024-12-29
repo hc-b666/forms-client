@@ -8,18 +8,23 @@ import { ProfileTemplates } from "@/pages/Profile/components/ProfileTemplates";
 import { PrivateTemplates } from "./components/PrivateTemplates";
 import { PrivateAccessibleTemplates } from "./components/PrivateAccessibleTemplates";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useEffect } from "react";
 
 export default function ProfilePage() {
   const { userId } = useParams();
   const { user: currentUser } = useAuth();
   const { t } = useTranslations();
 
+  useEffect(() => {
+    document.title = `Forms | Profile`;
+  }, []);
+
   return (
     <div className="container flex-grow flex flex-col md:grid grid-cols-4 xl:grid-cols-5 gap-20">
       <UserProfile userId={userId} />
       <Tabs defaultValue="templates" className="col-span-3 xl:col-span-4">
         <div className="overflow-x-auto">
-          {currentUser?.id === parseInt(userId as string) && (
+          {(currentUser?.id === parseInt(userId as string) || currentUser?.role === "ADMIN") && (
             <TabsList className="grid w-full min-w-[920px] grid-cols-4 mb-5">
               <TabsTrigger value="templates">
                 {t("profilepage.templates")}
@@ -40,7 +45,7 @@ export default function ProfilePage() {
           <ProfileTemplates userId={parseInt(userId as string)} />
         </TabsContent>
         <TabsContent value="private-templates">
-          <PrivateTemplates />
+          <PrivateTemplates userId={parseInt(userId as string)} />
         </TabsContent>
         <TabsContent value="forms" className="h-full">
           <UserFilledForms />

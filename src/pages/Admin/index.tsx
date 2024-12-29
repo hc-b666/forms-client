@@ -1,6 +1,11 @@
 import { UsersTable } from "@/pages/Admin/components/UsersTable";
+import { useEffect } from "react";
 
 export default function AdminPage() {
+
+  useEffect(() => {
+    document.title = "Forms | Admin Dashboard";
+  }, []);
 
   return (
     <div className="container flex-grow">

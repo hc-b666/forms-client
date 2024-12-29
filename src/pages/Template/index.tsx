@@ -1,18 +1,25 @@
 import { useParams } from "react-router-dom";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import TemplateHeader from "./TemplateHeader";
+import TemplateHeader from "./components/TemplateHeader";
 import { ErrorMessage } from "../error/Error";
 import { Comments } from "@/features/comments/components/Comments";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Form } from "@/features/forms/components/Form";
+import { Form } from "@/pages/Template/components/Form";
 import { useGetTemplateByIdQuery, useHasUserSubmittedFormQuery } from "./services";
+import { useEffect } from "react";
 
 export default function TemplatePage() {
   const { templateId } = useParams();
 
   const { data: template, isError, isLoading, isSuccess, error } = useGetTemplateByIdQuery(templateId);
   const { data, refetch } = useHasUserSubmittedFormQuery(templateId);
+  
+  useEffect(() => {
+    if (template) {
+      document.title = `Forms | ${template?.title}`;
+    }
+  }, []);
 
   if (isLoading) {
     return <LoadingSpinner />;

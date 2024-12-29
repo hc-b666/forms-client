@@ -1,21 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { MoonLoader } from "react-spinners";
-import { useIntl } from "react-intl";
 
 import { useGetTemplatesByUserIdQuery } from "../services";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { TemplateComponent } from "./TemplateComponent";
 import { ErrorMessage } from "@/pages/error/Error";
+import { useTranslations } from "@/hooks/useTranslations";
+import { useGetPath } from "@/hooks/useGetPath";
 
-interface IProfileTemplates {
-  userId: number;
-}
-
-export function ProfileTemplates({ userId }: IProfileTemplates) {
+export function ProfileTemplates({ userId }: { userId: number }) {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const intl = useIntl();
+  const { t } = useTranslations();
+  const { path } = useGetPath("/create-template", userId);
 
   const { data, isLoading, isError, isSuccess, error } = useGetTemplatesByUserIdQuery(userId);
 
@@ -35,13 +33,12 @@ export function ProfileTemplates({ userId }: IProfileTemplates) {
         <div className="w-full">
           <div className="flex items-center justify-between mb-5">
             <h1 className="md:text-2xl font-semibold">
-              {intl.formatMessage({ id: "profilepage.templates" })} (
-              {data.length})
+              {t("profilepage.templates")} ({data.length})
             </h1>
 
-            {user?.id === userId && (
-              <Button onClick={() => navigate("/create-template")}>
-                {intl.formatMessage({ id: "profilepage.create" })}
+            {(user?.id === userId || user?.role === "ADMIN") && (
+              <Button onClick={() => navigate(path)}>
+                {t("profilepage.create")}
               </Button>
             )}
           </div>
@@ -52,11 +49,11 @@ export function ProfileTemplates({ userId }: IProfileTemplates) {
                 <TemplateComponent
                   template={t}
                   key={t.id}
-                  isAuthor={user?.id === userId}
+                  userId={userId}
                 />
               ))
             ) : (
-              <p>{intl.formatMessage({ id: "profilepage.notemplates" })}</p>
+              <p>{t("profilepage.notemplates")}</p>
             )}
           </div>
         </div>
