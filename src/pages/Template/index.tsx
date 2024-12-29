@@ -5,7 +5,7 @@ import TemplateHeader from "./components/TemplateHeader";
 import { ErrorMessage } from "../error/Error";
 import { Comments } from "@/features/comments/components/Comments";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Form } from "@/features/forms/components/Form";
+import { Form } from "@/pages/Template/components/Form";
 import { useGetTemplateByIdQuery, useHasUserSubmittedFormQuery } from "./services";
 import { useEffect } from "react";
 

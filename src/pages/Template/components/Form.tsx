@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "@/hooks/use-toast";
-import { useSubmitFormMutation } from "../services/formApi";
+import { useSubmitFormMutation } from "../services";
 import TemplateQuestionRenderer from "./TemplateQuestionRenderer";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/hooks/useAuth";
