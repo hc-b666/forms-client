@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useEditResponseMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
+import { QuestionType } from "@/enums";
 
 interface ResponseProps {
   question: {
@@ -63,8 +64,8 @@ export function Response({ question, authorId, responses, refetch }: ResponsePro
     let newResponse;
     
     switch (question.type) {
-      case "TEXT":
-      case "PARAGRAPH":
+      case QuestionType.TEXT:
+      case QuestionType.PARAGRAPH:
         newResponse = {
           questionId: question.id,
           answer: textAnswer,
@@ -73,7 +74,7 @@ export function Response({ question, authorId, responses, refetch }: ResponsePro
           questionType: question.type,
         };
         break;
-      case "MCQ":
+      case QuestionType.MCQ:
         newResponse = {
           questionId: question.id,
           answer: null,
@@ -82,7 +83,7 @@ export function Response({ question, authorId, responses, refetch }: ResponsePro
           questionType: question.type,
         };
         break;
-      case "CHECKBOX":
+      case QuestionType.CHECKBOX:
         newResponse = {
           questionId: question.id,
           answer: null,
@@ -94,7 +95,10 @@ export function Response({ question, authorId, responses, refetch }: ResponsePro
     }
     
     try {
-      const res = await editResponse({ formId: currentResponse?.formId, body: newResponse }).unwrap();
+      const res = await editResponse({ 
+        formId: currentResponse?.formId, 
+        body: newResponse,
+      }).unwrap();
       toast({ description: res.message });
       refetch();
     } catch (err) {

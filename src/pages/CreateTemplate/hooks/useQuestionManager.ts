@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { QuestionType } from "../../../enums";
 
 interface useQuestionsManagerProps {
   questions: Question[];
@@ -14,7 +15,7 @@ export function useQuestionManager({ questions, setQuestions }: useQuestionsMana
       {
         id: uuidv4(),
         questionText: `Question ${previousQuestions.length + 1}`,
-        type: "TEXT",
+        type: QuestionType.TEXT,
         options: [],
         order: newOrder,
       },

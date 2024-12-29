@@ -7,13 +7,11 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useSearchUserByEmailQuery } from "../services";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useCreateTemplate } from "../CreateTemplateProvider";
 
-interface AddUsersProps {
-  users: { id: number; email: string }[];
-  setUsers: React.Dispatch<React.SetStateAction<{ id: number; email: string }[]>>;
-}
+export function AddUsers() {
+  const { users, setUsers } = useCreateTemplate();
 
-export function AddUsers({ users, setUsers }: AddUsersProps) {
   const { t } = useTranslations();
   const [user, setUser] = useState("");
   const [debouncedUser, setDebouncedUser] = useState("");

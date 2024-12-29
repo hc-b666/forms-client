@@ -3,11 +3,7 @@ import { useTranslations } from "@/hooks/useTranslations";
 
 const topics = ["EDU", "QUIZ", "OTHER"];
 
-export function SelectTopic({
-  handleTopicChange,
-}: {
-  handleTopicChange: (v: string) => void;
-}) {
+export function TemplateTopic({ handleTopicChange }: { handleTopicChange: (v: string) => void }) {
   const { t } = useTranslations();
 
   return (

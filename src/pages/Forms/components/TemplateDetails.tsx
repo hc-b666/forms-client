@@ -8,12 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { TagsComponent } from "@/pages/CreateTemplate/components/TagsComponent";
-import { SelectTopic } from "@/pages/CreateTemplate/components/SelectTopic";
+import { TemplateTopic } from "./TemplateTopic";
 import { useEditTemplateDetailsMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
 import { ErrorMessage } from "@/pages/error/Error";
 import { useTranslations } from "@/hooks/useTranslations";
+import { TagsManager } from "./TagsManager";
 
 interface FormData {
   title: string;
@@ -125,7 +125,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
           rules={{ required: "Topic is required" }}
           render={({ field }) => (
             <div>
-              <SelectTopic handleTopicChange={field.onChange} />
+              <TemplateTopic handleTopicChange={field.onChange} />
               {errors.topic && (
                 <span className="text-sm text-red-500">
                   {errors.topic.message}
@@ -135,7 +135,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
           )}
         />
 
-        <TagsComponent tags={tags} setTags={setTags} />
+        <TagsManager tags={tags} setTags={setTags} />
 
         <div className="flex gap-2 mt-2">
           <Button disabled={isLoading} type="submit">

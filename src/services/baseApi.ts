@@ -28,7 +28,7 @@ export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQu
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 403) {
-    handleLogout(api, "Access forbidden. Please login with appropriate permissions");
+    // handleLogout(api, "Access forbidden. Please login with appropriate permissions");
     return result;
   }
 

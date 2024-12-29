@@ -1,9 +1,18 @@
 declare global {
   type UserRole = "ADMIN" | "USER";
 
-  type TemplateTopic = "EDU" | "QUIZ" | "OTHER";
+  enum TemplateTopic {
+    EDU = "EDU",
+    QUIZ = "QUIZ",
+    OTHER = "OTHER",
+  }
 
-  type QuestionType = "TEXT" | "PARAGRAPH" | "MCQ" | "CHECKBOX";
+  enum QuestionType {
+    TEXT = "TEXT",
+    PARAGRAPH = "PARAGRAPH",
+    MCQ = "MCQ",
+    CHECKBOX = "CHECKBOX",
+  }
 
   interface IUser {
     id: number;

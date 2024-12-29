@@ -2,17 +2,19 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { X } from "lucide-react";
 
-import { useSearchTagsQuery } from "../services";
+import { useSearchTagsQuery } from "@/pages/CreateTemplate/services";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "@/hooks/useTranslations";
-import { useCreateTemplate } from "../CreateTemplateProvider";
 
-export function TagsComponent() {
-  const { tags, setTags } = useCreateTemplate();
+interface TagsManagerProps {
+  tags: ITag[];
+  setTags: React.Dispatch<React.SetStateAction<ITag[]>>;
+}
 
+export function TagsManager({ tags, setTags }: TagsManagerProps) {
   const { t } = useTranslations();
   const [tag, setTag] = useState("");
   const [debouncedTag, setDebouncedTag] = useState("");
