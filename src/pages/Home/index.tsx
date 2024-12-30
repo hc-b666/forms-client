@@ -32,7 +32,7 @@ export default function HomePage() {
             {topLoading && (
               <>
                 {[...Array(5)].map((_, i) => (
-                  <Skeleton key={i} className="w-full h-[160px]" />
+                  <Skeleton key={i} className="w-full h-[400px]" />
                 ))}
               </>
             )}
@@ -51,7 +51,7 @@ export default function HomePage() {
             {latestLoading && (
               <>
                 {[...Array(10)].map((_, i) => (
-                  <Skeleton key={i} className="w-full h-[160px]" />
+                  <Skeleton key={i} className="w-full h-[400px]" />
                 ))}
               </>
             )}

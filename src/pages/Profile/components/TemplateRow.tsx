@@ -48,40 +48,41 @@ export function TemplateRow({ userId, template }: TemplateRowProps) {
       <TableCell>{template.responses}</TableCell>
       <TableCell>{template.likes}</TableCell>
       <TableCell>{new Date(template.createdAt).toLocaleDateString()}</TableCell>
-      {user?.id === userId || user?.role === "ADMIN"}
-      <TableCell className="flex items-center gap-1">
-        <NavLink
-          to={
-            user?.role === "ADMIN" || user?.id === parseInt(userId as string)
-              ? `/template/${template.id}/forms`
-              : `/template/${template.id}`
-          }
-        >
-          <Button size="sm">Edit</Button>
-        </NavLink>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="destructive" size="sm">
-              Delete
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete{" "}
-                {template.title}.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete}>
+      {(user?.id === parseInt(userId as string) || user?.role === "ADMIN") && (
+        <TableCell className="flex items-center gap-1">
+          <NavLink
+            to={
+              user?.role === "ADMIN" || user?.id === parseInt(userId as string)
+                ? `/template/${template.id}/forms`
+                : `/template/${template.id}`
+            }
+          >
+            <Button size="sm">Edit</Button>
+          </NavLink>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" size="sm">
                 Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </TableCell>
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete{" "}
+                  {template.title}.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDelete}>
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </TableCell>
+      )}
     </TableRow>
   );
 }

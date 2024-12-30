@@ -32,13 +32,15 @@ export function TemplateCard({ template }: TemplateCardProps) {
       className="hover:bg-zinc-50 duration-300 h-full flex flex-col dark:bg-zinc-900 dark:hover:bg-zinc-800 cursor-pointer"
     >
       {template.imageId ? (
-        <img
-          src={`https://drive.google.com/thumbnail?id=${template.imageId}`}
-          alt={template.title}
-          className="w-full h-60 object-cover rounded-xl"
-        />
+        <div className="overflow-hidden rounded-xl">
+          <img
+            src={`https://drive.google.com/thumbnail?id=${template.imageId}`}
+            alt={template.title}
+            className="w-full h-[360px] md:h-[320px] xl:h-[240px] 2xl:h-[280px] hover:scale-110 duration-300 object-cover rounded-xl"
+          />
+        </div>
       ) : (
-        <div className="w-full h-60 flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-xl">
+        <div className="w-full h-[360px] md:h-[320px] xl:h-[240px] 2xl:h-[280px] flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-xl">
           <Image />
         </div>
       )}
