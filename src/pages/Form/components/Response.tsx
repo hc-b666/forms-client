@@ -278,7 +278,7 @@ export function Response({ question, authorId, responses, refetch }: ResponsePro
         </>
       )}
 
-      {user?.id === authorId && renderEditDialog()}
+      {(user?.id === authorId || user?.role === "ADMIN") && renderEditDialog()}
     </div>
   );
 }

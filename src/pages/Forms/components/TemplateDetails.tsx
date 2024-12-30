@@ -14,6 +14,7 @@ import { toast } from "@/hooks/use-toast";
 import { ErrorMessage } from "@/pages/error/Error";
 import { useTranslations } from "@/hooks/useTranslations";
 import { TagsManager } from "./TagsManager";
+import { UsersManager } from "./UsersManager";
 
 interface FormData {
   title: string;
@@ -35,6 +36,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
       tagName: tag,
     }))
   );
+  const [users, setUsers] = useState(template.accessControls);
 
   const [editTemplateDetails, { isLoading, isError, error }] =
     useEditTemplateDetailsMutation();
@@ -60,6 +62,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
       description: formData.description,
       topic: formData.topic,
       tags: tags.map((tag) => tag.tagName),
+      accessControls: users.map((user) => user.id),
     };
 
     try {
@@ -88,9 +91,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div>
-          <Label htmlFor="title">
-            {t("formspage.title")}
-          </Label>
+          <Label htmlFor="title">{t("formspage.title")}</Label>
           <Input
             id="title"
             {...register("title", { required: "Title is required" })}
@@ -102,9 +103,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
         </div>
 
         <div>
-          <Label htmlFor="description">
-            {t("formspage.description")}
-          </Label>
+          <Label htmlFor="description">{t("formspage.description")}</Label>
           <Textarea
             id="description"
             {...register("description", {
@@ -137,6 +136,8 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
 
         <TagsManager tags={tags} setTags={setTags} />
 
+        <UsersManager users={users} setUsers={setUsers} />
+
         <div className="flex gap-2 mt-2">
           <Button disabled={isLoading} type="submit">
             {isLoading ? t("formspage.saving") : t("formspage.save")}
@@ -154,12 +155,38 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <p>{t("formspage.title")}: {template.title}</p>
-      <p>{t("formspage.description")}: {template.description}</p>
-      <p>{t("formspage.topic")}: {capitalize(template.topic)}</p>
-      <div>{t("formspage.tags")}: {template.tags.join(", ")}</div>
-      <span>{t("formspage.created-at")}: {formatDate(template.createdAt)}</span>
+    <div className="w-full lg:w-[720px] flex flex-col gap-3">
+      <p>
+        {t("formspage.title")}: {template.title}
+      </p>
+      <p>
+        {t("formspage.description")}: {template.description}
+      </p>
+      <p>
+        {t("formspage.topic")}: {capitalize(template.topic)}
+      </p>
+      <div>
+        {t("formspage.tags")}: {template.tags.join(", ")}
+      </div>
+      <span>
+        {t("formspage.created-at")}: {formatDate(template.createdAt)}
+      </span>
+      {!template.isPublic && (
+        <div>
+          <h4>People who can access</h4>
+          {template.accessControls.length > 0 ? (
+            <ul className="list-disc pl-5">
+              {template.accessControls.map((control) => (
+                <li key={control.id}>{control.email}</li>
+              ))}
+            </ul>
+          ) : (
+            <div>
+              <p>There is no users who can access to your template</p>
+            </div>
+          )}
+        </div>
+      )}
       <Button onClick={() => setEditMode(true)} className="w-fit mt-2">
         {t("formspage.edit")}
       </Button>

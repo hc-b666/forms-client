@@ -88,6 +88,11 @@ declare global {
     };
     tags: string[];
     questions: IQuestionServer[];
+    accessControls: {
+      id: number;
+      email: string;
+    }[];
+    isPublic: boolean;
   }
 
   interface IProfileTemplate {
