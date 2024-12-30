@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useGetPrivateTemplatesQuery } from "../services";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "@/hooks/useTranslations";
-import { ErrorMessage } from "@/pages/error/Error";
-import { useGetPath } from "@/hooks/useGetPath";
+import { useGetTemplatesByUserIdQuery } from "../services";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { ErrorMessage } from "@/pages/error/Error";
+import { useTranslations } from "@/hooks/useTranslations";
+import { useGetPath } from "@/hooks/useGetPath";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/table";
 import { TemplateRow } from "./TemplateRow";
 
-export function PrivateTemplates() {
+export function PublicTemplates() {
   const { userId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export function PrivateTemplates() {
   const { path } = useGetPath("/create-template", parseInt(userId as string));
 
   const { data, isLoading, isError, isSuccess, error } =
-    useGetPrivateTemplatesQuery(userId);
+    useGetTemplatesByUserIdQuery(userId);
 
   if (isError) {
     return <ErrorMessage error={error} />;
@@ -38,7 +38,7 @@ export function PrivateTemplates() {
           <Skeleton className="w-48 h-10" />
         ) : (
           <h1 className="md:text-2xl font-semibold">
-            {t("profilepage.private-templates")} ({data?.length})
+            {t("profilepage.templates")} ({data?.length})
           </h1>
         )}
 
@@ -94,7 +94,7 @@ export function PrivateTemplates() {
           {isSuccess && data.length === 0 && (
             <div className="w-full py-10">
               <h1 className="text-center font-semibold">
-                You don't have any private templates yet.
+                You don't have any public templates yet.
               </h1>
             </div>
           )}

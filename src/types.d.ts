@@ -84,24 +84,6 @@ declare global {
     imageUrl: string;
   }
 
-  interface IProfileTemplate {
-    id: number;
-    title: string;
-    description: string;
-    topic: TemplateTopic;
-    createdAt: string;
-    responses: number;
-    tags: string[];
-  }
-
-  interface IUserProfile {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    username: string;
-  }
-
   interface Form {
     id: number;
     filledAt: string;
@@ -151,17 +133,6 @@ declare global {
     accessToken: string;
   }
 
-  interface IUserForm {
-    id: number;
-    filledAt: Date;
-    template: {
-      id: number;
-      title: string;
-      description: string;
-      topic: TemplateTopic;
-      tags: string[];
-    };
-  }
 }
 
 export {};

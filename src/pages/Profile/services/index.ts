@@ -2,33 +2,33 @@ import { baseApi } from "@/services/baseApi";
 
 export const profileApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUserById: builder.query<IUserProfile, string | undefined>({
+    getUserById: builder.query<UserProfile, string | undefined>({
       query: (userId) => ({
         url: `user/profile/${userId}`,
         method: "GET",
       }),
     }),
-    getPrivateTemplates: builder.query<IProfileTemplate[], number>({
-      query: (userId) => ({
-        url: `templates/profile/private/${userId}`,
-        method: "GET",
-      }),
-    }),
-    getFormsByUser: builder.query<IUserForm[], string | undefined>({
-      query: (userId) => ({
-        url: `forms/user/${userId}`,
-        method: "GET",
-      }),
-      providesTags: ["Forms"],
-    }),
-    getTemplatesByUserId: builder.query<IProfileTemplate[], number>({
+    getTemplatesByUserId: builder.query<ProfileTemplate[], string | undefined>({
       query: (userId) => ({
         url: `templates/profile/${userId}`,
         method: "GET",
       }),
       providesTags: ["Profile"],
     }),
-    getPrivateAccessibleTemplates: builder.query<IProfileTemplate[], string | undefined>({
+    getPrivateTemplates: builder.query<ProfileTemplate[], string | undefined>({
+      query: (userId) => ({
+        url: `templates/profile/private/${userId}`,
+        method: "GET",
+      }),
+    }),
+    getFormsByUser: builder.query<FilledForm[], string | undefined>({
+      query: (userId) => ({
+        url: `forms/user/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["Forms"],
+    }),
+    getAccessibleTemplates: builder.query<ProfileTemplate[], string | undefined>({
       query: (userId) => ({
         url: `templates/profile/private/templates/${userId}`,
         method: "GET",
@@ -53,10 +53,10 @@ export const profileApi = baseApi.injectEndpoints({
 
 export const {
   useGetUserByIdQuery,
+  useGetTemplatesByUserIdQuery,
   useGetPrivateTemplatesQuery,
   useGetFormsByUserQuery,
-  useGetTemplatesByUserIdQuery,
-  useGetPrivateAccessibleTemplatesQuery,
+  useGetAccessibleTemplatesQuery,
   useDeleteTemplateMutation,
   useDeleteFormMutation,
 } = profileApi;

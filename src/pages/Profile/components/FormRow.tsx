@@ -16,7 +16,7 @@ import { capitalize, truncateText } from "@/lib/utils/stringUtils";
 import { useDeleteFormMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
 
-export function FormRow({ form }: { form: IUserForm }) {
+export function FormRow({ form }: { form: FilledForm }) {
   const navigate = useNavigate();
   const [deleteForm] = useDeleteFormMutation();
 

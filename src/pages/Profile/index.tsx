@@ -1,28 +1,35 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserFilledForms } from "./components/UserFilledForms";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { UserProfile } from "./components/UserProfile";
-import { ProfileTemplates } from "@/pages/Profile/components/ProfileTemplates";
-import { PrivateTemplates } from "./components/PrivateTemplates";
-import { PrivateAccessibleTemplates } from "./components/PrivateAccessibleTemplates";
 import { useTranslations } from "@/hooks/useTranslations";
-import { useEffect } from "react";
+
+import { UserProfile } from "./components/UserProfile";
+import { PublicTemplates } from "@/pages/Profile/components/PublicTemplates";
+import { PrivateTemplates } from "./components/PrivateTemplates";
+import { FilledForms } from "./components/FilledForms";
+import { AccessibleTemplates } from "./components/AccessibleTemplates";
 
 export default function ProfilePage() {
   const { userId } = useParams();
   const { user: currentUser } = useAuth();
   const { t } = useTranslations();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentTab = searchParams.get("tab") || "templates";
 
-  useEffect(() => {
-    document.title = `Forms | Profile`;
-  }, []);
+  const handleTabChange = (value: string) => {
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set("tab", value);
+      return newParams;
+    });
+  };
 
   return (
-    <div className="container flex-grow flex flex-col md:grid grid-cols-4 xl:grid-cols-5 gap-20">
+    <div className="container flex-grow flex flex-col md:grid grid-cols-4 xl:grid-cols-5 gap-10 xl:gap-20">
       <UserProfile userId={userId} />
-      <Tabs defaultValue="templates" className="col-span-3 xl:col-span-4">
+
+      <Tabs value={currentTab} onValueChange={handleTabChange} className="col-span-3 xl:col-span-4">
         <div className="overflow-x-auto">
           {(currentUser?.id === parseInt(userId as string) || currentUser?.role === "ADMIN") && (
             <TabsList className="grid w-full min-w-[920px] grid-cols-4 mb-5">
@@ -41,17 +48,18 @@ export default function ProfilePage() {
             </TabsList>
           )}
         </div>
-        <TabsContent value="templates">
-          <ProfileTemplates userId={parseInt(userId as string)} />
+
+        <TabsContent value="templates" className="h-full">
+          <PublicTemplates />
         </TabsContent>
         <TabsContent value="private-templates">
-          <PrivateTemplates userId={parseInt(userId as string)} />
+          <PrivateTemplates />
         </TabsContent>
         <TabsContent value="forms" className="h-full">
-          <UserFilledForms />
+          <FilledForms />
         </TabsContent>
         <TabsContent value="private-accessible-templates">
-          <PrivateAccessibleTemplates />
+          <AccessibleTemplates />
         </TabsContent>
       </Tabs>
     </div>

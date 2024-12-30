@@ -1,14 +1,21 @@
+import { useEffect } from "react";
 import { MoonLoader } from "react-spinners";
-import { useGetUserByIdQuery } from "../services";
 import { Mail, User } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "@/hooks/useTranslations";
+import { useGetUserByIdQuery } from "../services";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useTranslations } from "@/hooks/useTranslations";
+import { Button } from "@/components/ui/button";
 
 export function UserProfile({ userId }: { userId: string | undefined }) {
   const { data, isLoading, isSuccess } = useGetUserByIdQuery(userId);
   const { t } = useTranslations();
   const { user, logout } = useAuth();
+
+  useEffect(() => {
+    if (isSuccess) {
+      document.title = `Forms | Profile of ${data.email}`;
+    }
+  }, []);
 
   return (
     <div className="col-span-1 flex justify-center">
