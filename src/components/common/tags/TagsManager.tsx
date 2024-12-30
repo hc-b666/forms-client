@@ -2,17 +2,19 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { X } from "lucide-react";
 
-import { useSearchTagsQuery } from "../services";
+import { useSearchTagsQuery } from "./services";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "@/hooks/useTranslations";
-import { useCreateTemplate } from "../CreateTemplateProvider";
 
-export function TagsComponent() {
-  const { tags, setTags } = useCreateTemplate();
+interface TagsManagerProps {
+  tags: Tag[];
+  setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+}
 
+export function TagsManager({ tags, setTags }: TagsManagerProps) {
   const { t } = useTranslations();
   const [tag, setTag] = useState("");
   const [debouncedTag, setDebouncedTag] = useState("");
@@ -28,7 +30,7 @@ export function TagsComponent() {
 
   const { data: suggestedTags = [], isLoading } = useSearchTagsQuery(debouncedTag, { skip: debouncedTag.trim().length < 2 });
 
-  const handleAddTag = (tagToAdd?: ITag) => {
+  const handleAddTag = (tagToAdd?: Tag) => {
     const tagValue = tagToAdd ? tagToAdd.tagName : tag;
     
     if (!tags.some(t => t.tagName.toLowerCase() === tagValue.toLowerCase())) {
@@ -94,12 +96,12 @@ export function TagsComponent() {
   );
 }
 
-interface ITagComponent {
-  t: ITag;
+interface TagComponent {
+  t: Tag;
   handleDeleteTag: (id: string) => void;
 }
 
-function TagComponent({ t, handleDeleteTag }: ITagComponent) {
+function TagComponent({ t, handleDeleteTag }: TagComponent) {
   return (
     <Badge className="flex items-center gap-1">
       {t.tagName}

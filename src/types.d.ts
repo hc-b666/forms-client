@@ -1,19 +1,4 @@
 declare global {
-  type UserRole = "ADMIN" | "USER";
-
-  enum TemplateTopic {
-    EDU = "EDU",
-    QUIZ = "QUIZ",
-    OTHER = "OTHER",
-  }
-
-  enum QuestionType {
-    TEXT = "TEXT",
-    PARAGRAPH = "PARAGRAPH",
-    MCQ = "MCQ",
-    CHECKBOX = "CHECKBOX",
-  }
-
   interface IUser {
     id: number;
     firstName: string;
@@ -35,7 +20,7 @@ declare global {
     options: { id: string, optionText: string }[];
   }
 
-  interface ITag {
+  interface Tag {
     id: string;
     tagName: string;
   }

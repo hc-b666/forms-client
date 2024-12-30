@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
+import { UserRole } from "@/enums";
+
 import { PrivateRoute } from "@/components/layout/PrivateRoute";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
@@ -36,35 +38,35 @@ export function Router() {
         <Route
           path="/profile/:userId"
           element={
-            <PrivateRoute roles={["USER", "ADMIN"]} component={ProfilePage} />
+            <PrivateRoute roles={[UserRole.USER, UserRole.ADMIN]} component={ProfilePage} />
           }
         />
 
         <Route
           path="/create-template"
           element={
-            <PrivateRoute roles={["USER", "ADMIN"]} component={CreateTemplatePage} />
+            <PrivateRoute roles={[UserRole.USER, UserRole.ADMIN]} component={CreateTemplatePage} />
           }
         />
 
         <Route
           path="/template/:templateId/forms"
           element={
-            <PrivateRoute roles={["USER", "ADMIN"]} component={FormsPage} />
+            <PrivateRoute roles={[UserRole.USER, UserRole.ADMIN]} component={FormsPage} />
           }
         />
 
         <Route
           path="/template/:templateId/forms/:formId"
           element={
-            <PrivateRoute roles={["USER", "ADMIN"]} component={FormPage} />
+            <PrivateRoute roles={[UserRole.USER, UserRole.ADMIN]} component={FormPage} />
           }
         />
 
         <Route
           path="/admin"
           element={
-            <PrivateRoute roles={["ADMIN"]} component={AdminPage} />
+            <PrivateRoute roles={[UserRole.ADMIN]} component={AdminPage} />
           }
         />
 

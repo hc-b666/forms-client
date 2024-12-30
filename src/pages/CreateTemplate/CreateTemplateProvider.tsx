@@ -11,8 +11,8 @@ type CreateTemplateProviderState = {
   setTopic: React.Dispatch<React.SetStateAction<TemplateTopic>>;
   type: "public" | "private";
   setType: React.Dispatch<React.SetStateAction<"public" | "private">>;
-  tags: ITag[];
-  setTags: React.Dispatch<React.SetStateAction<ITag[]>>;
+  tags: Tag[];
+  setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
   questions: Question[];
   setQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
   users: { id: number; email: string }[];
@@ -93,7 +93,7 @@ export function CreateTemplateProvider({
   const [description, setDescription] = useState("");
   const [topic, setTopic] = useState<TemplateTopic>(TemplateTopic.OTHER);
   const [type, setType] = useState<"public" | "private">("public");
-  const [tags, setTags] = useState<ITag[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: uuidv4(),

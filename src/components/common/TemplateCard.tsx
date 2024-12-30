@@ -38,7 +38,7 @@ export function TemplateCard({ template }: TemplateCardProps) {
           className="w-full h-60 object-cover rounded-xl"
         />
       ) : (
-        <div className="w-full h-60 flex items-center justify-center">
+        <div className="w-full h-60 flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-xl">
           <Image />
         </div>
       )}

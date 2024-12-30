@@ -1,3 +1,8 @@
+export enum UserRole {
+  ADMIN = "ADMIN",
+  USER = "USER",
+}
+
 export enum TemplateTopic {
   EDU = "EDU",
   QUIZ = "QUIZ",

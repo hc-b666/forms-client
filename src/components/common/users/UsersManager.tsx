@@ -5,13 +5,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { useSearchUserByEmailQuery } from "../services";
+import { useSearchUserByEmailQuery } from "./services";
 import { useTranslations } from "@/hooks/useTranslations";
-import { useCreateTemplate } from "../CreateTemplateProvider";
 
-export function AddUsers() {
-  const { users, setUsers } = useCreateTemplate();
+interface UsersManagerProps {
+  users: { id: number; email: string }[];
+  setUsers: React.Dispatch<React.SetStateAction<{ id: number; email: string }[]>>;
+}
 
+export function UsersManager({ users, setUsers }: UsersManagerProps) {
   const { t } = useTranslations();
   const [user, setUser] = useState("");
   const [debouncedUser, setDebouncedUser] = useState("");

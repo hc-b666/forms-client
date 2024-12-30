@@ -13,8 +13,8 @@ import { useEditTemplateDetailsMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
 import { ErrorMessage } from "@/pages/error/Error";
 import { useTranslations } from "@/hooks/useTranslations";
-import { TagsManager } from "./TagsManager";
-import { UsersManager } from "./UsersManager";
+import { TagsManager } from "@/components/common/tags";
+import { UsersManager } from "@/components/common/users";
 
 interface FormData {
   title: string;
@@ -30,7 +30,7 @@ interface TemplateDetailsProps {
 export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
   const { t } = useTranslations();
   const [editMode, setEditMode] = useState(false);
-  const [tags, setTags] = useState<ITag[]>(
+  const [tags, setTags] = useState<Tag[]>(
     template.tags.map((tag) => ({
       id: uuidv4(),
       tagName: tag,

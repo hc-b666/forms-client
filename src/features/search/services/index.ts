@@ -2,7 +2,7 @@ import { baseApi } from "@/services/baseApi";
 
 export const searchApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTags: builder.query<ITag[], void>({
+    getTags: builder.query<Tag[], void>({
       query: () => ({
         url: "tags",
         method: "GET",

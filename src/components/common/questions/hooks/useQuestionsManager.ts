@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { QuestionType } from "../../../enums";
+import { QuestionType } from "@/enums";
 
 interface useQuestionsManagerProps {
   questions: Question[];

@@ -2,15 +2,17 @@ import { useState } from "react";
 
 import { QuestionCard } from "./QuestionCard";
 import { Button } from "@/components/ui/button";
-import { useQuestionManager } from "../hooks/useQuestionManager";
+import { useQuestionManager } from "./hooks/useQuestionsManager";
 import { useTranslations } from "@/hooks/useTranslations";
-import { useCreateTemplate } from "../CreateTemplateProvider";
 
-export function QuestionsManager() {
+interface QuestionsManagerProps {
+  questions: Question[];
+  setQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
+}
+
+export function QuestionsManager({ questions, setQuestions }: QuestionsManagerProps) {
   const { t } = useTranslations();
   const [draggedItem, setDraggedItem] = useState<Question | null>(null);
-
-  const { questions, setQuestions } = useCreateTemplate();
 
   const { 
     addQuestion, 
