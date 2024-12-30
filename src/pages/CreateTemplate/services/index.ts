@@ -1,19 +1,20 @@
 import { baseApi } from "@/services/baseApi";
 
-interface CreateTemplateBody {
-  title: string;
-  description: string;
-  topic: TemplateTopic;
-  type: "public" | "private";
-  questions: {
-    order: number;
-    questionText: string;
-    type: QuestionType;
-    options: string[];
-  }[];
-  tags: string[];
-  users: number[];
-}
+// interface CreateTemplateBody {
+//   title: string;
+//   description: string;
+//   topic: TemplateTopic;
+//   type: "public" | "private";
+//   questions: {
+//     order: number;
+//     questionText: string;
+//     type: QuestionType;
+//     options: string[];
+//   }[];
+//   tags: string[];
+//   users: number[];
+//   image: File | null;
+// }
 
 export const createTemplateApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,7 +25,7 @@ export const createTemplateApi = baseApi.injectEndpoints({
       }),
     }),
     createTemplate: builder.mutation({
-      query: ({ userId, body }: { userId: number, body: CreateTemplateBody }) => ({
+      query: ({ userId, body }: { userId: number, body: FormData }) => ({
         url: `templates/create/${userId}`,
         method: "POST",
         body,

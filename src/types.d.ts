@@ -51,6 +51,8 @@ declare global {
       email: string;
   };
     responses: number;
+    imageId: string;
+    imageUrl: string;
     // likes: number;
     // hasLiked: boolean;
   }
@@ -93,6 +95,8 @@ declare global {
       email: string;
     }[];
     isPublic: boolean;
+    imageId: string;
+    imageUrl: string;
   }
 
   interface IProfileTemplate {

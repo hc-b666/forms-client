@@ -15,9 +15,10 @@ import { TemplateTopic } from "./TemplateTopic";
 import { TemplateType } from "./TemplateType";
 import { QuestionsManager } from "./QuestionsManager";
 import { TagsComponent } from "./TagsComponent";
+import FileUpload from "./FileUpload";
 
 export function CreateTemplateForm() {
-  const { type, formData } = useCreateTemplate();
+  const { type, formData, file } = useCreateTemplate();
   const navigate = useNavigate();
   const { t } = useTranslations();
   const [searchParams] = useSearchParams();
@@ -36,9 +37,19 @@ export function CreateTemplateForm() {
     }
 
     try {
+      const reqFormData = new FormData();
+      if (file) reqFormData.append("image", file);
+      reqFormData.append("title", result.data.title);
+      reqFormData.append("description", result.data.description);
+      reqFormData.append("topic", result.data.topic);
+      reqFormData.append("type", result.data.type);
+      reqFormData.append("tags", JSON.stringify(result.data.tags));
+      reqFormData.append("questions", JSON.stringify(result.data.questions));
+      reqFormData.append("users", JSON.stringify(result.data.users));
+
       const res = await createTemplate({
         userId: userId ? parseInt(userId) : (user?.id as number),
-        body: result.data,
+        body: reqFormData,
       }).unwrap();
       toast({ description: res.message });
       navigate(`/profile/${userId ? userId : user?.id}`);
@@ -70,6 +81,8 @@ export function CreateTemplateForm() {
       {type === "private" && <AddUsers />}
 
       <QuestionsManager />
+
+      <FileUpload />
 
       <Button disabled={isLoading} onClick={handleCreateTemplate}>
         {isLoading

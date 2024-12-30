@@ -156,6 +156,13 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
 
   return (
     <div className="w-full lg:w-[720px] flex flex-col gap-3">
+      {template.imageId && (
+        <img
+          src={`https://drive.google.com/thumbnail?id=${template.imageId}`}
+          alt={template.title}
+          className="w-80 h-80 object-cover rounded-md"
+        />
+      )}
       <p>
         {t("formspage.title")}: {template.title}
       </p>

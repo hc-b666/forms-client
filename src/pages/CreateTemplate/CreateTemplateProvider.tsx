@@ -18,6 +18,11 @@ type CreateTemplateProviderState = {
   users: { id: number; email: string }[];
   setUsers: React.Dispatch<React.SetStateAction<{ id: number; email: string }[]>>;
 
+  file: File | null;
+  setFile: React.Dispatch<React.SetStateAction<File | null>>;
+  preview: string;
+  setPreview: React.Dispatch<React.SetStateAction<string>>;
+
   formData: {
     title: string;
     description: string;
@@ -58,6 +63,11 @@ const initialState: CreateTemplateProviderState = {
   users: [],
   setUsers: () => null,
 
+  file: null,
+  setFile: () => null,
+  preview: "",
+  setPreview: () => null,
+
   formData: {
     title: "",
     description: "",
@@ -94,6 +104,8 @@ export function CreateTemplateProvider({
     },
   ]);
   const [users, setUsers] = useState<{ id: number; email: string }[]>([]);
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string>("");
 
   const formData = {
     title,
@@ -125,6 +137,11 @@ export function CreateTemplateProvider({
         setQuestions,
         users,
         setUsers,
+
+        file,
+        setFile,
+        preview,
+        setPreview,
 
         formData,
       }}

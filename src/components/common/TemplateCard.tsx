@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Inbox } from "lucide-react";
+import { Image, Inbox } from "lucide-react";
 
 import { capitalize, truncateText } from "@/lib/utils/stringUtils";
 import {
@@ -31,6 +31,18 @@ export function TemplateCard({ template }: TemplateCardProps) {
       }
       className="hover:bg-zinc-50 duration-300 h-full flex flex-col dark:bg-zinc-900 dark:hover:bg-zinc-800 cursor-pointer"
     >
+      {template.imageId ? (
+        <img
+          src={`https://drive.google.com/thumbnail?id=${template.imageId}`}
+          alt={template.title}
+          className="w-full h-60 object-cover rounded-xl"
+        />
+      ) : (
+        <div className="w-full h-60 flex items-center justify-center">
+          <Image />
+        </div>
+      )}
+
       <CardHeader>
         <CardTitle>{template.title}</CardTitle>
         <CardDescription className="text-justify">
