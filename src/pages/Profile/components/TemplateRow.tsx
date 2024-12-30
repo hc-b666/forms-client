@@ -52,7 +52,7 @@ export function TemplateRow({ userId, template }: TemplateRowProps) {
       <TableCell className="flex items-center gap-1">
         <NavLink
           to={
-            user?.role === "ADMIN" || user?.id === userId
+            user?.role === "ADMIN" || user?.id === parseInt(userId as string)
               ? `/template/${template.id}/forms`
               : `/template/${template.id}`
           }
