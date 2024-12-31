@@ -5,6 +5,7 @@ import { useGetUserByIdQuery } from "../services";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useTranslations } from "@/hooks/useTranslations";
 import { Button } from "@/components/ui/button";
+import { truncateText } from "@/lib/utils/stringUtils";
 
 export function UserProfile({ userId }: { userId: string | undefined }) {
   const { data, isLoading, isSuccess } = useGetUserByIdQuery(userId);
@@ -25,8 +26,8 @@ export function UserProfile({ userId }: { userId: string | undefined }) {
           <h3 className="text-xl font-bold">
             {data.firstName} {data.lastName}
           </h3>
-          <h3 className="flex items-center gap-1">
-            <Mail className="w-4" /> {data.email}
+          <h3 className="flex items-center gap-1" title={data.email}>
+            <Mail className="w-4" /> {truncateText(data.email, 15)}
           </h3>
           <h3 className="flex items-center gap-1">
             <User className="w-4" />

@@ -2,6 +2,8 @@
   "navbar.login": "Log In",
   "navbar.logout": "Log Out",
   "navbar.search": "Search by keyword...",
+  "navbar.templates": "Templates",
+  "navbar.dashboard": "Dashboard",
 
   "goback": "Go Back",
 
@@ -87,6 +89,7 @@
   "profilepage.tags": "Tags",
   "profilepage.filledat": "Filled at",
   "profilepage.delete": "Delete",
+  "profilepage.edit": "Edit",
   "profilepage.cancel": "Cancel",
   "profilepage.delete.alert.title": "Are you absolutely sure?",
   "profilepage.delete.alert.description": "This action cannot be undone. This will permanently delete your template and remove it from our servers.",

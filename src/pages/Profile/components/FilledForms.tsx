@@ -40,7 +40,7 @@ export function FilledForms() {
         )}
 
         {(user?.id === parseInt(userId as string) || user?.role === "ADMIN") && (
-          <Button onClick={() => refetch()} size="icon">
+          <Button onClick={() => refetch()} size="icon" title="Refresh">
             <RefreshCcw />
           </Button>
         )}
@@ -56,7 +56,7 @@ export function FilledForms() {
                 <TableHead>{t("profilepage.topic")}</TableHead>
                 <TableHead>{t("profilepage.tags")}</TableHead>
                 <TableHead>{t("profilepage.filledat")}</TableHead>
-                <TableHead>More</TableHead>
+                <TableHead>{t("profilepage.actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody className="h-full w-full">

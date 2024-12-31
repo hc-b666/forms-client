@@ -1,7 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import { TableCell, TableRow } from "@/components/ui/table";
-import { capitalize } from "@/lib/utils/stringUtils";
+import { capitalize, truncateText } from "@/lib/utils/stringUtils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,16 +16,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDeleteTemplateMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
+import { useTranslations } from "@/hooks/useTranslations";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface TemplateRowProps {
   template: ProfileTemplate;
   showActions?: boolean;
 }
 
-export function TemplateRow({
-  template,
-  showActions,
-}: TemplateRowProps) {
+export function TemplateRow({ template, showActions }: TemplateRowProps) {
+  const { userId } = useParams();
+  const { user } = useAuth();
+  const { t } = useTranslations();
   const [deleteTemplate] = useDeleteTemplateMutation();
 
   const handleDelete = async () => {
@@ -40,11 +42,15 @@ export function TemplateRow({
   return (
     <TableRow key={template.id}>
       <TableCell>{template.id}</TableCell>
-      <TableCell>{template.title}</TableCell>
-      <TableCell>{template.description}</TableCell>
+      <TableCell>
+        <NavLink to={user?.id === parseInt(userId as string) ? `/template/${template.id}/forms` : `/template/${template.id}`} className="underline">
+          {truncateText(template.title, 20)}
+        </NavLink>
+      </TableCell>
+      <TableCell>{truncateText(template.description, 60)}</TableCell>
       <TableCell>{capitalize(template.topic)}</TableCell>
       <TableCell>
-        {template.tags.map((tag) => tag.tagName).join(", ")}
+        {template.tags.slice(0, 3).map((tag) => tag.tagName).join(", ")}
       </TableCell>
       <TableCell>{template.responses}</TableCell>
       <TableCell>{template.likes}</TableCell>
@@ -58,26 +64,25 @@ export function TemplateRow({
                 : `/template/${template.id}`
             }
           >
-            <Button size="sm">Edit</Button>
+            <Button size="sm">{t("profilepage.edit")}</Button>
           </NavLink>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="destructive" size="sm">
-                Delete
+                {t("profilepage.delete")}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogTitle>{t("profilepage.delete.alert.title")}</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete{" "}
-                  {template.title}.
+                  {t("profilepage.delete.alert.description")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>{t("profilepage.cancel")}</AlertDialogCancel>
                 <AlertDialogAction onClick={handleDelete}>
-                  Delete
+                  {t("profilepage.delete")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
