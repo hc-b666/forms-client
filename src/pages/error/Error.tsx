@@ -19,7 +19,7 @@ export function ErrorPage(error: any) {
 }
 
 interface ErrorMessageProps {
-  error: FetchBaseQueryError | SerializedError;
+  error: FetchBaseQueryError | SerializedError | undefined;
 }
 
 export function ErrorMessage({ error }: ErrorMessageProps) {
@@ -31,7 +31,7 @@ export function ErrorMessage({ error }: ErrorMessageProps) {
   const navigate = useNavigate();
   let message = "An unexpected error occurred";
 
-  if ("status" in error) {
+  if (error && "status" in error) {
     switch (error.status) {
       case 403:
         message = "You do not have permission";
@@ -46,7 +46,7 @@ export function ErrorMessage({ error }: ErrorMessageProps) {
         break;
     }
   } else {
-    message = error.message || "An error occurred";
+    message = error?.message || "An error occurred";
   }
 
   return (

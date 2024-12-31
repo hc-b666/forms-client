@@ -16,15 +16,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { useDeleteTemplateMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface TemplateRowProps {
-  userId: string | undefined;
   template: ProfileTemplate;
+  showActions?: boolean;
 }
 
-export function TemplateRow({ userId, template }: TemplateRowProps) {
-  const { user } = useAuth();
+export function TemplateRow({
+  template,
+  showActions,
+}: TemplateRowProps) {
   const [deleteTemplate] = useDeleteTemplateMutation();
 
   const handleDelete = async () => {
@@ -48,11 +49,11 @@ export function TemplateRow({ userId, template }: TemplateRowProps) {
       <TableCell>{template.responses}</TableCell>
       <TableCell>{template.likes}</TableCell>
       <TableCell>{new Date(template.createdAt).toLocaleDateString()}</TableCell>
-      {(user?.id === parseInt(userId as string) || user?.role === "ADMIN") && (
+      {showActions && (
         <TableCell className="flex items-center gap-1">
           <NavLink
             to={
-              user?.role === "ADMIN" || user?.id === parseInt(userId as string)
+              showActions
                 ? `/template/${template.id}/forms`
                 : `/template/${template.id}`
             }

@@ -91,6 +91,9 @@
   "profilepage.delete.alert.title": "Are you absolutely sure?",
   "profilepage.delete.alert.description": "This action cannot be undone. This will permanently delete your template and remove it from our servers.",
   "profilepage.responses": "Responses",
+  "profilepage.likes": "Likes",
+  "profilepage.createdAt": "Created at",
+  "profilepage.actions": "Actions",
 
   "formspage.details": "Details",
   "formspage.questions": "questions",
