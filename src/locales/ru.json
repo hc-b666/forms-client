@@ -2,6 +2,8 @@
   "navbar.login": "Войти",
   "navbar.logout": "Выйти",
   "navbar.search": "Поиск по ключевому слову...",
+  "navbar.templates": "Шаблоны",
+  "navbar.dashboard": "Панель управления",
 
   "goback": "Назад",
 
@@ -87,10 +89,14 @@
   "profilepage.tags": "Теги",
   "profilepage.filledat": "Заполнено в",
   "profilepage.delete": "Удалить",
+  "profilepage.edit": "Редактировать",
   "profilepage.cancel": "Отмена",
   "profilepage.delete.alert.title": "Вы абсолютно уверены?",
   "profilepage.delete.alert.description": "Это действие нельзя будет отменить",
   "profilepage.responses": "Ответы",
+  "profilepage.likes": "Лайки",
+  "profilepage.createdAt": "Создано в",
+  "profilepage.actions": "Действия",
 
   "formspage.details": "Детали",
   "formspage.questions": "Вопросы",

@@ -15,9 +15,11 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { capitalize, truncateText } from "@/lib/utils/stringUtils";
 import { useDeleteFormMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
+import { useTranslations } from "@/hooks/useTranslations";
 
 export function FormRow({ form }: { form: FilledForm }) {
   const navigate = useNavigate();
+  const { t } = useTranslations();
   const [deleteForm] = useDeleteFormMutation();
 
   const handleDelete = async () => {
@@ -49,26 +51,27 @@ export function FormRow({ form }: { form: FilledForm }) {
             )
           }
         >
-          See more
+          {t("profilepage.edit")}
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
-              Delete
+              {t("profilepage.delete")}
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogTitle>
+                {t("profilepage.delete.alert.title")}
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your
-                response to this template.
+                {t("profilepage.delete.alert.description")}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>{t("profilepage.cancel")}</AlertDialogCancel>
               <AlertDialogAction onClick={handleDelete}>
-                Delete
+                {t("profilepage.delete")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

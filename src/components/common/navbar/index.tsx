@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { useIntl } from "react-intl";
 import { Menu } from "lucide-react";
 
 import { SearchComponent } from "@/features/search/components/SearchComponent";
@@ -8,13 +7,14 @@ import { Button } from "@/components/ui/button";
 import { LanguageDropdown } from "./LanguageDropdown";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import Logo from "../Logo";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface INavbar {
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function Navbar({ setSidebar }: INavbar) {
-  const intl = useIntl();
+  const { t } = useTranslations();
   const { isAuthenticated, user } = useAuth();
 
   return (
@@ -29,20 +29,20 @@ export function Navbar({ setSidebar }: INavbar) {
             <div className="flex items-center gap-4">
               {user?.role === "ADMIN" && (
                 <NavLink to="/admin" className="hover:underline">
-                  Dashboard
+                  {t("navbar.dashboard")}
                 </NavLink>
               )}
-              <NavLink to={`/profile/${user?.id}`} className="hover:underline">
+              <NavLink to={`/profile/${user?.id}?tab=templates`} className="hover:underline">
                 {user?.username}
               </NavLink>
             </div>
           ) : (
             <NavLink to="/login">
-              <Button>{intl.formatMessage({ id: "navbar.login" })}</Button>
+              <Button>{t("navbar.login")}</Button>
             </NavLink>
           )}
           <NavLink to="/templates" className="hover:underline">
-            Templates
+            {t("navbar.templates")}
           </NavLink>
           <ModeToggle />
           <LanguageDropdown />
