@@ -8,8 +8,6 @@ interface useQuestionsManagerProps {
 
 export function useQuestionManager({ questions, setQuestions }: useQuestionsManagerProps) {
   const addQuestion = () => {
-    const newOrder = Math.max(...questions.map((question) => question.order), 0) + 1;
-
     setQuestions((previousQuestions) => [
       ...previousQuestions,
       {
@@ -17,7 +15,7 @@ export function useQuestionManager({ questions, setQuestions }: useQuestionsMana
         questionText: `Question ${previousQuestions.length + 1}`,
         type: QuestionType.TEXT,
         options: [],
-        order: newOrder,
+        order: questions.length + 1,
       },
     ]);
   };

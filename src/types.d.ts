@@ -12,19 +12,6 @@ declare global {
     isBlocked: boolean;
   }
 
-  interface Question {
-    id: string;
-    questionText: string;
-    type: QuestionType;
-    order: number;
-    options: { id: string, optionText: string }[];
-  }
-
-  interface Tag {
-    id: string;
-    tagName: string;
-  }
-
   interface Template {
     id: number;
     title: string;
@@ -38,8 +25,6 @@ declare global {
     responses: number;
     imageId: string;
     imageUrl: string;
-    // likes: number;
-    // hasLiked: boolean;
   }
 
   interface IComment {

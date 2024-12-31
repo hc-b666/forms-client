@@ -23,7 +23,7 @@ export default function FileUpload() {
 
   return (
     <div className="flex flex-col gap-4 rounded-lg shadow-md">
-      <Label>Upload Image</Label>
+      <Label>Upload Image (Optional)</Label>
 
       <div className="space-y-4">
         <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
