@@ -3,7 +3,7 @@ import { formatDate } from "@/lib/utils/dateUtils";
 import { NavLink } from "react-router-dom";
 
 interface TemplateFormsProps {
-  template: ISingleTemplate;
+  template: TemplateExtended;
   forms: Form[];
 }
 

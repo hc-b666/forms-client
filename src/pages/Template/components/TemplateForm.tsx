@@ -5,8 +5,8 @@ import TemplateQuestionRenderer from "./TemplateQuestionRenderer";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
-interface IForm {
-  template: ISingleTemplate;
+interface TemplateFormProps {
+  template: TemplateExtended;
   refetch: () => void;
 }
 
@@ -14,7 +14,7 @@ interface IFormBody {
   [key: string]: any;
 }
 
-export function Form({ template, refetch }: IForm) {
+export function TemplateForm({ template, refetch }: TemplateFormProps) {
   const { user } = useAuth();
   const [submitForm, { isLoading }] = useSubmitFormMutation();
 
@@ -84,8 +84,8 @@ export function Form({ template, refetch }: IForm) {
       }).unwrap();
       toast({ description: res.message });
       refetch();
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      toast({ variant: "destructive", description: err.data.message });
     }
   };
 

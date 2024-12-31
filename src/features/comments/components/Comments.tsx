@@ -12,7 +12,7 @@ export function Comments({ templateId }: IComments) {
   const { data, isLoading, isSuccess } = useGetCommentsQuery(templateId);
 
   return (
-    <div className="w-full py-5 flex flex-col gap-5">
+    <div className="w-full lg:w-[720px] py-5 mx-auto flex flex-col gap-5">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl">Comments</h1>
         <GoBack />

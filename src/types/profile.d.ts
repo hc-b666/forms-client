@@ -7,20 +7,6 @@ declare global {
     lastName: string;
   }
 
-  interface ProfileTemplate {
-    id: number;
-    title: string;
-    description: string;
-    topic: TemplateTopic;
-    
-    createdAt: Date;
-
-    responses: number;
-    likes: number;
-
-    tags: Tag[];
-  }
-
   interface FilledForm {
     id: number;
     filledAt: Date;

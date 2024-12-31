@@ -33,14 +33,17 @@ export function ErrorMessage({ error }: ErrorMessageProps) {
 
   if (error && "status" in error) {
     switch (error.status) {
+      case 400:
+        message = (error?.data as { message: string })?.message || "Bad request";
+        break;
       case 403:
-        message = "You do not have permission";
+        message = (error?.data as { message: string })?.message || "You do not have permission";
         break;
       case 404:
-        message = "Template not found";
+        message = (error?.data as { message: string })?.message || "Resource not found";
         break;
       case 500:
-        message = "Server error occurred";
+        message = (error?.data as { message: string })?.message || "Internal server error";
         break;
       default:
         break;

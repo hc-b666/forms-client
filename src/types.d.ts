@@ -12,21 +12,6 @@ declare global {
     isBlocked: boolean;
   }
 
-  interface Template {
-    id: number;
-    title: string;
-    description: string;
-    topic: TemplateTopic;
-    createdAt: string;
-    creator: {
-      id: number;
-      email: string;
-  };
-    responses: number;
-    imageId: string;
-    imageUrl: string;
-  }
-
   interface IComment {
     id: number;
     createdAt: string;
@@ -46,27 +31,6 @@ declare global {
       id: number;
       option: string;
     }[];
-  }
-
-  interface ISingleTemplate {
-    id: number;
-    title: string;
-    description: string;
-    topic: TemplateTopic;
-    createdAt: string;
-    creator: {
-      id: number;
-      email: string;
-    };
-    tags: string[];
-    questions: IQuestionServer[];
-    accessControls: {
-      id: number;
-      email: string;
-    }[];
-    isPublic: boolean;
-    imageId: string;
-    imageUrl: string;
   }
 
   interface Form {

@@ -2,7 +2,7 @@ import { baseApi } from "@/services/baseApi";
 
 interface GetForms {
   forms: Form[];
-  template: ISingleTemplate;
+  template: TemplateExtended;
 }
 
 interface EditTemplateDetails {

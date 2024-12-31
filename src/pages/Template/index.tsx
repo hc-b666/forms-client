@@ -1,59 +1,58 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import LoadingSpinner from "@/components/common/LoadingSpinner";
-import TemplateHeader from "./components/TemplateHeader";
 import { ErrorMessage } from "../error/Error";
 import { Comments } from "@/features/comments/components/Comments";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Form } from "@/pages/Template/components/Form";
-import { useGetTemplateByIdQuery, useHasUserSubmittedFormQuery } from "./services";
-import { useEffect } from "react";
+import {
+  useGetTemplateByIdQuery,
+  useHasUserSubmittedFormQuery,
+} from "./services";
+import { Template } from "./components/Template";
+import { TemplateSkeletion } from "./components/TemplateSkeleton";
 
 export default function TemplatePage() {
   const { templateId } = useParams();
 
-  const { data: template, isError, isLoading, isSuccess, error } = useGetTemplateByIdQuery(templateId);
-  const { data, refetch } = useHasUserSubmittedFormQuery(templateId);
-  
+  const {
+    data: template,
+    isError,
+    isLoading,
+    isSuccess: templateSuccess,
+    error,
+  } = useGetTemplateByIdQuery(templateId);
+  const {
+    data,
+    isSuccess: hasSubmittedSuccess,
+    refetch,
+  } = useHasUserSubmittedFormQuery(templateId);
+
   useEffect(() => {
     if (template) {
       document.title = `Forms | ${template?.title}`;
     }
-  }, []);
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  }, [template]);
 
   if (isError) {
     return <ErrorMessage error={error} />;
   }
 
-  if (!template) {
-    return <div className="container flex-grow flex justify-center">Template not found</div>;
-  }
-
   return (
     <div className="container flex-grow flex justify-center gap-20">
       <Tabs defaultValue="form" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-5">
+        <TabsList className="grid w-full lg:w-[720px] grid-cols-2 mb-5 mx-auto">
           <TabsTrigger value="form">Form</TabsTrigger>
           <TabsTrigger value="comments">Comments</TabsTrigger>
         </TabsList>
-      
+
         <TabsContent value="form">
-          {isSuccess && !data?.hasSubmitted ? (
-            <div className="w-full h-full flex flex-col gap-5 py-5">
-              <TemplateHeader template={template} />
-
-              <Form template={template} refetch={refetch} />
-            </div>
-          ) : (
-            <div className="w-fullh-full flex flex-col gap-5 py-5">
-              <TemplateHeader template={template} />
-
-              <p className="text-center">You have already submitted the form</p>
-            </div>
+          {isLoading && <TemplateSkeletion />}
+          {templateSuccess && hasSubmittedSuccess && (
+            <Template
+              template={template}
+              hasSubmmited={data?.hasSubmitted}
+              refetch={refetch}
+            />
           )}
         </TabsContent>
         <TabsContent value="comments">

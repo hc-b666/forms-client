@@ -2,7 +2,7 @@ import { baseApi } from "@/services/baseApi";
 
 export const templateApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTemplateById: builder.query<ISingleTemplate, string | undefined>({
+    getTemplateById: builder.query<TemplateExtended, string | undefined>({
       query: (id) => ({
         url: `templates/${id}`,
         method: "GET",
@@ -20,7 +20,6 @@ export const templateApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Template"],
     }),
   }),
 });

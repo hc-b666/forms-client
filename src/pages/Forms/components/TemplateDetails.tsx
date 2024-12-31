@@ -23,7 +23,7 @@ interface FormData {
 }
 
 interface TemplateDetailsProps {
-  template: ISingleTemplate;
+  template: TemplateExtended;
   refetch: () => void;
 }
 
@@ -33,7 +33,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
   const [tags, setTags] = useState<Tag[]>(
     template.tags.map((tag) => ({
       id: uuidv4(),
-      tagName: tag,
+      tagName: tag.tagName,
     }))
   );
   const [users, setUsers] = useState(template.accessControls);
@@ -81,7 +81,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
     setTags(
       template.tags.map((tag) => ({
         id: uuidv4(),
-        tagName: tag,
+        tagName: tag.tagName,
       }))
     );
     setEditMode(false);
