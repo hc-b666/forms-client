@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useTranslations } from "@/hooks/useTranslations";
 
 interface ICreateCommentForm {
   templateId: string | undefined;
@@ -16,6 +17,7 @@ interface ICommentForm {
 
 export function CreateCommentForm({ templateId }: ICreateCommentForm) {
   const { user } = useAuth();
+  const { t } = useTranslations();
 
   const [createComment, { isLoading }] = useCreateCommentMutation();
 
@@ -39,11 +41,11 @@ export function CreateCommentForm({ templateId }: ICreateCommentForm) {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-3 pb-5 border-b"
     >
-      <Label htmlFor="content">Add your comment</Label>
+      <Label htmlFor="content">{t("add-comment")}</Label>
       <div className="grid grid-cols-4 gap-3">
         <Input
           id="content"
-          placeholder="Add your comment"
+          placeholder={t("add-comment")}
           className="col-span-3"
           {...register("content")}
           disabled={!user}
@@ -53,7 +55,7 @@ export function CreateCommentForm({ templateId }: ICreateCommentForm) {
           type="submit"
           className="col-span-1"
         >
-          Comment
+          {t("comment")}
         </Button>
       </div>
     </form>

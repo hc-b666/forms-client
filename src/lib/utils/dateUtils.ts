@@ -1,4 +1,4 @@
-export const formatDate = (date: string) => {
+export const formatDate = (date: string | Date) => {
   const options: Intl.DateTimeFormatOptions = {
     hour: "numeric",
     minute: "numeric",

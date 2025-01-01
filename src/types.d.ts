@@ -12,16 +12,6 @@ declare global {
     isBlocked: boolean;
   }
 
-  interface IComment {
-    id: number;
-    createdAt: string;
-    content: string;
-    author: {
-      id: number;
-      email: string;
-    };
-  }
-
   interface IQuestionServer {
     id: number;
     questionText: string;

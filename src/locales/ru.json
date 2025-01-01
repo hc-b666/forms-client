@@ -111,6 +111,10 @@
   "formspage.save": "Сохранить",
   "formspage.saving": "Сохранение",
   "formspage.cancel": "Отмена",
-  "formspage.noforms": "Формы отсутствуют"
+  "formspage.noforms": "Формы отсутствуют",
+
+  "comments": "Комментарии",
+  "add-comment": "Добавьте свой комментарий",
+  "comment": "Отправить"
 
 }

@@ -111,5 +111,9 @@
   "formspage.save": "Save changes",
   "formspage.saving": "Saving changes",
   "formspage.cancel": "Cancel",
-  "formspage.noforms": "There is no form filled out yet"
+  "formspage.noforms": "There is no form filled out yet",
+
+  "comments": "Comments",
+  "add-comment": "Add your comment",
+  "comment": "Comment"
 }

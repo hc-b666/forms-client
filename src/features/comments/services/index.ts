@@ -2,7 +2,7 @@ import { baseApi } from "@/services/baseApi";
 
 export const commentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getComments: builder.query<IComment[], string | undefined>({
+    getComments: builder.query<Comment[], string | undefined>({
       query: (templateId) => ({
         url: `comments/${templateId}`,
         method: "GET"
