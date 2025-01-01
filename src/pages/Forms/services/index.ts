@@ -11,7 +11,7 @@ interface EditTemplateDetails {
   description: string;
   topic: TemplateTopic;
   tags: string[];
-  accessControls: number[];
+  users: number[];
 }
 
 export const formsApi = baseApi.injectEndpoints({
@@ -24,10 +24,10 @@ export const formsApi = baseApi.injectEndpoints({
       providesTags: ["SingleTemplate"],
     }),
     editTemplateDetails: builder.mutation<{ message: string }, EditTemplateDetails>({
-      query: ({ templateId, title, description, topic, tags, accessControls }) => ({
+      query: ({ templateId, title, description, topic, tags, users }) => ({
         url: `templates/${templateId}`,
         method: "PUT",
-        body: { title, description, topic, tags, accessControls },
+        body: { title, description, topic, tags, users },
       }),
       invalidatesTags: ["SingleTemplate"],
     }),

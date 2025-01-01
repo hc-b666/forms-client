@@ -62,7 +62,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
       description: formData.description,
       topic: formData.topic,
       tags: tags.map((tag) => tag.tagName),
-      accessControls: users.map((user) => user.id),
+      users: users.map((user) => user.id),
     };
 
     try {
@@ -173,7 +173,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
         {t("formspage.topic")}: {capitalize(template.topic)}
       </p>
       <div>
-        {t("formspage.tags")}: {template.tags.join(", ")}
+        {t("formspage.tags")}: {template.tags.map((tag) => tag.tagName).join(", ")}
       </div>
       <span>
         {t("formspage.created-at")}: {formatDate(template.createdAt)}
