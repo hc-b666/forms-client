@@ -93,7 +93,7 @@ export function UserRow({ user, refetch }: UserRowProps) {
   return (
     <TableRow
       key={user.id}
-      className={`${currentUser?.id === user.id ? "bg-gray-100" : ""}`}
+      className={`${currentUser?.id === user.id ? "bg-zinc-100 dark:bg-zinc-700" : ""}`}
     >
       <TableCell>{user.id}</TableCell>
       <TableCell>{user.firstName}</TableCell>
