@@ -15,6 +15,7 @@ import { authApi } from "@/features/auth/services/authApi";
 import { baseApi } from "@/services/baseApi";
 
 import authReducer from "@/features/auth/slices/authSlice";
+import commentReducer from "@/features/comments/slices/commentSlice";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +26,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   authSlice: authReducer,
+  commentSlice: commentReducer,
   [authApi.reducerPath]: authApi.reducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
