@@ -5,7 +5,10 @@ import { BACKEND_BASE_URL } from "@/lib/constants";
 import { addComment, setComments } from "../slices/commentSlice";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
-const socket = io(BACKEND_BASE_URL, { withCredentials: true });
+const socket = io(BACKEND_BASE_URL, { 
+  transports: ['websocket', 'polling'],
+  withCredentials: true,
+});
 
 export const useComments = (templateId: number) => {
   const dispatch = useAppDispatch();
