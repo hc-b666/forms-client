@@ -39,7 +39,7 @@ export function Comments({ templateId }: IComments) {
           <div key={comment.id} className="flex flex-col border p-3 rounded-md">
             <NavLink
               to={`/profile/${comment.author.id}?tab=templates`}
-              className="text-zinc-800 font-semibold text-sm hover:underline"
+              className="text-zinc-800 dark:text-zinc-400 font-semibold text-sm hover:underline"
             >
               {comment.author.email}
             </NavLink>
