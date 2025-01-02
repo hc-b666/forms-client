@@ -11,7 +11,7 @@ export function TemplateForms({ forms, template }: TemplateFormsProps) {
   const { t } = useTranslations();
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <div className="w-full lg:w-[720px] mx-auto flex flex-col items-center gap-5">
       {forms.length > 0 ? (
         <>
           {forms.map((form) => (

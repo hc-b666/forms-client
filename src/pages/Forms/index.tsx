@@ -35,12 +35,12 @@ export default function FormsPage() {
 
   return (
     <div className="container flex-grow flex flex-col items-center gap-5">
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full lg:w-[720px] mx-auto">
         {isLoading && <Skeleton className="w-40 h-8" />}
         {isSuccess && <h1 className="text-lg font-semibold">{truncateText(data?.template.title, 20)}</h1>}
         <GoBack />
       </div>
-      <Tabs defaultValue="details" className="w-full">
+      <Tabs defaultValue="details" className="w-full lg:w-[720px]">
         <div className="overflow-x-auto">
           <TabsList className="grid w-full min-w-[480px] grid-cols-4 mb-5">
             <TabsTrigger value="details" >

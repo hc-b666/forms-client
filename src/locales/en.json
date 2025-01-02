@@ -99,7 +99,7 @@
   "profilepage.actions": "Actions",
 
   "formspage.details": "Details",
-  "formspage.questions": "questions",
+  "formspage.questions": "Questions",
   "formspage.forms": "Forms",
   "formspage.comments": "Comments",
   "formspage.title": "Title",
@@ -112,8 +112,26 @@
   "formspage.saving": "Saving changes",
   "formspage.cancel": "Cancel",
   "formspage.noforms": "There is no form filled out yet",
+  "formspage.access": "People who can access this template",
 
   "comments": "Comments",
   "add-comment": "Add your comment",
-  "comment": "Comment"
+  "comment": "Comment",
+
+  "admin.title": "All Users",
+  "admin.table.firstname": "First Name",
+  "admin.table.lastname": "Last Name",
+  "admin.table.username": "Username",
+  "admin.table.email": "Email",
+  "admin.table.status": "Status",
+  "admin.table.role": "Role",
+  "admin.table.actions": "Actions",
+  "admin.blocked": "Blocked",
+  "admin.active": "Active",
+  "admin.block": "Block",
+  "admin.unblock": "Unblock",
+  "admin.delete": "Delete",
+  "admin.cancel": "Cancel",
+  "admin.delete.alert.title": "Are you absolutely sure?",
+  "admin.delete.alert.description": "This action cannot be undone."
 }

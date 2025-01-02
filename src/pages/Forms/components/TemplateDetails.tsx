@@ -155,14 +155,16 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
   }
 
   return (
-    <div className="w-full lg:w-[720px] flex flex-col gap-3">
-      {template.imageId && (
-        <img
-          src={`https://drive.google.com/thumbnail?id=${template.imageId}`}
-          alt={template.title}
-          className="w-80 h-80 object-cover rounded-md"
-        />
-      )}
+    <div className="w-full lg:w-[720px] flex flex-col gap-3 mx-auto border-x px-5">
+      <div>
+        {template.imageId && (
+          <img
+            src={`https://drive.google.com/thumbnail?id=${template.imageId}`}
+            alt={template.title}
+            className="object-cover rounded-md"
+          />
+        )}
+      </div>
       <p>
         {t("formspage.title")}: {template.title}
       </p>
@@ -173,7 +175,8 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
         {t("formspage.topic")}: {capitalize(template.topic)}
       </p>
       <div>
-        {t("formspage.tags")}: {template.tags.map((tag) => tag.tagName).join(", ")}
+        {t("formspage.tags")}:{" "}
+        {template.tags.map((tag) => tag.tagName).join(", ")}
       </div>
       <span>
         {t("formspage.created-at")}: {formatDate(template.createdAt)}
@@ -188,9 +191,7 @@ export function TemplateDetails({ template, refetch }: TemplateDetailsProps) {
               ))}
             </ul>
           ) : (
-            <div>
-              <p>There is no users who can access to your template</p>
-            </div>
+            <p>{t("formspage.access")}</p>
           )}
         </div>
       )}

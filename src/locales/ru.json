@@ -112,9 +112,26 @@
   "formspage.saving": "Сохранение",
   "formspage.cancel": "Отмена",
   "formspage.noforms": "Формы отсутствуют",
+  "formspage.access": "Люди, которые могут получить доступ к этому шаблону",
 
   "comments": "Комментарии",
   "add-comment": "Добавьте свой комментарий",
-  "comment": "Отправить"
+  "comment": "Отправить",
 
+  "admin.title": "Все пользователи",
+  "admin.table.firstname": "Имя",
+  "admin.table.lastname": "Фамилия",
+  "admin.table.username": "Имя пользователя",
+  "admin.table.email": "Электронная почта",
+  "admin.table.status": "Статус",
+  "admin.table.role": "Роль",
+  "admin.table.actions": "Действия",
+  "admin.blocked": "Заблокировано",
+  "admin.active": "Активно",
+  "admin.block": "Заблокировать",
+  "admin.unblock": "Разблокировать",
+  "admin.delete": "Удалить",
+  "admin.cancel": "Отмена",
+  "admin.delete.alert.title": "Вы абсолютно уверены?",
+  "admin.delete.alert.description": "Это действие нельзя будет отменить"
 }

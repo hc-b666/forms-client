@@ -1,5 +1,3 @@
-import { MoonLoader } from "react-spinners";
-import { Lock, LockOpen, Trash } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -8,93 +6,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  useBlockUserMutation,
-  useDeleteUserMutation,
-  useDemoteToUserMutation,
-  useGetUsersQuery,
-  usePromoteToAdminMutation,
-  useUnblockUserMutation,
-} from "../services";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
-import { RoleSelect } from "./SelectRole";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useGetUsersQuery } from "../services";
 import { ErrorMessage } from "@/pages/error/Error";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { useTranslations } from "@/hooks/useTranslations";
+import { Skeleton } from "@/components/ui/skeleton";
+import { UserRow } from "./UserRow";
 
 export function UsersTable() {
-  const { user: currentUser } = useAuth();
+  const { t } = useTranslations();
 
   const { data, isLoading, isError, isSuccess, error, refetch } =
     useGetUsersQuery();
-
-  const [blockUser] = useBlockUserMutation();
-  const [unblockUser] = useUnblockUserMutation();
-  const [promoteToAdmin] = usePromoteToAdminMutation();
-  const [demoteToUser] = useDemoteToUserMutation();
-  const [deleteUser] = useDeleteUserMutation();
-
-  const handleBlock = async (userId: number) => {
-    try {
-      const res = await blockUser(userId).unwrap();
-      toast({ description: res.message });
-      refetch();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleUnblock = async (userId: number) => {
-    try {
-      const res = await unblockUser(userId).unwrap();
-      toast({ description: res.message });
-      refetch();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handlePromote = async (userId: number) => {
-    try {
-      const res = await promoteToAdmin(userId).unwrap();
-      toast({ description: res.message });
-      refetch();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleDemote = async (userId: number) => {
-    try {
-      const res = await demoteToUser(userId).unwrap();
-      toast({ description: res.message });
-      refetch();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleDelete = async (userId: number) => {
-    try {
-      const res = await deleteUser(userId).unwrap();
-      toast({ description: res.message });
-      refetch();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   if (isError) {
     return <ErrorMessage error={error} />;
@@ -107,107 +29,34 @@ export function UsersTable() {
           <TableHeader>
             <TableRow>
               <TableHead>Id</TableHead>
-              <TableHead>First Name</TableHead>
-              <TableHead>Last Name</TableHead>
-              <TableHead>Username</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead>{t("admin.table.firstname")}</TableHead>
+              <TableHead>{t("admin.table.lastname")}</TableHead>
+              <TableHead>{t("admin.table.username")}</TableHead>
+              <TableHead>{t("admin.table.email")}</TableHead>
+              <TableHead>{t("admin.table.status")}</TableHead>
+              <TableHead>{t("admin.table.role")}</TableHead>
+              <TableHead>{t("admin.table.actions")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
+            {isLoading &&
+              Array.from({ length: 5 }).map((_, rIdx) => (
+                <TableRow key={`row-${rIdx}`}>
+                  {Array.from({ length: 8 }).map((_, cIdx) => (
+                    <TableCell key={`cell-${rIdx}-${cIdx}`}>
+                      <Skeleton className="w-full h-10" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+
             {isSuccess &&
               data.map((user) => (
-                <TableRow
-                  key={user.id}
-                  className={`${
-                    currentUser?.id === user.id ? "bg-gray-100" : ""
-                  }`}
-                >
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.firstName}</TableCell>
-                  <TableCell>{user.lastName}</TableCell>
-                  <TableCell>
-                    <Link to={`/profile/${user.id}`}>
-                      <Button size="sm">{user.username}</Button>
-                    </Link>
-                  </TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    <span
-                      className={`px-2 py-1 rounded-md text-sm ${
-                        user.isBlocked ? "bg-red-500" : "bg-green-500"
-                      }`}
-                    >
-                      {user.isBlocked ? "Blocked" : "Active"}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <RoleSelect
-                      currentRole={user.role}
-                      onRoleChange={{
-                        promote: handlePromote,
-                        demote: handleDemote,
-                      }}
-                      userId={user.id}
-                    />
-                  </TableCell>
-                  <TableCell className="flex space-x-2">
-                    <Button
-                      onClick={() => handleBlock(user.id)}
-                      size="icon"
-                      title="Block User"
-                    >
-                      <Lock />
-                    </Button>
-                    <Button
-                      onClick={() => handleUnblock(user.id)}
-                      size="icon"
-                      title="Unblock User"
-                    >
-                      <LockOpen />
-                    </Button>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          size="icon"
-                          variant="destructive"
-                          title="Delete User"
-                        >
-                          <Trash />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            Are you sure you want to delete this user?
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            This action cannot be undone.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => handleDelete(user.id)}
-                          >
-                            Delete
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </TableCell>
-                </TableRow>
+                <UserRow user={user} refetch={refetch} key={user.id} />
               ))}
           </TableBody>
         </Table>
       </div>
-      {isLoading && (
-        <div className="w-full h-80 flex items-center justify-center">
-          <MoonLoader color="black" />
-        </div>
-      )}
     </div>
   );
 }

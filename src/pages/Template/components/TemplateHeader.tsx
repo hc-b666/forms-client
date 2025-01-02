@@ -26,6 +26,17 @@ export default function TemplateHeader({ template }: TemplateHeaderProps) {
           </div>
         </NavLink>
       </div>
+
+      <div className="">
+        {template.imageId && (
+          <img
+            src={`https://drive.google.com/thumbnail?id=${template.imageId}`}
+            alt={template.title}
+            className="object-cover rounded-md"
+          />
+        )}
+      </div>
+
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl">{template.title}</h1>
