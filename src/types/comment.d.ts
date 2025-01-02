@@ -4,6 +4,8 @@ declare global {
     content: string;
     createdAt: Date;
 
+    templateId: number;
+
     author: {
       id: number;
       email: string;

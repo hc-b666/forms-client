@@ -56,7 +56,7 @@ export default function TemplatePage() {
           )}
         </TabsContent>
         <TabsContent value="comments">
-          <Comments templateId={templateId} />
+          <Comments templateId={parseInt(templateId as string)} />
         </TabsContent>
       </Tabs>
     </div>

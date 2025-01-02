@@ -1,14 +1,14 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useCreateCommentMutation } from "../services";
 import { toast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useComments } from "../hooks/useComments";
 
 interface ICreateCommentForm {
-  templateId: string | undefined;
+  templateId: number;
 }
 
 interface ICommentForm {
@@ -18,17 +18,16 @@ interface ICommentForm {
 export function CreateCommentForm({ templateId }: ICreateCommentForm) {
   const { user } = useAuth();
   const { t } = useTranslations();
-
-  const [createComment, { isLoading }] = useCreateCommentMutation();
+  const { sendComment } = useComments(templateId);
 
   const { register, handleSubmit, reset } = useForm<ICommentForm>();
   const onSubmit: SubmitHandler<ICommentForm> = async (data) => {
     try {
-      const res = await createComment({
-        templateId,
-        content: data.content,
-      }).unwrap();
-      toast({ description: res.message });
+      if (data.content.trim() === "") {
+        return toast({ variant: "destructive", description: "Comment cannot be empty" });
+      }
+
+      sendComment(data.content);
       reset();
     } catch (err) {
       console.log(err);
@@ -51,7 +50,7 @@ export function CreateCommentForm({ templateId }: ICreateCommentForm) {
           disabled={!user}
         />
         <Button
-          disabled={!user || isLoading}
+          disabled={!user}
           type="submit"
           className="col-span-1"
         >
