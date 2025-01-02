@@ -1,13 +1,17 @@
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { BACKEND_BASE_URL } from "@/lib/constants";
+import { BACKEND_BASE_URL, ENV, SSL_CERT, SSL_KEY } from "@/lib/constants";
 import { addComment, setComments } from "../slices/commentSlice";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
-const socket = io(BACKEND_BASE_URL, { 
+const socket = io(BACKEND_BASE_URL, {
+  cert: ENV === 'production' ? SSL_CERT : '',
+  key: ENV === 'production' ? SSL_KEY : '',
   transports: ['websocket', 'polling'],
   withCredentials: true,
+  reconnection: true,
+  reconnectionAttempts: 5,
 });
 
 export const useComments = (templateId: number) => {

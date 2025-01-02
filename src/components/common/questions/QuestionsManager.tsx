@@ -57,8 +57,6 @@ export function QuestionsManager({
     setQuestions(newQuestions);
   };
 
-  console.log(questions);
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex flex-col gap-3">
