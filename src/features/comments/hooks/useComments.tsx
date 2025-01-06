@@ -8,8 +8,8 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 const socket = io(BACKEND_BASE_URL, {
   cert: ENV === 'production' ? SSL_CERT : '',
   key: ENV === 'production' ? SSL_KEY : '',
-  transports: ['websocket', 'polling'],
-  path: '/socket.io',
+  transports: ['polling'],
+  path: '/socket.io/',
   withCredentials: true,
   reconnection: true,
   reconnectionAttempts: 5,
