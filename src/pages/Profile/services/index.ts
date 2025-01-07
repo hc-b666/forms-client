@@ -1,5 +1,15 @@
 import { baseApi } from "@/services/baseApi";
 
+export interface ResponseProps {
+  templates: ProfileTemplate[];
+  metadata: MetaData;
+}
+
+interface RequestProps {
+  userId: string | undefined;
+  page: number;
+}
+
 export const profileApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUserById: builder.query<UserProfile, string | undefined>({
@@ -8,16 +18,16 @@ export const profileApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    getTemplatesByUserId: builder.query<ProfileTemplate[], string | undefined>({
-      query: (userId) => ({
-        url: `templates/profile/${userId}`,
+    getPublicByUserId: builder.query<ResponseProps, RequestProps>({
+      query: ({ userId, page }) => ({
+        url: `templates/profile/${userId}?page=${page}`,
         method: "GET",
       }),
       providesTags: ["Profile"],
     }),
-    getPrivateTemplates: builder.query<ProfileTemplate[], string | undefined>({
-      query: (userId) => ({
-        url: `templates/profile/private/${userId}`,
+    getPrivateTemplates: builder.query<ResponseProps, RequestProps>({
+      query: ({ userId, page }) => ({
+        url: `templates/profile/private/${userId}?page=${page}`,
         method: "GET",
       }),
     }),
@@ -28,9 +38,9 @@ export const profileApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Forms"],
     }),
-    getAccessibleTemplates: builder.query<ProfileTemplate[], string | undefined>({
-      query: (userId) => ({
-        url: `templates/profile/private/templates/${userId}`,
+    getAccessibleTemplates: builder.query<ResponseProps, RequestProps>({
+      query: ({ userId, page }) => ({
+        url: `templates/profile/private/templates/${userId}?page=${page}`,
         method: "GET",
       }),
     }),
@@ -53,7 +63,7 @@ export const profileApi = baseApi.injectEndpoints({
 
 export const {
   useGetUserByIdQuery,
-  useGetTemplatesByUserIdQuery,
+  useGetPublicByUserIdQuery,
   useGetPrivateTemplatesQuery,
   useGetFormsByUserQuery,
   useGetAccessibleTemplatesQuery,

@@ -15,17 +15,27 @@ import { TemplateRow } from "./TemplateRow";
 import { type FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { type SerializedError } from "@reduxjs/toolkit";
 import { useGetPath } from "@/hooks/useGetPath";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { ResponseProps } from "../services";
 
 interface TemplatesTableProps {
   tabTitle: string;
-  data: ProfileTemplate[] | undefined;
+  data: ResponseProps | undefined;
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
   error: FetchBaseQueryError | SerializedError | undefined;
   showActions?: boolean;
   createPath?: string;
-  onCreateClick?: () => void;
+  page: number;
+  handlePageChange: (page: number) => void;
 }
 
 export function TemplatesTable({
@@ -36,6 +46,8 @@ export function TemplatesTable({
   isSuccess,
   error,
   showActions = false,
+  page,
+  handlePageChange,
 }: TemplatesTableProps) {
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -47,13 +59,13 @@ export function TemplatesTable({
   }
 
   return (
-    <div className="h-full">
+    <div className="h-full flex flex-col">
       <div className="flex items-center justify-between mb-5">
         {isLoading ? (
           <Skeleton className="w-48 h-10" />
         ) : (
           <h1 className="md:text-2xl font-semibold">
-            {t(tabTitle)} ({data?.length})
+            {t(tabTitle)} ({data?.metadata.total})
           </h1>
         )}
 
@@ -64,8 +76,8 @@ export function TemplatesTable({
         )}
       </div>
 
-      <div className="overflow-x-auto">
-        <div className="min-w-[920px]">
+      <div className="overflow-x-auto flex-grow">
+        <div className="min-w-[920px] h-full flex flex-col">
           <Table className="h-full">
             <TableHeader>
               <TableRow>
@@ -98,8 +110,8 @@ export function TemplatesTable({
 
               {isSuccess &&
                 data &&
-                data.length > 0 &&
-                data.map((template) => (
+                data.templates.length > 0 &&
+                data.templates.map((template) => (
                   <TemplateRow
                     key={template.id}
                     template={template}
@@ -109,13 +121,50 @@ export function TemplatesTable({
             </TableBody>
           </Table>
 
-          {isSuccess && (!data || data.length === 0) && (
+          {isSuccess && (!data || data.templates.length === 0) && (
             <div className="w-full py-10">
               <h1 className="text-center font-semibold">
                 {t("profilepage.notemplates")}
               </h1>
             </div>
           )}
+
+          <Pagination className="mt-auto">
+            <PaginationContent>
+              <PaginationPrevious
+                onClick={() => {
+                  if (page > 1) {
+                    handlePageChange(page - 1);
+                  }
+                }}
+              />
+              {data &&
+                data.metadata.totalPages > 0 &&
+                Array.from({ length: data.metadata.totalPages }).map(
+                  (_, idx) => (
+                    <PaginationItem key={idx}>
+                      <PaginationLink
+                        isActive={data.metadata.page === idx + 1}
+                        onClick={() => handlePageChange(idx + 1)}
+                      >
+                        {idx + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  )
+                )}
+
+              <PaginationNext
+                onClick={() => {
+                  if (
+                    data?.metadata.totalPages &&
+                    page < data?.metadata.totalPages
+                  ) {
+                    handlePageChange(page + 1);
+                  }
+                }}
+              />
+            </PaginationContent>
+          </Pagination>
         </div>
       </div>
     </div>

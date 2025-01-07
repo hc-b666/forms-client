@@ -29,7 +29,7 @@ export default function ProfilePage() {
     <div className="container flex-grow flex flex-col md:grid grid-cols-4 xl:grid-cols-5 gap-10 xl:gap-20">
       <UserProfile userId={userId} />
 
-      <Tabs value={currentTab} onValueChange={handleTabChange} className="col-span-3 xl:col-span-4">
+      <Tabs value={currentTab} onValueChange={handleTabChange} className="h-full flex flex-col col-span-3 xl:col-span-4">
         <div className="overflow-x-auto">
           {(currentUser?.id === parseInt(userId as string) || currentUser?.role === "ADMIN") && (
             <TabsList className="grid w-full min-w-[920px] grid-cols-4 mb-5">
@@ -49,16 +49,16 @@ export default function ProfilePage() {
           )}
         </div>
 
-        <TabsContent value="templates" className="h-full">
+        <TabsContent value="templates" className="flex-grow">
           <PublicTemplates />
         </TabsContent>
-        <TabsContent value="private-templates">
+        <TabsContent value="private-templates" className="flex-grow">
           <PrivateTemplates />
         </TabsContent>
-        <TabsContent value="forms" className="h-full">
+        <TabsContent value="forms" className="flex-grow">
           <FilledForms />
         </TabsContent>
-        <TabsContent value="private-accessible-templates">
+        <TabsContent value="private-accessible-templates" className="flex-grow">
           <AccessibleTemplates />
         </TabsContent>
       </Tabs>

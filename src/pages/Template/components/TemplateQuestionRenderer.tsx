@@ -1,19 +1,24 @@
+import { useEffect } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-
-interface ITemplateForm {
-  [key: string]: any;
-}
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { IFormBody } from "./TemplateForm";
+import { AutoGrowingTextarea } from "./AutoGrowingTextarea";
 
 interface ITemplateQuestionRenderer {
   question: IQuestionServer;
-  register: UseFormRegister<ITemplateForm>;
-  user?: IUser | null;
+  register: UseFormRegister<IFormBody>;
 }
-export default function TemplateQuestionRenderer({ question, register, user }: ITemplateQuestionRenderer) {
+export default function TemplateQuestionRenderer(
+  props: ITemplateQuestionRenderer
+) {
+  const { question, register } = props;
+  const { user } = useAuth();
+
+  useEffect(() => {}, []);
+
   switch (question.type) {
     case "TEXT":
       return (
@@ -26,14 +31,7 @@ export default function TemplateQuestionRenderer({ question, register, user }: I
       );
 
     case "PARAGRAPH":
-      return (
-        <Textarea
-          {...register(`${question.id}`)}
-          disabled={!user}
-          placeholder="Your answer"
-          required
-        />
-      );
+      return <AutoGrowingTextarea {...props} />;
 
     case "MCQ":
       return (

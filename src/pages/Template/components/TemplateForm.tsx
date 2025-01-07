@@ -10,7 +10,7 @@ interface TemplateFormProps {
   refetch: () => void;
 }
 
-interface IFormBody {
+export interface IFormBody {
   [key: string]: any;
 }
 
@@ -98,7 +98,6 @@ export function TemplateForm({ template, refetch }: TemplateFormProps) {
           <TemplateQuestionRenderer
             question={q}
             register={register}
-            user={user}
           />
         </div>
       ))}

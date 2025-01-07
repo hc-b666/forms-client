@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useGetPrivateTemplatesQuery } from "../services";
@@ -8,9 +9,13 @@ import { TemplatesTable } from "./TemplatesTable";
 export function PrivateTemplates() {
   const { userId } = useParams();
   const { user } = useAuth();
+  const [page, setPage] = useState(1);
 
-  const { data, isLoading, isError, isSuccess, error } =
-    useGetPrivateTemplatesQuery(userId);
+  const { data, isLoading, isError, isSuccess, error } = useGetPrivateTemplatesQuery({ userId, page });
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
 
   if (isError) {
     return <ErrorMessage error={error} />;
@@ -27,6 +32,8 @@ export function PrivateTemplates() {
       showActions={
         user?.id === parseInt(userId as string) || user?.role === "ADMIN"
       }
+      page={page}
+      handlePageChange={handlePageChange}
     />
   );
 }

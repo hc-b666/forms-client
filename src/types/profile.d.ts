@@ -19,6 +19,12 @@ declare global {
       tags: string[];
     };
   }
+
+  interface MetaData {
+    total: number;
+    page: number;
+    totalPages: number;
+  }
 }
 
 export {};

@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useGetTemplatesByUserIdQuery } from "../services";
+import { useGetPublicByUserIdQuery } from "../services";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ErrorMessage } from "@/pages/error/Error";
 import { TemplatesTable } from "./TemplatesTable";
@@ -8,9 +9,13 @@ import { TemplatesTable } from "./TemplatesTable";
 export function PublicTemplates() {
   const { userId } = useParams();
   const { user } = useAuth();
+  const [page, setPage] = useState(1);
 
-  const { data, isLoading, isError, isSuccess, error } =
-    useGetTemplatesByUserIdQuery(userId);
+  const { data, isLoading, isError, isSuccess, error } = useGetPublicByUserIdQuery({ userId, page });
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
 
   if (isError) {
     return <ErrorMessage error={error} />;
@@ -27,6 +32,8 @@ export function PublicTemplates() {
       showActions={
         user?.id === parseInt(userId as string) || user?.role === "ADMIN"
       }
+      page={page}
+      handlePageChange={handlePageChange}
     />
   );
 }
