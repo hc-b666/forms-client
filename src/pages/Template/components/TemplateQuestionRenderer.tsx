@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { IFormBody } from "./TemplateForm";
-import { AutoGrowingTextarea } from "./AutoGrowingTextarea";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ITemplateQuestionRenderer {
   question: IQuestionServer;
@@ -31,7 +31,14 @@ export default function TemplateQuestionRenderer(
       );
 
     case "PARAGRAPH":
-      return <AutoGrowingTextarea {...props} />;
+      return (
+        <Textarea
+          {...register(`${question.id}`)}
+          disabled={!user}
+          placeholder="Your answer"
+          required
+        />
+      );
 
     case "MCQ":
       return (
