@@ -23,6 +23,7 @@ export function PrivateTemplates() {
 
   return (
     <TemplatesTable
+      author={true}
       data={data}
       isLoading={isLoading}
       isError={isError}

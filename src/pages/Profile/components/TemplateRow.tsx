@@ -20,11 +20,12 @@ import { useTranslations } from "@/hooks/useTranslations";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface TemplateRowProps {
+  author: boolean;
   template: ProfileTemplate;
   showActions?: boolean;
 }
 
-export function TemplateRow({ template, showActions }: TemplateRowProps) {
+export function TemplateRow({ author, template, showActions }: TemplateRowProps) {
   const { userId } = useParams();
   const { user } = useAuth();
   const { t } = useTranslations();
@@ -43,9 +44,15 @@ export function TemplateRow({ template, showActions }: TemplateRowProps) {
     <TableRow key={template.id}>
       <TableCell>{template.id}</TableCell>
       <TableCell>
-        <NavLink to={user?.id === parseInt(userId as string) ? `/template/${template.id}/forms` : `/template/${template.id}`} className="underline">
-          {truncateText(template.title, 20)}
-        </NavLink>
+        {author ? (
+          <NavLink to={user?.id === parseInt(userId as string) ? `/template/${template.id}/forms` : `/template/${template.id}`} className="underline">
+            {truncateText(template.title, 20)}
+          </NavLink>
+        ) : (
+          <NavLink to={`/template/${template.id}`} className="underline">
+            {truncateText(template.title, 20)}
+          </NavLink>
+        )}
       </TableCell>
       <TableCell>{truncateText(template.description, 60)}</TableCell>
       <TableCell>{capitalize(template.topic)}</TableCell>
@@ -66,27 +73,29 @@ export function TemplateRow({ template, showActions }: TemplateRowProps) {
           >
             <Button size="sm">{t("profilepage.edit")}</Button>
           </NavLink>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="destructive" size="sm">
-                {t("profilepage.delete")}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>{t("profilepage.delete.alert.title")}</AlertDialogTitle>
-                <AlertDialogDescription>
-                  {t("profilepage.delete.alert.description")}
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>{t("profilepage.cancel")}</AlertDialogCancel>
-                <AlertDialogAction onClick={handleDelete}>
+          {author && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm">
                   {t("profilepage.delete")}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{t("profilepage.delete.alert.title")}</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {t("profilepage.delete.alert.description")}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{t("profilepage.cancel")}</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete}>
+                    {t("profilepage.delete")}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
         </TableCell>
       )}
     </TableRow>

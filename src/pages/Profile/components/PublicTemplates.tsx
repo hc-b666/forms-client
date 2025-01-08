@@ -23,6 +23,7 @@ export function PublicTemplates() {
 
   return (
     <TemplatesTable
+      author={true}
       data={data}
       isLoading={isLoading}
       isError={isError}

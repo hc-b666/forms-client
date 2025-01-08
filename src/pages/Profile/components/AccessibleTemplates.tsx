@@ -23,15 +23,14 @@ export function AccessibleTemplates() {
 
   return (
     <TemplatesTable
+      author={false}
       data={data}
       isLoading={isLoading}
       isError={isError}
       isSuccess={isSuccess}
       error={error}
       tabTitle={"profilepage.private-accessible-templates"}
-      showActions={
-        user?.id === parseInt(userId as string) || user?.role === "ADMIN"
-      }
+      showActions={user?.role === "ADMIN"}
       page={page}
       handlePageChange={handlePageChange}
     />

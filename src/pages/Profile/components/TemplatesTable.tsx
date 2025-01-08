@@ -26,6 +26,7 @@ import {
 import { ResponseProps } from "../services";
 
 interface TemplatesTableProps {
+  author: boolean;
   tabTitle: string;
   data: ResponseProps | undefined;
   isLoading: boolean;
@@ -39,6 +40,7 @@ interface TemplatesTableProps {
 }
 
 export function TemplatesTable({
+  author,
   tabTitle,
   data,
   isLoading,
@@ -113,6 +115,7 @@ export function TemplatesTable({
                 data.templates.length > 0 &&
                 data.templates.map((template) => (
                   <TemplateRow
+                    author={author}
                     key={template.id}
                     template={template}
                     showActions={showActions}
