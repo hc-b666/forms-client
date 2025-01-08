@@ -38,28 +38,40 @@ export function Router() {
         <Route
           path="/profile/:userId"
           element={
-            <PrivateRoute roles={[UserRole.USER, UserRole.ADMIN]} component={ProfilePage} />
+            <PrivateRoute
+              roles={[UserRole.USER, UserRole.ADMIN]}
+              component={ProfilePage}
+            />
           }
         />
 
         <Route
           path="/create-template"
           element={
-            <PrivateRoute roles={[UserRole.USER, UserRole.ADMIN]} component={CreateTemplatePage} />
+            <PrivateRoute
+              roles={[UserRole.USER, UserRole.ADMIN]}
+              component={CreateTemplatePage}
+            />
           }
         />
 
         <Route
           path="/template/:templateId/forms"
           element={
-            <PrivateRoute roles={[UserRole.USER, UserRole.ADMIN]} component={FormsPage} />
+            <PrivateRoute
+              roles={[UserRole.USER, UserRole.ADMIN]}
+              component={FormsPage}
+            />
           }
         />
 
         <Route
           path="/template/:templateId/forms/:formId"
           element={
-            <PrivateRoute roles={[UserRole.USER, UserRole.ADMIN]} component={FormPage} />
+            <PrivateRoute
+              roles={[UserRole.USER, UserRole.ADMIN]}
+              component={FormPage}
+            />
           }
         />
 

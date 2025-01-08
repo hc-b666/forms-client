@@ -1,23 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useIntl } from "react-intl";
 
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 
 import { useRegisterMutation } from "../services/authApi";
 import { AuthInput } from "./AuthInput";
-
-export interface IRegisterForm {
-  firstName: string;
-  lastName: string;
-  username: string;
-  email: string;
-  password: string;
-}
+import { useTranslations } from "@/hooks/useTranslations";
 
 export function RegisterForm() {
-  const intl = useIntl();
+  const { t } = useTranslations();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [signup, { isLoading }] = useRegisterMutation();
@@ -37,58 +29,58 @@ export function RegisterForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-[450px] p-8 flex flex-col gap-4 border rounded-lg">
       <h1 className="text-xl font-semibold">
-        {intl.formatMessage({ id: "registerpage.title" })}
+        {t("registerpage.title")}
       </h1>
 
       <AuthInput
-        label={intl.formatMessage({ id: "registerpage.firstname" })}
+        label={t("registerpage.firstname")}
         type="text"
         id="firstName"
-        register={register("firstName", { required: intl.formatMessage({ id: "registerpage.firstname.error" }) })}
+        register={register("firstName", { required: t("registerpage.firstname.error") })}
         error={errors.firstName?.message}
       />
 
       <AuthInput
-        label={intl.formatMessage({ id: "registerpage.lastname" })}
+        label={t("registerpage.lastname")}
         type="text"
         id="lastName"
-        register={register("lastName", { required: intl.formatMessage({ id: "registerpage.lastname.error" }) })}
+        register={register("lastName", { required: t("registerpage.lastname.error") })}
         error={errors.lastName?.message}
       />
 
       <AuthInput
-        label={intl.formatMessage({ id: "registerpage.username" })}
+        label={t("registerpage.username")}
         type="text"
         id="username"
-        register={register("username", { required: intl.formatMessage({ id: "registerpage.username.error" }) })}
+        register={register("username", { required: t("registerpage.username.error") })}
         error={errors.username?.message}
       />
 
       <AuthInput
-        label={intl.formatMessage({ id: "registerpage.email" })}
+        label={t("registerpage.email")}
         type="email"
         id="email"
-        register={register("email", { required: intl.formatMessage({ id: "registerpage.email.error" }) })}
+        register={register("email", { required: t("registerpage.email.error") })}
         error={errors.email?.message}
       />
 
       <AuthInput
-        label={intl.formatMessage({ id: "registerpage.password" })}
+        label={t("registerpage.password")}
         type="password"
         id="password"
-        register={register("password", { required: intl.formatMessage({ id: "registerpage.password.error" }) })}
+        register={register("password", { required: t("registerpage.password.error") })}
         error={errors.password?.message}
       />
 
       <div className="text-sm flex items-center gap-1">
-        <p>{intl.formatMessage({ id: "registerpage.haveaccount" })}</p>
+        <p>{t("registerpage.haveaccount")}</p>
         <Link to={"/login"} className="underline">
-          {intl.formatMessage({ id: "registerpage.login" })}
+          {t("registerpage.login")}
         </Link>
       </div>
 
       <Button type="submit" disabled={isLoading}>
-        {intl.formatMessage({ id: "registerpage.button" })}
+        {t("registerpage.button")}
       </Button>
     </form>
   );

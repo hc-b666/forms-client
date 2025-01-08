@@ -133,5 +133,8 @@
   "admin.delete": "Удалить",
   "admin.cancel": "Отмена",
   "admin.delete.alert.title": "Вы абсолютно уверены?",
-  "admin.delete.alert.description": "Это действие нельзя будет отменить"
+  "admin.delete.alert.description": "Это действие нельзя будет отменить",
+
+  "form.tab.form": "Форма",
+  "form.tab.comments": "Комментарии"
 }

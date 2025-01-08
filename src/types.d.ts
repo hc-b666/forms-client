@@ -57,21 +57,6 @@ declare global {
     }[];
   }
 
-  interface ILoginResponse {
-    accessToken: string;
-    refreshToken: string;
-    user: IUser;
-    message: string;
-  }
-
-  interface IRegisterResponse {
-    message: string;
-  }
-
-  interface IRefreshTokenResponse {
-    accessToken: string;
-  }
-
 }
 
 export {};

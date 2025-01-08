@@ -1,14 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-
 import { baseQuery } from "@/services/baseApi";
-import { IRegisterForm } from "../components/RegisterForm";
-import { ILoginForm } from "../components/LoginForm";
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery,
   endpoints: (builder) => ({
-    register: builder.mutation<IRegisterResponse, IRegisterForm>({
+    register: builder.mutation<RegisterResponse, IRegisterForm>({
       query: (body) => ({
         url: `auth/register`,
         method: "POST",
@@ -22,17 +19,10 @@ export const authApi = createApi({
         body: { token },
       }),
     }),
-    login: builder.mutation<ILoginResponse, ILoginForm>({
+    login: builder.mutation<LoginResponse, ILoginForm>({
       query: (body) => ({
         url: `auth/login`,
         method: "POST",
-        body,
-      }),
-    }),
-    refreshToken: builder.mutation<IRefreshTokenResponse, { refreshToken: string }>({
-      query: (body) => ({
-        url: 'auth/refresh-token',
-        method: 'POST',
         body,
       }),
     }),
@@ -43,5 +33,4 @@ export const {
   useRegisterMutation,
   useVerifyMutation,
   useLoginMutation,
-  useRefreshTokenMutation,
 } = authApi;

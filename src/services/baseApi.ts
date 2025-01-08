@@ -27,11 +27,6 @@ const handleLogout = (api: BaseQueryApi, message: string) => {
 export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result.error && result.error.status === 403) {
-    // handleLogout(api, "Access forbidden. Please login with appropriate permissions");
-    return result;
-  }
-
   if (result.error && result.error.status === 401) {
     const refreshToken = (api.getState() as RootState).authSlice.refreshToken;
 
@@ -52,7 +47,7 @@ export const baseQueryInterceptor = async (args: string | FetchArgs, api: BaseQu
       );
 
       if (refreshResult.data) {
-        const newAccessToken = (refreshResult.data as { accessToken: string }).accessToken;
+        const newAccessToken = (refreshResult.data as RefreshResponse).accessToken;
         api.dispatch(updateAccessToken(newAccessToken));
         result = await baseQuery(args, api, extraOptions);
       } else {

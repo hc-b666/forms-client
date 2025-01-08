@@ -20,13 +20,13 @@ export const useComments = (templateId: number) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const fetchInitialComments = async () => {
-      const response = await fetch(`${BACKEND_BASE_URL}/api/v1/comments/${templateId}`);
-      const comments = await response.json();
+    const fetchComments = async () => {
+      const res = await fetch(`${BACKEND_BASE_URL}/api/v1/comments/${templateId}`);
+      const comments = await res.json();
       dispatch(setComments({ templateId, comments }));
     };
 
-    fetchInitialComments();
+    fetchComments();
     socket.emit('joinTemplate', templateId);
 
     socket.on('commentAdded', (comment: Comment) => {
