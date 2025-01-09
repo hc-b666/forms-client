@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { X } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useSearchUserByEmailQuery } from "./services";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface UsersManagerProps {
   users: { id: number; email: string }[];
@@ -15,17 +16,8 @@ interface UsersManagerProps {
 
 export function UsersManager({ users, setUsers }: UsersManagerProps) {
   const { t } = useTranslations();
-  const [user, setUser] = useState("");
-  const [debouncedUser, setDebouncedUser] = useState("");
+  const { state: user, setState: setUser, debounced: debouncedUser } = useDebounce();
   const [showSuggestions, setShowSuggestions] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedUser(user);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [user]);
 
   const { data: suggestedUsers = [], isLoading } = useSearchUserByEmailQuery(debouncedUser, { skip: debouncedUser.trim().length < 3 });
 

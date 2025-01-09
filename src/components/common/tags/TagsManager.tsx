@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { X } from "lucide-react";
 
@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface TagsManagerProps {
   tags: Tag[];
@@ -16,17 +17,8 @@ interface TagsManagerProps {
 
 export function TagsManager({ tags, setTags }: TagsManagerProps) {
   const { t } = useTranslations();
-  const [tag, setTag] = useState("");
-  const [debouncedTag, setDebouncedTag] = useState("");
+  const { state: tag, setState: setTag, debounced: debouncedTag } = useDebounce();
   const [showSuggestions, setShowSuggestions] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedTag(tag);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [tag]);
 
   const { data: suggestedTags = [], isLoading } = useSearchTagsQuery(debouncedTag, { skip: debouncedTag.trim().length < 2 });
 
